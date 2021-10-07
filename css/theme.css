@@ -14649,9 +14649,3 @@ section {
 .vue-lists ul, .vue-lists ol {
     padding-left: 30px;
 }
-
-
-#btnAltaUsuario {
-    display: flex;
-    justify-content: flex-end;
-}

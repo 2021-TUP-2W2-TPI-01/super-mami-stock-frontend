@@ -33,6 +33,8 @@
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
 
+    
+
 </head>
 
 <body class="animsition">
@@ -234,101 +236,39 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                     
-                        <div id="btnAltaUsuario"><button class="au-btn au-btn-icon au-btn--green au-btn--small" id="">
-                            <i class="zmdi zmdi-plus"></i>nuevo usuario</button></div>
+                        <div id="" >
+                            <div class="row">
+                            <div class="col-4">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Buscar" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                      <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i> </span>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col-5"></div>
+                            <div class="col-3">
+                                <button class="au-btn au-btn-icon au-btn--green au-btn--small float-right" id="">
+                                    <i class="zmdi zmdi-plus"></i>nuevo usuario</button>
+                            </div>
+                            </div>
+                        </div>
                         <table class="table table-data2">
                             <thead>
                                 <tr>
                                     <th>Username</th>
-                                    <th>Password</th>
                                     <th>Nombre</th>
                                     <th>apellido</th>
                                     <th>email</th>
                                     <th>Rol</th>
-                                    <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="cuerpoTabla">
+                                
+                                <!-- <tr class="spacer"></tr>
                                 <tr class="tr-shadow">
                                     <td>Lori Lynch</td>
-                                    <td>
-                                        <span >lori@example.com</span>
-                                    </td>
-                                    <td >Samsung S8 Black</td>
-                                    <td>2018-09-27 02:12</td>
-                                    <td>
-                                        <span>Processed</span>
-                                    </td>
-                                    <td>$679.00</td>
-                                    <td>
-                                        <div class="table-data-feature">
-                                            
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                <i class="zmdi zmdi-edit"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                            
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="spacer"></tr>
-                                <tr class="tr-shadow">
-                                    <td>Lori Lynch</td>
-                                    <td>
-                                        <span >john@example.com</span>
-                                    </td>
-                                    <td>iPhone X 64Gb Grey</td>
-                                    <td>2018-09-29 05:57</td>
-                                    <td>
-                                        <span>Processed</span>
-                                    </td>
-                                    <td>$999.00</td>
-                                    <td>
-                                        <div class="table-data-feature">
-                                            
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                <i class="zmdi zmdi-edit"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                            
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="spacer"></tr>
-                                <tr class="tr-shadow">
-                                    <td>Lori Lynch</td>
-                                    <td>
-                                        <span>lyn@example.com</span>
-                                    </td>
-                                    <td>iPhone X 256Gb Black</td>
-                                    <td>2018-09-25 19:03</td>
-                                    <td>
-                                        <span>Denied</span>
-                                    </td>
-                                    <td>$1199.00</td>
-                                    <td>
-                                        <div class="table-data-feature">
-                                            
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                <i class="zmdi zmdi-edit"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                            
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="spacer"></tr>
-                                <tr class="tr-shadow">
-                                    <td>Lori Lynch</td>
-                                    <td>
-                                        <span>doe@example.com</span>
-                                    </td>
+                                    
                                     <td>Camera C430W 4k</td>
                                     <td>2018-09-24 19:10</td>
                                     <td>
@@ -338,7 +278,7 @@
                                     <td>
                                         <div class="table-data-feature">
                                             
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <button class="item " data-toggle="tooltip" data-placement="top" title="Edit">
                                                 <i class="zmdi zmdi-edit"></i>
                                             </button>
                                             <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
@@ -347,7 +287,7 @@
                                             
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
         
@@ -383,6 +323,10 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
+    <script src="js/conexionApi.js"></script>
 
 </body>
 
