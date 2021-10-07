@@ -1,21 +1,33 @@
 
-$(document).ready(function() {
-    $('#tablaUsuarios').DataTable({
-        orderCellstop: true,
-        fixedHeader: true
-    });
-});
 
 
 // CARGAMOS TABLA USUARIOS
 $(document).ready(function() {
+
     $.ajax({
     url: "http://26.100.251.19/api/usuarios/",
     type: "GET",
     headers: {Authorization:"Basic bWF0aWVyb2pvOm1hdGlhc2Vyb2pvMTIz"},
     statusCode: {
         200: function (data) {
-            creartabla(data, $("#tablaUsuarios"));
+
+            let tabla_usuarios = $('#tablaUsuarios').DataTable({
+                "language": {
+                    "lengthMenu": "",
+                    "zeroRecords": "No hay datos - disculpe",
+                    "info": "Mostrando pag. _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay datos",
+                    "infoFiltered": "(Filtrado de _MAX_ total registros)"
+                },
+                pageLength: 5,
+                columnDefs: [{
+                    'targets': 5,
+                    'searchable':false,
+                    'orderable':false,
+                }],
+            });
+
+            creartabla(data, tabla_usuarios);
         },
         401: function (data) {
             console.log("error")
@@ -27,6 +39,19 @@ $(document).ready(function() {
     });
 })
 
+function creartabla(datos, tabla){
+
+    let botones = '';
+    botones += "<td><div class=\"table-data-feature\">"
+    botones += "<button class=\"item \" data-toggle=\"modal\" data-placement=\"top\" title=\"Edit\"><i class=\"zmdi zmdi-edit\"></i></button>\<button class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Delete\"><i class=\"zmdi zmdi-delete\"></i></button></div></td>";
+
+   datos.forEach(usuario => {
+       tabla.row.add([usuario.usuario, usuario.nombre, usuario.apellido, usuario.email, usuario.rol, botones]).draw();
+   });
+
+}
+
+/*
 function creartabla(datos, tabla){
     var html = "<thead>";
         html += "<tr>";
@@ -56,6 +81,7 @@ function creartabla(datos, tabla){
     html += "</tbody>";
     tabla.append(html);
 }
+*/
 
 // CARGAMOS SELECT CON TIPO ROLES
 
