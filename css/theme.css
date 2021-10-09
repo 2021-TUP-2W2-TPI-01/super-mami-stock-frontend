@@ -491,6 +491,11 @@ section {
     background: #63c76a;
 }
 
+.au-btn--red {
+    background: #dc3545;
+}
+
+
 .au-btn--green:hover {
     background: #59bd60;
 }
