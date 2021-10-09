@@ -242,13 +242,13 @@
                         <div id="">
                             <div class="row">
                                 <div class="col-4">
-                                
+                                    <button class="mb-2 au-btn au-btn-icon au-btn--green au-btn--small float-left"
+                                        id="" data-toggle="modal" data-target="#popup_alta_usuario">
+                                        <i class="zmdi zmdi-plus"></i>nuevo usuario</button>
                                 </div>
                                 <div class="col-5"></div>
                                 <div class="col-3">
-                                    <button class="mb-2 au-btn au-btn-icon au-btn--green au-btn--small float-right"
-                                        id="btnPopupAltaUsuario" data-toggle="modal" data-target="#mediumModal">
-                                        <i class="zmdi zmdi-plus"></i>nuevo usuario</button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -256,17 +256,14 @@
                             <table class="table table-data2 display" id="tablaUsuarios">
                                 <thead>
                                     <tr>
-                                        <th>Username</th>
-                                        <th>Nombre</th>
+                                        <th>username</th>
+                                        <th>nombre</th>
                                         <th>apellido</th>
                                         <th>email</th>
-                                        <th>Rol</th>
+                                        <th>rol</th>
                                         <th></th>
                                     </tr>
                                 </thead>
-        
-                                <tbody id="cuerpoTabla">
-                                </tbody>
 
                             </table>
                         </div>
@@ -276,9 +273,9 @@
             </div>
             <!-- END MAIN CONTENT-->
 
-            <!-- Modal -->
+            <!-- MODAL ALTA USUARIO -->
 
-            <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+            <div class="modal fade" id="popup_alta_usuario" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -291,8 +288,7 @@
                         <div class="modal-body">
                             <form action="" method="post" class="">
                                 <div class="row">
-                                    <div class="col-2"></div>
-                                    <div class="col-8">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
@@ -317,6 +313,8 @@
                                                 <input type="text" id="username" name="username" placeholder="Usuario" class="form-control">
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
@@ -343,21 +341,40 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-actions form-group">
-                                            <button type="button" class="au-btn au-btn-icon au-btn--red au-btn--small float-right" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="au-btn au-btn-icon au-btn--green au-btn--small float-right mr-2">Agregar Usuario</button>
-                                        </div>
-                                        
                                     </div>
-                                    <div class="col-2"></div>
                                 </div>
                                 
                             </form>
                         </div>
-                        <!-- <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary">Agregar Ususario</button>
-                        </div> -->
+                        <div class="modal-footer">
+                            <button type="button" class="au-btn au-btn-icon au-btn--red au-btn--small float-right" data-dismiss="modal">cancelar</button>
+                                            <button type="submit" class="au-btn au-btn-icon au-btn--green au-btn--small float-right mr-2">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL CONFIRMAR BAJA -->
+
+            <div class="modal fade" id="popup_baja_usuario" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
+                aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticModalLabel">ELIMINAR USUARIO</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="mensaje_confirm_delete">
+                                Seguro que desea dar de baja este Usuario?
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btn_baja_usuario"class="btn btn-primary">Aceptar</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -393,7 +410,7 @@
     <!-- Sweet Alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
-    <script src="js/conexionApi.js"></script>
+    <script src="js/usuarios.js"></script>
 
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
