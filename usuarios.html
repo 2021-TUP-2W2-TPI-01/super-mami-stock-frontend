@@ -33,6 +33,11 @@
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+  
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
+
 </head>
 
 <body class="animsition">
@@ -95,6 +100,7 @@
                 </div>
             </nav>
         </header>
+        
         <!-- END HEADER MOBILE-->
 
         <!-- MENU SIDEBAR-->
@@ -179,13 +185,13 @@
                                     <div class="noti__item js-item-menu">
                                         <i class="zmdi zmdi-notifications"></i>
                                         <span class="quantity">1</span>
-                                        
-
+        
+        
                                         <div class="notifi-dropdown js-dropdown">
                                             <div class="notifi__title">
                                                 <p>You have 1 Notifications</p>
                                             </div>
-
+        
                                             <div class="notifi__item">
                                                 <div class="bg-c1 img-cir img-40">
                                                     <i class="zmdi zmdi-email-open"></i>
@@ -195,10 +201,10 @@
                                                     <span class="date">April 12, 2018 06:50</span>
                                                 </div>
                                             </div>
-
+        
                                         </div>
-
-                                        
+        
+        
                                     </div>
                                 </div>
                                 <div class="account-wrap">
@@ -223,7 +229,7 @@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
-  
+        
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
                                                         <i class="zmdi zmdi-money-box"></i>Item de prueba</a>
@@ -242,21 +248,156 @@
                 </div>
             </header>
             <!-- HEADER DESKTOP-->
-
+        
             <!-- MAIN CONTENT-->
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-
         
+                        <div id="">
+                            <div class="row">
+                                <div class="col-4">
+                                    <button class="mb-2 au-btn au-btn-icon au-btn--green au-btn--small float-left"
+                                        id="" data-toggle="modal" data-target="#popup_alta_usuario">
+                                        <i class="zmdi zmdi-plus"></i>nuevo usuario</button>
+                                </div>
+                                <div class="col-5"></div>
+                                <div class="col-3">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <table class="table table-data2 display" id="tablaUsuarios">
+                                <thead>
+                                    <tr>
+                                        <th>username</th>
+                                        <th>nombre</th>
+                                        <th>apellido</th>
+                                        <th>email</th>
+                                        <th>rol</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
             <!-- END MAIN CONTENT-->
+
+            <!-- MODAL ALTA USUARIO -->
+
+            <div class="modal fade" id="popup_alta_usuario" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="mediumModalLabel">ALTA USUARIO</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" class="">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <input type="text" id="username" name="username" placeholder="Nombre" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <input type="text" id="username" name="username" placeholder="Apellido" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <input type="text" id="username" name="username" placeholder="Usuario" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-envelope"></i>
+                                                </div>
+                                                <input type="email" id="email" name="email" placeholder="Email" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-asterisk"></i>
+                                                </div>
+                                                <input type="password" id="password" name="password" placeholder="Contraseña" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <select name="select" id="selectTipoRol" class="form-control">
+                                                    <option value="0">Tipo Rol</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="au-btn au-btn-icon au-btn--red au-btn--small float-right" data-dismiss="modal">cancelar</button>
+                                            <button type="submit" class="au-btn au-btn-icon au-btn--green au-btn--small float-right mr-2">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL CONFIRMAR BAJA -->
+
+            <div class="modal fade" id="popup_baja_usuario" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
+                aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticModalLabel">ELIMINAR USUARIO</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="mensaje_confirm_delete">
+                                Seguro que desea dar de baja este Usuario?
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btn_baja_usuario"class="btn btn-primary">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- END PAGE CONTAINER-->
         </div>
 
     </div>
+    
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
@@ -283,6 +424,19 @@
     <script src="js/main.js"></script>
     <script src="js/session.js"></script>
     <script src="js/configuration.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
+    <script src="js/usuarios.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+
+
 
 </body>
 
