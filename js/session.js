@@ -1,6 +1,6 @@
 var storage = window.sessionStorage;
 
-if (window.location.pathname !== '/login.html')
+if (window.location.pathname !== '/login.html' && window.location.pathname !== '/SMS/login.html' && window.location.pathname !== '/SMS')
 {
     validateSession();
 }
