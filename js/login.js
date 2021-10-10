@@ -24,6 +24,15 @@ $(document).ready(function(){
 
 async function login (username, password)
 {
+    if (username.trim() == '' || password == '') {
+        swal({
+            title: "Información",
+            text: "Debe completar todos los campos",
+            icon: "error",
+          });
+          
+        return;
+    }
     let bodyRequest = {
         'usuario' : username,
         'password' : password
@@ -38,7 +47,11 @@ async function login (username, password)
 
     }
     else {
-        
+        swal({
+            title: "Información",
+            text: "Los datos ingresados no corresponden a un usuario registrado",
+            icon: "error",
+          });
     }
 
 }

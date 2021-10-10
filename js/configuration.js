@@ -1,6 +1,7 @@
 function cargarInfoUsuario() {
     $('.lblUsuario').text(`${user_info_nombre()} ${user_info_apellido()}`);
     $('#lblEmail').text(`${user_info_email()}`);
+    $('#lblRol').text(`${user_info_tipo_rol()}`);
 }
 
 function cargarEventosGenerales() {
