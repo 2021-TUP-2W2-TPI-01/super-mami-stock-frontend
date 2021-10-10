@@ -268,7 +268,7 @@
                             </div>
                         </div>
                         <div>
-                            <table class="table table-data2 display" id="tablaUsuarios">
+                            <table class="table table-data2 display" id="tabla_usuarios">
                                 <thead>
                                     <tr>
                                         <th>username</th>
@@ -309,7 +309,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username" placeholder="Nombre" class="form-control">
+                                                <input type="text" id="nombre" name="username" placeholder="Nombre" class="form-control" >
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -317,7 +317,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username" placeholder="Apellido" class="form-control">
+                                                <input type="text" id="apellido" name="username" placeholder="Apellido" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -325,7 +325,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username" placeholder="Usuario" class="form-control">
+                                                <input type="text" id="usuario" name="username" placeholder="Usuario" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -362,8 +362,9 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="au-btn au-btn-icon au-btn--red au-btn--small float-right" data-dismiss="modal">cancelar</button>
-                                            <button type="submit" class="au-btn au-btn-icon au-btn--green au-btn--small float-right mr-2">Agregar</button>
+                            <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success mr-2" id="btn_alta_usuario">Agregar</button>
                         </div>
                     </div>
                 </div>
@@ -428,13 +429,13 @@
     <!-- Sweet Alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
-    <script src="js/usuarios.js"></script>
+    <script type="module" src="js/usuarios.js"></script>
 
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
     <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
 
 
 
