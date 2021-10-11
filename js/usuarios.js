@@ -18,7 +18,7 @@ $(document).ready(function() {
         let email = $("#email").val();
         let tipo_rol = $("#selectTipoRol").val();
 
-        alta_usuario(usuario, password, apellido, nombre, email, tipo_rol);
+        alta_usuario(nombre, apellido, usuario, password, email, tipo_rol);
     })
 })
 
@@ -154,9 +154,9 @@ async function eliminar_usuario(id) {
 
 // ALTA USUARIO
 
-async function alta_usuario (nombre, apellido, usuario, email, password, tipo_rol) {
+async function alta_usuario (nombre, apellido, usuario, password, email,tipo_rol) {
     
-    if(usuario.trim() == '' || password == '') {
+    if(usuario.trim() == '' || password == '' || tipo_rol == 0) {
         swal({
             title: "Información",
             text: "Los campos usuario, password y tipo rol son obligatorios",
@@ -172,12 +172,25 @@ async function alta_usuario (nombre, apellido, usuario, email, password, tipo_ro
         'email' : email,
         'last_name' : apellido,
         'firs_name' : nombre,
-        'id_tipo_rol' : rol
+        'id_tipo_rol' : tipo_rol
     }
 
-    await POST('/usuario/', bodyRequest);
+    const response = await POST('/usuario/', bodyRequest);
 
-    
+    if (response.success) {
+        swal({
+            title: "Información",
+            text: "Usuario creado correctamente!",
+            icon: "success",
+          });
+    }
+    else {
+        swal({
+            title: "Información",
+            text: "Los datos ingresados corresponden a un usuario ya existente",
+            icon: "error",
+          });
+    }
 }
 
 
