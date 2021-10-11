@@ -86,6 +86,12 @@ async function POST(path, bodyRequest) {
                     response.success = true;
                     response.data = data;
                 },
+                201: function (data) {
+
+                    response.statusCode = 201;
+                    response.success = true;
+                    response.data = data;
+                },
                 401: function (data) {
 
                     response.statusCode = 401;
@@ -129,6 +135,12 @@ async function PUT(path, bodyRequest) {
                 200: function (data) {
 
                     response.statusCode = 200;
+                    response.success = true;
+                    response.data = data;
+                },
+                201: function (data) {
+
+                    response.statusCode = 201;
                     response.success = true;
                     response.data = data;
                 },

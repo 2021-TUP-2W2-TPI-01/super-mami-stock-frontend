@@ -1,3 +1,32 @@
+var datetable_languaje =  {
+    "lengthMenu": "",//Mostrando _MENU_ resultados por página",
+    "zeroRecords": "No hay resultados",
+    "info": "(Total _MAX_ reg.)   Página _PAGE_ de _PAGES_",
+    "infoEmpty": "No hay resultados",
+    "infoFiltered": "(filtrando de _MAX_ registros)",
+    "loadingRecords": "Cargando...",
+    "processing":     "Procesando...",
+    "search":         "Buscar:",
+    "paginate": {
+        "first":      "Prim.",
+        "last":       "Últ.",
+        "next":       ">",
+        "previous":   "<"
+    },
+
+    "aria": {
+        "sortAscending":  ": orden ascendente",
+        "sortDescending": ": orden descendente"
+    },
+    select: {
+        rows: {
+            _: "%d reg. seleccionados",
+            0: "",
+            1: "1 reg. seleccionado"
+        }
+    }
+}
+
 function cargarInfoUsuario() {
     $('.lblUsuario').text(`${user_info_nombre()} ${user_info_apellido()}`);
     $('#lblEmail').text(`${user_info_email()}`);
