@@ -255,7 +255,7 @@
                         <div id="">
                             <div class="row">
                                 <div class="col-4">
-                                    <button class="mb-2 au-btn au-btn-icon au-btn--blue au-btn--small float-left" id=""
+                                    <button class="mb-2 au-btn au-btn-icon au-btn--green au-btn--small float-left" id=""
                                         data-toggle="modal" data-target="#popup_alta_deposito">
                                         <i class="zmdi zmdi-plus"></i>Nuevo Deposito</button>
                                 </div>
@@ -266,7 +266,7 @@
                             </div>
                         </div>
                         <div>
-                            <table class="table table-data2 display" id="tablaDepositos">
+                            <table class="table table-data2 display" id="tabla_depositos">
                                 <thead>
                                     <tr>
                                         <th>Nombre</th>
@@ -311,7 +311,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username" placeholder="Nombre"
+                                                <input type="text" id="nombre" name="nombre" placeholder="Nombre"
                                                     class="form-control">
                                             </div>
                                         </div>
@@ -320,7 +320,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username"
+                                                <input type="text" id="descripcion" name="descripcion"
                                                     placeholder="Descripcion" class="form-control">
                                             </div>
                                         </div>
@@ -330,7 +330,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username" placeholder="Domicilio"
+                                                <input type="text" id="domicilio" name="domicilio" placeholder="Domicilio"
                                                     class="form-control">
                                             </div>
                                         </div>
@@ -339,7 +339,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username" placeholder="Barrio"
+                                                <input type="text" id="barrio" name="barrio" placeholder="Barrio"
                                                     class="form-control">
                                             </div>
                                         </div>
@@ -375,16 +375,101 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="au-btn au-btn-icon au-btn--red au-btn--small float-right"
-                                data-dismiss="modal">cancelar</button>
+                            <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">Cancelar</button>
                             <button type="submit"
-                                class="au-btn au-btn-icon au-btn--green au-btn--small float-right mr-2">Agregar</button>
+                                class="btn btn-success mr-2" id="btn_alta_deposito">Agregar</button>
                         </div>
 
                     </div>
 
                 </div>
             </div>
+
+            <!-- MODAL MODIF DEPOSITO -->
+
+            <div class="modal fade" id="popup_modif_deposito" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="mediumModalLabel">MODIFICACIÓN DEPOSITO</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" class="">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <input type="text" id="txtNombre_Modificar" name="nombre" placeholder="Nombre" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <input type="text" id="txtDescripcion_Modificar" name="descripcion" placeholder="Descripcion" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <input disabled type="text" id="txtDomicilio_Modificar" name="domicilio" placeholder="Domicilio" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-envelope"></i>
+                                                </div>
+                                                <input disabled type="text" id="txtBarrio_Modificar" name="barrio" placeholder="Barrio" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <select name="select" id="cmbLocalidad_Modificar" class="form-control">
+                                                    <option value="0">Seleccione la localidad</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <select name="select" id="cmbEncargado_Modificar" class="form-control">
+                                                    <option value="0">Seleccione el encargado</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            <button id="btnConfirmarModificacion" type="button" class="btn btn-success mr-2">Modificar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- MODAL CONFIRMAR BAJA -->
 
             <div class="modal fade" id="popup_baja_deposito" tabindex="-1" role="dialog"
@@ -392,7 +477,7 @@
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticModalLabel">ELIMINAR DEPOSITO/h5>
+                            <h5 class="modal-title" id="staticModalLabel">ELIMINAR DEPOSITO</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -443,7 +528,7 @@
     <!-- Sweet Alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
-    <script src="js/deposito.js"></script>
+    <script type="module" src="js/deposito.js"></script>
 
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
