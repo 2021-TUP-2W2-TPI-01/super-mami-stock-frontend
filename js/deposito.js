@@ -10,13 +10,7 @@ $(document).ready(function() {
         200: function (data) {
 
             let tabla_depositos = $('#tablaDepositos').DataTable({
-                "language": {
-                    "lengthMenu": "",
-                    "zeroRecords": "No hay datos - disculpe",
-                    "info": "Mostrando pag. _PAGE_ de _PAGES_",
-                    "infoEmpty": "No hay datos",
-                    "infoFiltered": "(Filtrado de _MAX_ total registros)"
-                },
+                "language": datetable_languaje,
                 pageLength: 7,
                 columnDefs: [{
                     'targets': 5,
