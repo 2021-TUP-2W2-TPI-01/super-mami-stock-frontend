@@ -16,8 +16,8 @@ $(document).ready(function() {
         let descripcion = $("#descripcion").val();
         let domicilio = $("#domicilio").val();
         let barrio = $("#barrio").val();
-        let localidad = $("#SelectLocalidad").val();
-        let encargado = $("#SelectEncargado").val();
+        let localidad = $("#selectLocalidad").val();
+        let encargado = $("#selectEncargado").val();
 
         alta_deposito(nombre, descripcion, domicilio, barrio, localidad, encargado);
     });
@@ -243,6 +243,9 @@ async function alta_deposito (nombre, descripcion, domicilio, barrio, localidad,
         'id_localidad' : localidad,//id
         'id_encargado' : encargado //id
     }
+
+    console.log(bodyRequest);
+    return;
 
     const response = await POST('/deposito/', bodyRequest);
 
