@@ -244,8 +244,6 @@ async function alta_deposito (nombre, descripcion, domicilio, barrio, localidad,
         'id_encargado' : encargado //id
     }
 
-    console.log(bodyRequest);
-    return;
 
     const response = await POST('/deposito/', bodyRequest);
 
