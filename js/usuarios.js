@@ -171,7 +171,7 @@ async function alta_usuario (nombre, apellido, usuario, password, email,tipo_rol
         'password': password,
         'email' : email,
         'last_name' : apellido,
-        'firs_name' : nombre,
+        'first_name' : nombre,
         'id_tipo_rol' : tipo_rol
     }
 
@@ -183,6 +183,11 @@ async function alta_usuario (nombre, apellido, usuario, password, email,tipo_rol
             text: "Usuario creado correctamente!",
             icon: "success",
           });
+          const response_usuarios = await GET('/usuarios/');
+
+          if (response_usuarios.success) {
+              llenar_tabla(response_usuarios.data, tabla_usuarios);
+          }
     }
     else {
         swal({
