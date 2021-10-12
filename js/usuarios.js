@@ -19,7 +19,12 @@ $(document).ready(function() {
         let tipo_rol = $("#selectTipoRol").val();
 
         alta_usuario(nombre, apellido, usuario, password, email, tipo_rol);
-    })
+    });
+
+    $('#popup_alta_usuario').on('hidden.bs.modal', function (e) {
+        limpiarFormularioAlta();
+    });
+    
 })
 
 async function cargar_tabla() {
@@ -187,7 +192,11 @@ async function alta_usuario (nombre, apellido, usuario, password, email,tipo_rol
 
           if (response_usuarios.success) {
               llenar_tabla(response_usuarios.data, tabla_usuarios);
+              
           }
+
+          $('#popup_alta_usuario').modal('hide');
+
     }
     else {
         swal({
@@ -277,7 +286,7 @@ async function modificar_usuario(id) {
         'nombre' : nombre,
         'apellido' : apellido,
         'password' : password,
-        'tipo_rol' : tipoRol,
+        'id_tipo_rol' : tipoRol,
         'cambio_password' : changePassword
     }
 
@@ -291,13 +300,31 @@ async function modificar_usuario(id) {
             icon: "success",
           });
 
+        const response_usuarios = await GET('/usuarios/');
+
+        if (response_usuarios.success) {
+            llenar_tabla(response_usuarios.data, tabla_usuarios);
+            
+        }
+
         $('#popup_modif_usuario').modal('hide');
     }
     else {
         swal({
             title: "Información",
-            text: response.data,
+            text: 'No fué posible actualizar usuario',
             icon: "error",
           });
     }
+}
+
+
+
+function limpiarFormularioAlta() {
+    $('#nombre').val('');
+    $('#apellido').val('');
+    $('#usuario').val('');
+    $('#email').val('');
+    $('#password').val('');
+    $('#selectTipoRol').val(0);
 }
