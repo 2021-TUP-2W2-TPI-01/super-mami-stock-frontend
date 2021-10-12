@@ -179,7 +179,7 @@ function confirmar_eliminacion_deposito(id, nombre) {
 
     $('#btn_baja_deposito').off('click');
     
-    $("#mensaje_confirm_delete").text("Seguro que desea dar de baja el deposito " + nombre + "?");
+    $("#mensaje_confirm_delete").text("Seguro que desea dar de baja el depósito " + nombre + "?");
 
     $("#btn_baja_deposito").click(function (){
         eliminar_deposito(id);
@@ -199,7 +199,7 @@ async function eliminar_deposito(id) {
 
         swal({
             title: "Información",
-            text: "Deposito dado de baja con éxito",
+            text: "Depósito dado de baja con éxito",
             icon: "success",
           });
 
@@ -213,7 +213,7 @@ async function eliminar_deposito(id) {
     else {
         swal({
             title: "Información",
-            text: "No fué posible dar de baja el deposito",
+            text: "No fué posible dar de baja el depósito",
             icon: "error",
           });
     }
@@ -249,7 +249,7 @@ async function alta_deposito (nombre, descripcion, domicilio, barrio, localidad,
     if (response.success) {
         swal({
             title: "Información",
-            text: "Deposito creado correctamente!",
+            text: "Depósito dado de alta con éxito",
             icon: "success",
           });
           const response_depositos = await GET('/depositos/');
@@ -265,7 +265,7 @@ async function alta_deposito (nombre, descripcion, domicilio, barrio, localidad,
     else {
         swal({
             title: "Información",
-            text: "Los datos ingresados corresponden a un deposito ya existente",
+            text: "El depósito cargado ya existe",
             icon: "error",
           });
     }
@@ -346,7 +346,7 @@ async function modificar_deposito(id) {
     if (response.success) {
         swal({
             title: "Información",
-            text: "Deposito modificado con éxito",
+            text: "Modificación exitosa",
             icon: "success",
           });
 
@@ -362,7 +362,7 @@ async function modificar_deposito(id) {
     else {
         swal({
             title: "Información",
-            text: 'No fué posible actualizar deposito',
+            text: 'Modificación fallida',
             icon: "error",
           });
     }
