@@ -192,10 +192,10 @@ async function eliminar_usuario(id) {
 
 async function alta_usuario (nombre, apellido, usuario, password, email,tipo_rol) {
     
-    if(usuario.trim() == '' || password == '' || tipo_rol == 0) {
+    if(usuario.trim() == '' || password == '' || tipo_rol == 0 || email.trim() == '') {
         swal({
             title: "Información",
-            text: "Los campos usuario, password y tipo rol son obligatorios",
+            text: "Los campos email, usuario, password y tipo rol son obligatorios",
             icon: "error",
           });
           
