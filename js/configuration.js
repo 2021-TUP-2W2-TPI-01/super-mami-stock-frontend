@@ -3,7 +3,7 @@ var datetable_languaje =  {
     "zeroRecords": "No hay resultados",
     "info": "(Total _MAX_ reg.)   Página _PAGE_ de _PAGES_",
     "infoEmpty": "No hay resultados",
-    "infoFiltered": "(filtrando de _MAX_ registros)",
+    "infoFiltered": "(filtrando _TOTAL_ de _MAX_ registros)",
     "loadingRecords": "Cargando...",
     "processing":     "Procesando...",
     "search":         "Buscar:",
