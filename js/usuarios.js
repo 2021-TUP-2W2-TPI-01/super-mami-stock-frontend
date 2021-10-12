@@ -24,6 +24,26 @@ $(document).ready(function() {
     $('#popup_alta_usuario').on('hidden.bs.modal', function (e) {
         limpiarFormularioAlta();
     });
+
+
+    $('#tabla_usuarios tbody').on( 'click', 'td', function () {
+       
+        let rowIdx = tabla_usuarios.cell( this ).index().row;
+        let colIdx = tabla_usuarios.cell(this).index().column;  
+
+        let id_usuario = tabla_usuarios.rows( rowIdx ).data()[0][0] ;
+        let username = tabla_usuarios.rows( rowIdx ).data()[0][1] ;
+    
+
+        if (colIdx == 6) {
+            modal_modificacion_usuario(id_usuario);
+        }
+        else if (colIdx == 7) {
+            confirmar_eliminacion_usuario(id_usuario, username);
+        }
+    
+    } );  
+    
     
 })
 
@@ -32,12 +52,18 @@ async function cargar_tabla() {
     tabla_usuarios  = $('#tabla_usuarios').DataTable({
         "language": datetable_languaje,
         pageLength: 7,
-        columnDefs: [{
-            'targets': 5,
-            'searchable':false,
-            'orderable':false,
+        columnDefs: [
+            {
+                'targets': [7,6],
+                'searchable':false,
+                'orderable':false,
                         
-        }],
+            },
+            {
+                'targets': 0,  
+                'visible': false      
+            }
+    ],
                      
     });
     const datos = await GET('/usuarios/');
@@ -56,15 +82,19 @@ function llenar_tabla(datos, tabla){
     tabla.clear().draw();
 
     datos.forEach(usuario => {
-        let botones = '';
+        //let botones = '';
 
-        botones += "<td><div class=\"table-data-feature\">"
+        //botones += "<td><div class=\"table-data-feature\">"
         // Por cada usuario, a los botones de borrar y editar, se le asigna un id dinamico segun el id del usuario
-        botones += "<button class=\"item\" id=\"btn_modif_usuario_" + usuario.id + "\" data-toggle=\"modal\" data-placement=\"top\" title=\"Modificar\"><i class=\"zmdi zmdi-edit\"></i></button>\<button id=\"btn_elim_usuario_" + usuario.id + "\" class=\"item\" data-toggle=\"modal\"  idata-placement=\"top\" title=\"Eliminar\"><i class=\"zmdi zmdi-delete\"></i></button></div></td>";
+       // botones += "<button class=\"item\" id=\"btn_modif_usuario_" + usuario.id + "\" data-toggle=\"modal\" data-placement=\"top\" title=\"Modificar\"><i class=\"zmdi zmdi-edit\"></i></button>\<button id=\"btn_elim_usuario_" + usuario.id + "\" class=\"item\" data-toggle=\"modal\"  idata-placement=\"top\" title=\"Eliminar\"><i class=\"zmdi zmdi-delete\"></i></button></div></td>";
         
-        tabla.row.add([usuario.usuario, usuario.nombre, usuario.apellido, usuario.email, usuario.rol, botones]).draw();
+        let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
+        let delete_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Delete"><i class="zmdi zmdi-delete"></i></button></div></td>';
+
+        tabla.row.add([usuario.id ,usuario.usuario, usuario.nombre, usuario.apellido, usuario.email, usuario.rol, edit_button, delete_button]).draw();
    
         // Con el id dinamico anteriormente asignado, seteo el on click para la eliminación y la edición
+        /*
         $(`#btn_modif_usuario_${usuario.id}`).click(function (){
             modal_modificacion_usuario(usuario.id);
         });
@@ -72,6 +102,7 @@ function llenar_tabla(datos, tabla){
         $(`#btn_elim_usuario_${usuario.id}`).click(function (){
             confirmar_eliminacion_usuario(usuario.id, usuario.usuario);
         });
+        */
     });
 
 }

@@ -25,6 +25,25 @@ $(document).ready(function() {
     $('#popup_alta_deposito').on('hidden.bs.modal', function (e) {
         limpiarFormularioAlta();
     });
+
+
+    $('#tabla_depositos tbody').on( 'click', 'td', function () {
+       
+        let rowIdx = tabla_depositos.cell( this ).index().row;
+        let colIdx = tabla_depositos.cell(this).index().column;  
+
+        let id_deposito = tabla_depositos.rows( rowIdx ).data()[0][0] ;
+        let nombre = tabla_depositos.rows( rowIdx ).data()[0][1] ;
+    
+
+        if (colIdx == 7) {
+            modal_modificacion_deposito(id_deposito);
+        }
+        else if (colIdx == 8) {
+            confirmar_eliminacion_deposito(id_deposito, nombre);
+        }
+    
+    } );  
     
 })
 
@@ -33,12 +52,18 @@ async function cargar_tabla() {
     tabla_depositos  = $('#tabla_depositos').DataTable({
         "language": datetable_languaje,
         pageLength: 7,
-        columnDefs: [{
-            'targets': 5,
-            'searchable':false,
-            'orderable':false,
-                        
-        }],
+        columnDefs: [
+            {
+                'targets': [7,8],
+                'searchable':false,
+                'orderable':false,
+                            
+            },
+            {
+                'targets': 0,  
+                'visible': false      
+            }
+    ],
                      
     });
     const datos = await GET('/depositos/');
@@ -57,22 +82,27 @@ function llenar_tabla(datos, tabla){
     tabla.clear().draw();
 
     datos.forEach(deposito => {
-        let botones = '';
+        //let botones = '';
 
-        botones += "<td><div class=\"table-data-feature\">"
-        // Por cada deposito, a los botones de borrar y editar, se le asigna un id dinamico segun el id del deposito
-        botones += "<button class=\"item\" id=\"btn_modif_deposito_" + deposito.id + "\" data-toggle=\"modal\" data-placement=\"top\" title=\"Modificar\"><i class=\"zmdi zmdi-edit\"></i></button>\<button id=\"btn_elim_deposito_" + deposito.id + "\" class=\"item\" data-toggle=\"modal\"  idata-placement=\"top\" title=\"Eliminar\"><i class=\"zmdi zmdi-delete\"></i></button></div></td>";
+        let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
+        let delete_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Delete"><i class="zmdi zmdi-delete"></i></button></div></td>';
         
-        tabla.row.add([deposito.nombre, deposito.descripcion, deposito.domicilio, deposito.barrio, deposito.localidad, deposito.encargado, botones]).draw();
+        //botones += "<td><div class=\"table-data-feature\">"
+        // Por cada deposito, a los botones de borrar y editar, se le asigna un id dinamico segun el id del deposito
+        //botones += "<button class=\"item\" id=\"btn_modif_deposito_" + deposito.id + "\" data-toggle=\"modal\" data-placement=\"top\" title=\"Modificar\"><i class=\"zmdi zmdi-edit\"></i></button>\<button id=\"btn_elim_deposito_" + deposito.id + "\" class=\"item\" data-toggle=\"modal\"  idata-placement=\"top\" title=\"Eliminar\"><i class=\"zmdi zmdi-delete\"></i></button></div></td>";
+        
+        tabla.row.add([deposito.id,deposito.nombre, deposito.descripcion, deposito.domicilio, deposito.barrio, deposito.localidad, deposito.encargado, edit_button,delete_button]).draw();
    
+        
+        
         // Con el id dinamico anteriormente asignado, seteo el on click para la eliminación y la edición
-        $(`#btn_modif_deposito_${deposito.id}`).click(function (){
-            modal_modificacion_deposito(deposito.id);
-        });
+        //$(`#btn_modif_deposito_${deposito.id}`).click(function (){
+        //    modal_modificacion_deposito(deposito.id);
+        //});
     
-        $(`#btn_elim_deposito_${deposito.id}`).click(function (){
-            confirmar_eliminacion_deposito(deposito.id, deposito.nombre);
-        });
+        //$(`#btn_elim_deposito_${deposito.id}`).click(function (){
+        //    confirmar_eliminacion_deposito(deposito.id, deposito.nombre);
+        //});
     });
 
 }
