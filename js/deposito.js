@@ -362,7 +362,7 @@ async function modificar_deposito(id) {
     else {
         swal({
             title: "Información",
-            text: 'Modificación fallida',
+            text: 'El nombre de depósito cargado ya existe',
             icon: "error",
           });
     }
