@@ -495,7 +495,6 @@ section {
     background: #dc3545;
 }
 
-
 .au-btn--green:hover {
     background: #59bd60;
 }
@@ -4493,7 +4492,7 @@ section {
 }
 
 .table-data2.table thead th {
-    font-size: 12px;
+    font-size: 15px;
     color: #555;
     text-transform: uppercase;
     border: none;

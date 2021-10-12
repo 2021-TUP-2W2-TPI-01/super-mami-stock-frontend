@@ -43,7 +43,7 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.html">
-                            <img src="images/icon/logo.png" alt="CoolAdmin" />
+                            <img src="images/icon/logo-prueba.png" alt="Logo" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -58,7 +58,7 @@
                     <ul class="navbar-mobile__list list-unstyled">
                         <li>
                             <a href="index.html">
-                                <i class="fas fa-chart-bar"></i>Resumen</a>
+                                <i class="fas fa-chart-bar"></i>Inicio</a>
                         </li>
                         <li>
                             <a href="articulos.html">
@@ -101,7 +101,7 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img src="images/icon/logo.png" alt="Cool Admin" />
+                    <img class="ml-4" style="max-width: 70%;" src="images/icon/logo-prueba.png" alt="Logo" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -109,38 +109,54 @@
                     <ul class="list-unstyled navbar__list">
                         <li class="active">
                             <a href="index.html">
-                                <i class="fas fa-chart-bar"></i>Resumen</a>
+                                <i class="fas fa-chart-bar"></i>Inicio</a>
                         </li>
-                        <li>
+                        <li id="item-articulos">
                             <a href="articulos.html">
                                 <i class="fas fa-boxes"></i>Artículos</a>
                         </li>
-                        <li>
+                        <li id="item-depositos">
                             <a href="depositos.html">
                                 <i class="fas fa-warehouse"></i>Depósitos</a>
                         </li>
 
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-clipboard-list"></i>Existencias</a>
+                        <li id="item-existencias" class="has-sub">
+                            <a class="js-arrow" href="#"> <i class="fas fa-clipboard-list"></i>Existencias</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="existencias_stock.html">
-                                        <i class="fas fa-pallet"></i>Stock</a>
+                                <li id="item-existencias-stock">
+                                    <a href="existencias_stock.html"> <i class="fas fa-pallet"></i>Stock</a>
                                 </li>
-                                <li>
-                                    <a href="existencias_movimientos.html">
-                                        <i class="fas fa-shipping-fast"></i>Movimientos</a>
+                                <li id="item-existencias-recpedidos">
+                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Recepción Pedidos</a>
+                                </li>
+                                <li id="item-existencias-rectraspasos">
+                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Recepción Traspasos</a>
+                                </li>
+                                <li id="item-existencias-gentraspaso">
+                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Generación Traspaso</a>
                                 </li>
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="informes.html">
-                                <i class="fas fa-chart-line"></i>Informes</a>
+                        <li id="item-informes" class="has-sub">
+                            <a class="js-arrow" href="#"> <i class="fas fa-chart-line"></i>Informes</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li id="item-informes-stockdep">
+                                    <a href="existencias_stock.html"> <i class="fas fa-pallet"></i>Stock por depósito</a>
+                                </li>
+                                <li id="item-informes-stockvencim">
+                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Stock próximo a vencer</a>
+                                </li>
+                                <li id="item-informes-movpordep">
+                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Movimientos por depósito</a>
+                                </li>
+                                <li id="item-informes-movdep">
+                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Movimientos del depósito</a>
+                                </li>
+                            </ul>
                         </li>
 
-                        <li>
+                        <li id="item-usuarios">
                             <a href="usuarios.html">
                                 <i class="fas fa-users"></i>Usuarios</a>
                         </li>
@@ -187,24 +203,23 @@
                                 </div>
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
-                                            <img src="images/icon/avatar-01.jpg" alt="John Doe" />
-                                        </div>
-                                        <div class="content">
-                                            <a class="js-acc-btn" href="#">john doe</a>
+                                        
+                                        <div class="content ml-0">
+                                            <a class="lblUsuario" class="js-acc-btn" href="#">Usuario</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
-                                            <div class="info clearfix">
+                                            <div class="info clearfix pb-0">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                                        <img src="images/icon/user-icon.png" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">john doe</a>
+                                                        <a class="lblUsuario" href="#">john doe</a>
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
+                                                    <span id="lblEmail" class="email">johndoe@example.com</span>
+                                                    <span id="lblRol" style="color: rgb(148, 0, 0);" class="email">johndoe@example.com</span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -215,7 +230,7 @@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a id="btnLogout" href="#">
                                                     <i class="zmdi zmdi-power"></i>Cerrar sesión</a>
                                             </div>
                                         </div>
@@ -232,8 +247,9 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-
-        
+                        <div class="col-md-12 d-flex justify-content-center pt-5 mt-5">
+                            <img src="images/icon/logo-super-mami.png" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -266,6 +282,8 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script src="js/session.js"></script>
+    <script src="js/configuration.js"></script>
 
 </body>
 
