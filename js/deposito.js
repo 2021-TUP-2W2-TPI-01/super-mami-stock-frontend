@@ -225,7 +225,7 @@ async function eliminar_deposito(id) {
 
 async function alta_deposito (nombre, descripcion, domicilio, barrio, localidad, encargado) {
     
-    if(descripcion.trim() == '' || nombre == '' || encargado == 0) {
+    if(nombre == '' || encargado == 0) {
         swal({
             title: "Información",
             text: "Los campos nombre, descripcion y encargado son obligatorios",
@@ -319,7 +319,7 @@ async function modificar_deposito(id) {
     let localidad = $('#cmbLocalidad_Modificar').val();
     let encargado = $('#cmbEncargado_Modificar').val();
 
-    if (nombre == '' || descripcion == '' || domicilio == '' || barrio == '' || localidad == 0|| encargado == 0) {
+    if (nombre == '' || encargado == 0) {
         
         swal({
             title: "Información",
