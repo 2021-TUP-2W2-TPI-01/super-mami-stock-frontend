@@ -268,10 +268,10 @@
                             </div>
                         </div>
                         <div>
-                            <table class="table table-data2 display" id="tablaUsuarios">
+                            <table class="table table-data2 display" id="tabla_usuarios">
                                 <thead>
                                     <tr>
-                                        <th>username</th>
+                                        <th>usuario</th>
                                         <th>nombre</th>
                                         <th>apellido</th>
                                         <th>email</th>
@@ -309,7 +309,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username" placeholder="Nombre" class="form-control">
+                                                <input type="text" id="nombre" name="username" placeholder="Nombre" class="form-control" >
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -317,7 +317,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username" placeholder="Apellido" class="form-control">
+                                                <input type="text" id="apellido" name="username" placeholder="Apellido" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -325,7 +325,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username" placeholder="Usuario" class="form-control">
+                                                <input type="text" id="usuario" name="username" placeholder="Usuario" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -352,7 +352,7 @@
                                                     <i class="fa fa-user"></i>
                                                 </div>
                                                 <select name="select" id="selectTipoRol" class="form-control">
-                                                    <option value="0">Tipo Rol</option>
+                                                    <option value="0">Seleccione el rol</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -362,8 +362,96 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="au-btn au-btn-icon au-btn--red au-btn--small float-right" data-dismiss="modal">cancelar</button>
-                                            <button type="submit" class="au-btn au-btn-icon au-btn--green au-btn--small float-right mr-2">Agregar</button>
+                            <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success mr-2" id="btn_alta_usuario">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- MODAL MODIF USUARIO -->
+
+            <div class="modal fade" id="popup_modif_usuario" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="mediumModalLabel">MODIFICACIÓN USUARIO</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" class="">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <input type="text" id="txtNombre_Modificar" name="username" placeholder="Nombre" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <input type="text" id="txtApellido_Modificar" name="username" placeholder="Apellido" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <input disabled type="text" id="txtUsername_Modificar" name="username" placeholder="Usuario" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-envelope"></i>
+                                                </div>
+                                                <input disabled type="email" id="txtEmail_Modificar" name="email" placeholder="Email" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <select name="select" id="cmbTipoRol_Modificar" class="form-control">
+                                                    <option value="0">Seleccione el rol</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-asterisk"></i>
+                                                </div>
+                                                <input disabled type="password" id="txtPassword_Modificar" name="password" placeholder="Contraseña" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="checkbox float-right">
+                                            <label for="chkbRestablecerPassword" class="form-check-label ">
+                                                <input type="checkbox" id="chkbRestablecerPassword" name="checkbox1" value="option1" class="form-check-input">Restablecer contraseña
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            <button id="btnConfirmarModificacion" type="button" class="btn btn-success mr-2">Modificar</button>
                         </div>
                     </div>
                 </div>
@@ -428,13 +516,13 @@
     <!-- Sweet Alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
-    <script src="js/usuarios.js"></script>
+    <script type="module" src="js/usuarios.js"></script>
 
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
     <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
 
 
 
