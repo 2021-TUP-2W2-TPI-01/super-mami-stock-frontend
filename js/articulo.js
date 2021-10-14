@@ -1,25 +1,28 @@
 import {GET, DELETE, POST, PUT} from './api.js';
 
-var tabla_depositos;
+var tabla_articulos;
 
 // CARGAMOS TABLA ARTICULOS
 $(document).ready(function() {
 
-    cargarSelectEncargado();
-    cargarSelectLocalidad();
+    cargarSelectMarcas();
+    cargarSelectCategorias();
+    cargarSelectUnidadMedida();
+
     cargar_tabla();
     
 
     $("#btn_alta_articulo").click(function () {
         
-        let nombre = $("#nombre").val();
-        let descripcion = $("#descripcion").val();
-        let domicilio = $("#domicilio").val();
-        let barrio = $("#barrio").val();
-        let localidad = $("#selectLocalidad").val();
-        let encargado = $("#selectEncargado").val();
+        let nombre = $("#txtNombreArticulo").val();
+        let descripcion = $("#txtDescripcion").val();
+        let precio = $("#txtPrecio").val();        
+        let marca = $("#cmbMarca").val();
+        let categoria = $("#cmbCategoria").val();
+        let unidadMedida = $("#cmbUnidadMedida").val();
+        let cantidadMedida = $("#txtCantidadMedida").val();
 
-        alta_deposito(nombre, descripcion, domicilio, barrio, localidad, encargado);
+        alta_articulo(nombre, descripcion, precio, marca, categoria, unidadMedida,cantidadMedida );
     });
 
     $('#popup_alta_articulo').on('hidden.bs.modal', function (e) {
@@ -27,20 +30,20 @@ $(document).ready(function() {
     });
 
 
-    $('#tabla_depositos tbody').on( 'click', 'td', function () {
+    $('#tabla_articulos tbody').on( 'click', 'td', function () {
        
-        let rowIdx = tabla_depositos.cell( this ).index().row;
-        let colIdx = tabla_depositos.cell(this).index().column;  
+        let rowIdx = tabla_articulos.cell( this ).index().row;
+        let colIdx = tabla_articulos.cell(this).index().column;  
 
-        let id_deposito = tabla_depositos.rows( rowIdx ).data()[0][0] ;
-        let nombre = tabla_depositos.rows( rowIdx ).data()[0][1] ;
+        let id_articulo = tabla_articulos.rows( rowIdx ).data()[0][0] ;
+        let nombre = tabla_articulos.rows( rowIdx ).data()[0][1] ;
     
 
         if (colIdx == 7) {
-            modal_modificacion_deposito(id_deposito);
+            modal_modificacion_articulo(id_articulo);
         }
         else if (colIdx == 8) {
-            confirmar_eliminacion_deposito(id_deposito, nombre);
+            confirmar_eliminacion_articulo(id_articulo, nombre);
         }
     
     } );  
@@ -49,12 +52,12 @@ $(document).ready(function() {
 
 async function cargar_tabla() {
     
-    tabla_depositos  = $('#tabla_depositos').DataTable({
+    tabla_articulos  = $('#tabla_articulos').DataTable({
         "language": datetable_languaje,
         pageLength: 7,
         columnDefs: [
             {
-                'targets': [7,8],
+                'targets': [8,9],
                 'searchable':false,
                 'orderable':false,
                             
@@ -66,13 +69,12 @@ async function cargar_tabla() {
     ],
                      
     });
-    const datos = await GET('/depositos/');
+    const datos = await GET('/articulos/');
 
     if (datos.success) {
-        llenar_tabla(datos.data, tabla_depositos);
+        llenar_tabla(datos.data, tabla_articulos);
     }
 
-    
     
 }
 
@@ -81,7 +83,7 @@ function llenar_tabla(datos, tabla){
     // Se limpia la tabla
     tabla.clear().draw();
 
-    datos.forEach(deposito => {
+    datos.forEach(articulo => {
         //let botones = '';
 
         let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
@@ -91,7 +93,9 @@ function llenar_tabla(datos, tabla){
         // Por cada deposito, a los botones de borrar y editar, se le asigna un id dinamico segun el id del deposito
         //botones += "<button class=\"item\" id=\"btn_modif_deposito_" + deposito.id + "\" data-toggle=\"modal\" data-placement=\"top\" title=\"Modificar\"><i class=\"zmdi zmdi-edit\"></i></button>\<button id=\"btn_elim_deposito_" + deposito.id + "\" class=\"item\" data-toggle=\"modal\"  idata-placement=\"top\" title=\"Eliminar\"><i class=\"zmdi zmdi-delete\"></i></button></div></td>";
         
-        tabla.row.add([deposito.id,deposito.nombre, deposito.descripcion, deposito.domicilio, deposito.barrio, deposito.localidad, deposito.encargado, edit_button,delete_button]).draw();
+        tabla.row.add([articulo.id,articulo.nombre, articulo.descripcion 
+            , articulo.precio_unitario, articulo.marca, articulo.categoria, articulo.unidad_medida,
+            articulo.cantidad_medida, edit_button,delete_button]).draw();
    
         
         
@@ -106,19 +110,19 @@ function llenar_tabla(datos, tabla){
     });
 
 }
-S
-// CARGAMOS SELECT CON LOCALIDADES
+// S
+// CARGAMOS SELECT CON MARCAS
 
-async function cargarSelectLocalidad() {
+async function cargarSelectMarcas() {
 
-    const response = await GET('/localidades/');
+    const response = await GET('/marcas/');
 
     if (response.success) {
 
         response.data.forEach(function (element) {
 
-            // Select tipos roles pop up alta deposito
-            let miSelect = document.getElementById("selectLocalidad");
+            // Select marcas pop up alta articulo
+            let miSelect = document.getElementById("cmbMarca");
             let opt = document.createElement("option");
     
             opt.appendChild(document.createTextNode(element.descripcion));
@@ -126,8 +130,8 @@ async function cargarSelectLocalidad() {
     
             miSelect.appendChild(opt);
 
-            // Select tipos roles pop up modif deposito
-            let cmbLocalidadModific = document.getElementById("cmbLocalidad_Modificar");
+            // Select marcas pop up modif articulo
+            let cmbLocalidadModific = document.getElementById("cmbMarca_Modificar");
             let optModif = document.createElement("option");
 
             optModif.appendChild(document.createTextNode(element.descripcion));
@@ -141,18 +145,18 @@ async function cargarSelectLocalidad() {
 }
 
 
-// CARGAMOS SELECT CON ENCARGADOS
+// CARGAMOS SELECT CON CATEGORIAS
 
-async function cargarSelectEncargado() {
+async function cargarSelectCategorias() {
 
-    const response = await GET('/encargados/');
+    const response = await GET('/categorias/');
 
     if (response.success) {
 
         response.data.forEach(function (element) {
 
-            // Select tipos roles pop up alta deposito
-            let miSelect = document.getElementById("selectEncargado");
+            // Select categorias pop up alta articulo
+            let miSelect = document.getElementById("cmbCategoria");
             let opt = document.createElement("option");
     
             opt.appendChild(document.createTextNode(element.descripcion));
@@ -160,8 +164,8 @@ async function cargarSelectEncargado() {
     
             miSelect.appendChild(opt);
 
-            // Select tipos roles pop up modif deposito
-            let cmbEncargadoModific = document.getElementById("cmbEncargado_Modificar");
+            // Select categorias pop up modif articulo
+            let cmbEncargadoModific = document.getElementById("cmbCategoria_Modificar");
             let optModif = document.createElement("option");
 
             optModif.appendChild(document.createTextNode(element.descripcion));
@@ -173,62 +177,97 @@ async function cargarSelectEncargado() {
 
     
 }
-// DAR DE BAJA DEPOSITO
-
-function confirmar_eliminacion_deposito(id, nombre) {
-
-    $('#btn_baja_deposito').off('click');
-    
-    $("#mensaje_confirm_delete").text("Seguro que desea dar de baja el depósito " + nombre + "?");
-
-    $("#btn_baja_deposito").click(function (){
-        eliminar_deposito(id);
-    });
-
-    $("#popup_baja_deposito").modal("show");
-}
 
 
-async function eliminar_deposito(id) {
-    
-    let path = `/deposito/${id}/`;
 
-    const response = await DELETE(path);
+// CARGAMOS SELECT CON UNIDADES MEDIDA
+
+async function cargarSelectUnidadMedida() {
+
+    const response = await GET('/unidades_medida/');
 
     if (response.success) {
 
-        swal({
-            title: "Información",
-            text: "Depósito dado de baja con éxito",
-            icon: "success",
-          });
+        response.data.forEach(function (element) {
 
-        const response_depositos = await GET('/depositos/');
-
-        if (response_depositos.success) {
-            llenar_tabla(response_depositos.data, tabla_depositos);
-        }
-          
-    }
-    else {
-        swal({
-            title: "Información",
-            text: "No fué posible dar de baja el depósito",
-            icon: "error",
-          });
-    }
-
-    $("#popup_baja_deposito").modal("hide");
-}
-
-// ALTA DEPOPSITO   
-
-async function alta_deposito (nombre, descripcion, domicilio, barrio, localidad, encargado) {
+            // Select unidades medida pop up alta articulo
+            let miSelect = document.getElementById("cmbUnidadMedida");
+            let opt = document.createElement("option");
     
-    if(nombre == '' || encargado == 0) {
+            opt.appendChild(document.createTextNode(element.descripcion));
+            opt.value = element.id;
+    
+            miSelect.appendChild(opt);
+
+            // Select unidades medida pop up modif articulo
+            let cmbEncargadoModific = document.getElementById("cmbUnidadMedida_Modificar");
+            let optModif = document.createElement("option");
+
+            optModif.appendChild(document.createTextNode(element.descripcion));
+            optModif.value = element.id;
+
+            cmbEncargadoModific.appendChild(optModif);
+        })
+    }
+
+    
+}
+// // DAR DE BAJA DEPOSITO
+
+// function confirmar_eliminacion_deposito(id, nombre) {
+
+//     $('#btn_baja_deposito').off('click');
+    
+//     $("#mensaje_confirm_delete").text("Seguro que desea dar de baja el depósito " + nombre + "?");
+
+//     $("#btn_baja_deposito").click(function (){
+//         eliminar_deposito(id);
+//     });
+
+//     $("#popup_baja_deposito").modal("show");
+// }
+
+
+// async function eliminar_deposito(id) {
+    
+//     let path = `/deposito/${id}/`;
+
+//     const response = await DELETE(path);
+
+//     if (response.success) {
+
+//         swal({
+//             title: "Información",
+//             text: "Depósito dado de baja con éxito",
+//             icon: "success",
+//           });
+
+//         const response_depositos = await GET('/depositos/');
+
+//         if (response_depositos.success) {
+//             llenar_tabla(response_depositos.data, tabla_depositos);
+//         }
+          
+//     }
+//     else {
+//         swal({
+//             title: "Información",
+//             text: "No fué posible dar de baja el depósito",
+//             icon: "error",
+//           });
+//     }
+
+//     $("#popup_baja_deposito").modal("hide");
+// }
+
+// ALTA ARTICULO   
+
+async function alta_articulo (nombre, descripcion, precio_unitario, marca , categoria , unidad_medida,cantidad_medida ) {
+    
+    if(nombre == '' || marca == 0) {
         swal({
             title: "Información",
-            text: "Los campos nombre, descripcion y encargado son obligatorios",
+            text: "Los campos nombre articulo, y marca son obligatorios",
             icon: "error",
           });
           
@@ -238,48 +277,49 @@ async function alta_deposito (nombre, descripcion, domicilio, barrio, localidad,
     let bodyRequest = {
         'nombre' : nombre,
         'descripcion': descripcion,
-        'domicilio' : domicilio,
-        'barrio' : barrio,
-        'id_localidad' : localidad,//id
-        'id_encargado' : encargado //id
+        'precio_unitario' : precio_unitario,
+        'id_marca' : marca,//id
+        'id_categoria' : categoria,//id
+        'id_unidad_medida' : unidad_medida, //id
+        'cantidad_medida' : cantidad_medida 
+        
     }
 
-
-    const response = await POST('/deposito/', bodyRequest);
+    const response = await POST('/articulo/', bodyRequest);
 
     if (response.success) {
         swal({
             title: "Información",
-            text: "Depósito dado de alta con éxito",
+            text: "Articulo dado de alta con éxito",
             icon: "success",
           });
-          const response_depositos = await GET('/depositos/');
+          const response_articulos = await GET('/articulos/');
 
-          if (response_depositos.success) {
-              llenar_tabla(response_depositos.data, tabla_depositos);
+          if (response_articulos.success) {
+              llenar_tabla(response_articulos.data, tabla_articulos);
               
           }
 
-          $('#popup_alta_deposito').modal('hide');
+          $('#popup_alta_articulo').modal('hide');
 
     }
     else {
         swal({
             title: "Información",
-            text: "El depósito cargado ya existe",
+            text: "El articulo cargado ya existe",
             icon: "error",
           });
     }
 }
 
 
-// Modificacion deposito
+// Modificacion articulo
 
-async function modal_modificacion_deposito(id) {
+async function modal_modificacion_articulo(id) {
     
-    let path = `/deposito/${id}/`;
+    let path = `/articulo/${id}/`;
 
-    // acá iria el reemplazo del get deposito
+    // acá iria el reemplazo del get articulo
     const response = await GET(path);
 
     if (response.success) {
@@ -289,38 +329,38 @@ async function modal_modificacion_deposito(id) {
 
         console.log(response);
 
-        $('#txtNombre_Modificar').val(response.data.nombre);
+        $('#txtNombreArticulo_Modificar').val(response.data.nombre);
         $('#txtDescripcion_Modificar').val(response.data.descripcion);
-        $('#txtDomicilio_Modificar').val(response.data.domicilio);
-        $('#txtBarrio_Modificar').val(response.data.barrio);
-        $('#cmbLocalidad_Modificar').val(response.data.id_localidad);//idlocalidad
-        $('#cmbEncargado_Modificar').val(response.data.id_encargado);//idencargado
-               
+        $('#txtPrecio_Modificar').val(response.data.precio_unitario);  
+        $('#cmbMarca_Modificar').val(response.data.id_marca);//idmarca
+        $('#cmbCategoria_Modificar').val(response.data.id_categoria);//idcategoria
+        $('#cmbUnidadMedida_Modificar').val(response.data.id_unidad_medida);//idunidad
+        $('#txtCantidadMedida_Modificar').val(response.data.cantidadMedida); 
 
         
         $('#btnConfirmarModificacion').click(function() {
-            modificar_deposito(id);
+            modificar_articulo(id);
         });
 
-        $('#popup_modif_deposito').modal('show');
+        $('#popup_modif_articulo').modal('show');
 
     }
     
 }
 
+async function modificar_articulo(id) {
 
-async function modificar_deposito(id) {
-
-    let path = `/deposito/${id}/`;
+    let path = `/articulo/${id}/`;
     
-    let nombre = $('#txtNombre_Modificar').val();
+    let nombre = $('#txtNombreArticulo_Modificar').val();
     let descripcion = $('#txtDescripcion_Modificar').val();
-    let domicilio = $('#txtDomicilio_Modificar').val();
-    let barrio = $('#txtBarrio_Modificar').val();
-    let localidad = $('#cmbLocalidad_Modificar').val();
-    let encargado = $('#cmbEncargado_Modificar').val();
+    let precio_unitario = $('#txtPrecio_Modificar').val();
+    let marca = $('#cmbMarca_Modificar').val();
+    let categoria = $('#cmbCategoria_Modificar').val();
+    let unidad_medida = $('#cmbUnidadMedida_Modificar').val();
+    let cantidad_medida = $('#txtCantidadMedida_Modificar').val();
 
-    if (nombre == '' || encargado == 0) {
+    if (nombre == '' || marca == 0) {
         
         swal({
             title: "Información",
@@ -333,14 +373,14 @@ async function modificar_deposito(id) {
 
     let bodyRequest = {
         'nombre' : nombre,
-        'descripcion' : descripcion,
-        'domicilio' : domicilio,
-        'barrio' : barrio,
-        'id_localidad': localidad,//id
-        'id_encargado' : encargado//id
-       
+        'descripcion': descripcion,
+        'precio_unitario' : precio_unitario,
+        'id_marca' : marca,//id
+        'id_categoria' : categoria,//id
+        'id_unidad_medida' : unidad_medida, //id
+        'cantidad_medida' : cantidad_medida 
+        
     }
-
 
     const response = await PUT(path, bodyRequest);
 
@@ -351,19 +391,19 @@ async function modificar_deposito(id) {
             icon: "success",
           });
 
-        const response_depositos = await GET('/depositos/');
+        const response_articulos = await GET('/articulos/');
 
-        if (response_depositos.success) {
-            llenar_tabla(response_depositos.data, tabla_depositos);
+        if (response_articulos.success) {
+            llenar_tabla(response_articulos.data, tabla_articulos);
             
         }
 
-        $('#popup_modif_deposito').modal('hide');
+        $('#popup_modif_articulo').modal('hide');
     }
     else {
         swal({
             title: "Información",
-            text: 'El nombre de depósito cargado ya existe',
+            text: 'El nombre de articulo cargado ya existe',
             icon: "error",
           });
     }
@@ -374,9 +414,9 @@ async function modificar_deposito(id) {
 function limpiarFormularioAlta() {
     $('#txtNombreArticulo').val('');
     $('#txtDescripcion').val('');
-    $('#txtPrecio').val('');
-    $('#txtCantidadMedida').val('');
+    $('#txtPrecio').val('');    
     $('#cmbMarca').val(0);
     $('#cmbCategoria').val(0);
     $('#cmbUnidadMedida').val(0);
+    $('#txtCantidadMedida').val('');
 }
