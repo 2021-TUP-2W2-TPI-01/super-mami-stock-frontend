@@ -23,6 +23,7 @@ $(document).ready(function() {
         let cantidadMedida = $("#txtCantidadMedida").val();
 
         alta_articulo(nombre, descripcion, precio, marca, categoria, unidadMedida,cantidadMedida );
+        
     });
 
     $('#popup_alta_articulo').on('hidden.bs.modal', function (e) {
@@ -39,10 +40,10 @@ $(document).ready(function() {
         let nombre = tabla_articulos.rows( rowIdx ).data()[0][1] ;
     
 
-        if (colIdx == 7) {
+        if (colIdx == 8) {
             modal_modificacion_articulo(id_articulo);
         }
-        else if (colIdx == 8) {
+        else if (colIdx == 9) {
             confirmar_eliminacion_articulo(id_articulo, nombre);
         }
     
@@ -72,7 +73,7 @@ async function cargar_tabla() {
     const datos = await GET('/articulos/');
 
     if (datos.success) {
-        llenar_tabla(datos.data, tabla_articulos);
+        llenar_tabla(datos.data, tabla_articulos)       
     }
 
     
@@ -141,9 +142,7 @@ async function cargarSelectMarcas() {
         })
     }
 
-    
 }
-
 
 // CARGAMOS SELECT CON CATEGORIAS
 
@@ -178,8 +177,6 @@ async function cargarSelectCategorias() {
     
 }
 
-
-
 // CARGAMOS SELECT CON UNIDADES MEDIDA
 
 async function cargarSelectUnidadMedida() {
@@ -212,67 +209,90 @@ async function cargarSelectUnidadMedida() {
 
     
 }
-// // DAR DE BAJA DEPOSITO
 
-// function confirmar_eliminacion_deposito(id, nombre) {
 
-//     $('#btn_baja_deposito').off('click');
+// DAR DE BAJA ARTICULO
+
+function confirmar_eliminacion_articulo(id, nombre) {
+
+    $('#btn_baja_articulo').off('click');
     
-//     $("#mensaje_confirm_delete").text("Seguro que desea dar de baja el depósito " + nombre + "?");
+    $("#mensaje_confirm_delete").text("Seguro que desea dar de baja el articulo " + nombre + "?");
 
-//     $("#btn_baja_deposito").click(function (){
-//         eliminar_deposito(id);
-//     });
+    $("#btn_baja_articulo").click(function (){
+        eliminar_articulo(id);
+    });
 
-//     $("#popup_baja_deposito").modal("show");
-// }
+    $("#popup_baja_articulo").modal("show");
+}
 
 
-// async function eliminar_deposito(id) {
+async function eliminar_articulo(id) {
     
-//     let path = `/deposito/${id}/`;
+    let path = `/articulo/${id}/`;
 
-//     const response = await DELETE(path);
+    const response = await DELETE(path);
 
-//     if (response.success) {
+    if (response.success) {
 
-//         swal({
-//             title: "Información",
-//             text: "Depósito dado de baja con éxito",
-//             icon: "success",
-//           });
+        swal({
+            title: "Información",
+            text: "Articulo dado de baja con éxito",
+            icon: "success",
+          });
 
-//         const response_depositos = await GET('/depositos/');
+        const response_articulos = await GET('/articulos/');
 
-//         if (response_depositos.success) {
-//             llenar_tabla(response_depositos.data, tabla_depositos);
-//         }
+        if (response_articulos.success) {
+            llenar_tabla(response_articulos.data, tabla_articulos);
+        }
           
-//     }
-//     else {
-//         swal({
-//             title: "Información",
-//             text: "No fué posible dar de baja el depósito",
-//             icon: "error",
-//           });
-//     }
+    }
+    else {
+        swal({
+            title: "Información",
+            text: "No fué posible dar de baja el articulo",
+            icon: "error",
+          });
+    }
 
-//     $("#popup_baja_deposito").modal("hide");
-// }
+    $("#popup_baja_articulo").modal("hide");
+}
 
 // ALTA ARTICULO   
 
-async function alta_articulo (nombre, descripcion, precio_unitario, marca , categoria , unidad_medida,cantidad_medida ) {
+async function alta_articulo (nombre, descripcion, precio_unitario, marca , categoria , unidad_medida , cantidad_medida ) {
     
-    if(nombre == '' || marca == 0) {
+
+
+    if(marca == 0 || nombre=="" || precio_unitario=="" || categoria==0 || unidad_medida==0 || cantidad_medida=="" ) {
         swal({
             title: "Información",
-            text: "Los campos nombre articulo, y marca son obligatorios",
+            text: "Todos los campos son obligatorios, excepto 'Descripcion'",
             icon: "error",
           });
           
         return;
     }
+    if(isNaN(precio_unitario)){
+        swal({
+            title: "Valor incorrecto",
+            text: "El campo 'Precio' debe llevar un valor numerico",
+            icon: "error",
+          });
+          
+        return;
+    }
+    if(isNaN(cantidad_medida)){
+        swal({
+            title: "Valor incorrecto",
+            text: "El campo 'Cantidad Medida' debe llevar un valor numerico",
+            icon: "error",
+          });
+          
+        return;
+    }
+
 
     let bodyRequest = {
         'nombre' : nombre,
@@ -312,7 +332,6 @@ async function alta_articulo (nombre, descripcion, precio_unitario, marca , cate
     }
 }
 
-
 // Modificacion articulo
 
 async function modal_modificacion_articulo(id) {
@@ -326,7 +345,6 @@ async function modal_modificacion_articulo(id) {
 
         $('#btnConfirmarModificacion').off('click');
        
-
         console.log(response);
 
         $('#txtNombreArticulo_Modificar').val(response.data.nombre);
@@ -335,7 +353,7 @@ async function modal_modificacion_articulo(id) {
         $('#cmbMarca_Modificar').val(response.data.id_marca);//idmarca
         $('#cmbCategoria_Modificar').val(response.data.id_categoria);//idcategoria
         $('#cmbUnidadMedida_Modificar').val(response.data.id_unidad_medida);//idunidad
-        $('#txtCantidadMedida_Modificar').val(response.data.cantidadMedida); 
+        $('#txtCantidadMedida_Modificar').val(response.data.cantidad_medida); 
 
         
         $('#btnConfirmarModificacion').click(function() {
@@ -360,14 +378,31 @@ async function modificar_articulo(id) {
     let unidad_medida = $('#cmbUnidadMedida_Modificar').val();
     let cantidad_medida = $('#txtCantidadMedida_Modificar').val();
 
-    if (nombre == '' || marca == 0) {
-        
+    if( precio_unitario==""  || cantidad_medida=="" ) {
         swal({
             title: "Información",
-            text: "Debe completar todos los campos",
+            text: "Debe completar todos los campos, excepto 'Descripcion'",
             icon: "error",
           });
-
+          
+        return;
+    }
+    if(isNaN(precio_unitario)){
+        swal({
+            title: "Valor incorrecto",
+            text: "El campo 'Precio' debe llevar un valor numerico",
+            icon: "error",
+          });
+          
+        return;
+    }
+    if(isNaN(cantidad_medida)){
+        swal({
+            title: "Valor incorrecto",
+            text: "El campo 'Cantidad Medida' debe llevar un valor numerico",
+            icon: "error",
+          });
+          
         return;
     }
 

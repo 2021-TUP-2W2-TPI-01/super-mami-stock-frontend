@@ -300,6 +300,7 @@
 
             <!-- Modal -->
 
+             <!-- MODAL ALTA ARTICULO -->
             <div class="modal fade" id="popup_alta_articulo" tabindex="-1" role="dialog"
                 aria-labelledby="mediumModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -381,9 +382,6 @@
                                             </div>
                                         </div>
 
-
-                                        
-
                                     </div>
 
                                 </div>
@@ -423,7 +421,7 @@
                                                 <div class="input-g roup-addon">
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </div>
-                                                <input type="text" id="txtNombreArticulo_Modificar" name="nombre" placeholder="Nombre Articulo" class="form-control">
+                                                <input disabled type="text" id="txtNombreArticulo_Modificar" name="nombre" placeholder="Nombre Articulo" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -434,7 +432,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-usd"></i>
                                                 </div>
-                                                <input disabled type="text" id="txtPrecio_Modificar" name="precio" placeholder="Precio Unitario" class="form-control">
+                                                <input type="text" id="txtPrecio_Modificar" name="precio" placeholder="Precio Unitario" class="form-control">
                                             </div>
                                         </div>
 
@@ -448,7 +446,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fas fa-check"></i>
                                                 </div>
-                                                <select name="select" id="cmbMarca_Modificar" class="form-control">
+                                                <select disabled name="select" id="cmbMarca_Modificar" class="form-control">
                                                     <option value="0">Seleccione Marca</option>
                                                 </select>
                                             </div>
@@ -459,7 +457,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fas fa-check"></i>
                                                 </div>
-                                                <select name="select" id="cmbCategoria_Modificar" class="form-control">
+                                                <select disabled name="select" id="cmbCategoria_Modificar" class="form-control">
                                                     <option value="0">Seleccione categoria</option>
                                                 </select>
                                             </div>
@@ -469,7 +467,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fas fa-check"></i>
                                                 </div>
-                                                <select name="select" id="cmbUnidadMedida_Modificar" class="form-control">
+                                                <select disabled name="select" id="cmbUnidadMedida_Modificar" class="form-control">
                                                     <option value="0">Seleccione Unidad de medida</option>
                                                 </select>
                                             </div>
@@ -517,7 +515,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" id="btn_baja_deposito" class="btn btn-danger">Aceptar</button>
+                            <button type="button" id="btn_baja_articulo" class="btn btn-danger">Aceptar</button>
                         </div>
                     </div>
                 </div>
