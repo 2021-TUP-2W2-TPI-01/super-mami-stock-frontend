@@ -293,7 +293,6 @@ async function alta_articulo (nombre, descripcion, precio_unitario, marca , cate
         return;
     }
 
-
     let bodyRequest = {
         'nombre' : nombre,
         'descripcion': descripcion,
@@ -381,7 +380,7 @@ async function modificar_articulo(id) {
     if( precio_unitario==""  || cantidad_medida=="" ) {
         swal({
             title: "Información",
-            text: "Debe completar todos los campos, excepto 'Descripcion'",
+            text: "Los campos 'Precio Unitario' y 'Cantidad Medida' son obligatorios",
             icon: "error",
           });
           
