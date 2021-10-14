@@ -253,8 +253,63 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-
-        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Deposito Origen
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="drop">
+                                      <a class="dropdown-item" href="#">Action</a>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Deposito Destino
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <a class="dropdown-item" href="#">Action</a>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-md-6">
+                                <h2 class="mt-4 lead"><span class="fa fa-home"></span> Stock Local</h2>
+                                <table class="mt-4 table  table-bordered table-light table-data2 display" id="tabla_articulo">
+                                    <thead>
+                                        <tr>
+                                            <th>Articulo</th>
+                                            <th>Cantidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cuerpoTabla">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="mt-4 lead"><span class="fa fa-shopping-cart"></span> Articulos a cargar</h2>
+                                <table class="mt-4 table table-light table-bordered table-data2 display" id="tabla_carrito">
+                                    <thead>
+                                        <tr>
+                                            <th>Articulo</th>
+                                            <th>Cantidad</th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody id="cuerpoTabla">
+    
+                                    </tbody>
+    
+                                </table>
+                            </div>
+                           
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -289,6 +344,8 @@
     <script src="js/main.js"></script>
     <script src="js/session.js"></script>
     <script src="js/configuration.js"></script>
+
+    <script type="module" src="js/generacion_traspaso.js"></script>
 
 </body>
 
