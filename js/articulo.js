@@ -274,19 +274,19 @@ async function alta_articulo (nombre, descripcion, precio_unitario, marca , cate
           
         return;
     }
-    if(isNaN(precio_unitario)){
+    if(isNaN(precio_unitario)|| precio_unitario <= 0 ){
         swal({
             title: "Valor incorrecto",
-            text: "El campo 'Precio' debe llevar un valor numerico",
+            text: "El campo 'Precio' debe llevar un valor numerico correcto",
             icon: "error",
           });
           
         return;
     }
-    if(isNaN(cantidad_medida)){
+    if(isNaN(cantidad_medida) || cantidad_medida <= 0){
         swal({
             title: "Valor incorrecto",
-            text: "El campo 'Cantidad Medida' debe llevar un valor numerico",
+            text: "El campo 'Cantidad Medida' debe llevar un valor numerico correcto",
             icon: "error",
           });
           
@@ -386,19 +386,19 @@ async function modificar_articulo(id) {
           
         return;
     }
-    if(isNaN(precio_unitario)){
+    if(isNaN(precio_unitario || precio_unitario <= 0)){
         swal({
             title: "Valor incorrecto",
-            text: "El campo 'Precio' debe llevar un valor numerico",
+            text: "El campo 'Precio' debe llevar un valor numerico correcto",
             icon: "error",
           });
           
         return;
     }
-    if(isNaN(cantidad_medida)){
+    if(isNaN(cantidad_medida) || cantidad_medida <= 0){
         swal({
             title: "Valor incorrecto",
-            text: "El campo 'Cantidad Medida' debe llevar un valor numerico",
+            text: "El campo 'Cantidad Medida' debe llevar un valor numerico correcto",
             icon: "error",
           });
           
