@@ -117,11 +117,11 @@
                             <a href="index.html">
                                 <i class="fas fa-chart-bar"></i>Inicio</a>
                         </li>
-                        <li id="item-articulos">
+                        <li class="active" id="item-articulos">
                             <a href="articulos.html">
                                 <i class="fas fa-boxes"></i>Artículos</a>
                         </li>
-                        <li class="active" id="item-depositos">
+                        <li  id="item-depositos">
                             <a href="depositos.html">
                                 <i class="fas fa-warehouse"></i>Depósitos</a>
                         </li>
@@ -275,13 +275,13 @@
                                 <thead>
                                     <tr>
                                         <th>id</th>
-                                        <th>NombreArticulo</th>
+                                        <th>Articulo</th>
                                         <th>Descripción</th>
-                                        <th>Precio Unitario</th>
+                                        <th>Precio </th>
                                         <th>Marca</th>
                                         <th>Categoria</th>
-                                        <th>Unidad Medida</th>
-                                        <th>Cantidad Medida</th>
+                                        <th>Unidad </th>
+                                        <th>Cantidad </th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -318,7 +318,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                    <!-- <i class="fa fa-shopping-cart"></i> -->
                                                 </div>
                                                 <input type="text" id="txtNombreArticulo" name="nombreArticulo" placeholder="Nombre Articulo"
                                                     class="form-control">
@@ -331,7 +331,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fa fa-usd"></i>
+                                                    <!-- <i class="fa fa-usd"></i> -->
                                                 </div>
                                                 <input type="text" id="txtPrecio" name="precio" placeholder="Precio Unitario"
                                                     class="form-control">
@@ -345,7 +345,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fas fa-check"></i>
+                                                    <!-- <i class="fas fa-check"></i> -->
                                                 </div>
                                                 <select name="select" id="cmbMarca" class="form-control">
                                                     <option value="0">Seleccione Marca</option>
@@ -355,7 +355,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fas fa-check"></i>
+                                                    <!-- <i class="fas fa-check"></i> -->
                                                 </div>
                                                 <select name="select" id="cmbCategoria" class="form-control">
                                                     <option value="0">Seleccione Categoria</option>
@@ -365,7 +365,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fas fa-check"></i>
+                                                    <!-- <i class="fas fa-check"></i> -->
                                                 </div>
                                                 <select name="select" id="cmbUnidadMedida" class="form-control">
                                                     <option value="0">Seleccione Unidad de medida</option>
@@ -376,7 +376,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fas fa-balance-scale-right"></i>
+                                                    <!-- <i class="fas fa-balance-scale-right"></i> -->
                                                 </div>
                                                 <input type="text" id="txtCantidadMedida" name="cantidad" placeholder="Cantidad Medida" class="form-control">
                                             </div>
@@ -419,7 +419,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-g roup-addon">
-                                                    <i class="fa fa-shopping-cart"></i>
+                                                    <!-- <i class="fal fa-turntable"></i> -->
                                                 </div>
                                                 <input disabled type="text" id="txtNombreArticulo_Modificar" name="nombre" placeholder="Nombre Articulo" class="form-control">
                                             </div>
@@ -430,7 +430,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fa fa-usd"></i>
+                                                    <!-- <i class="fal fa-turntable"></i> -->
                                                 </div>
                                                 <input type="text" id="txtPrecio_Modificar" name="precio" placeholder="Precio Unitario" class="form-control">
                                             </div>
@@ -444,7 +444,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fas fa-check"></i>
+                                                    <!-- <i class="fal fa-turntable"></i> -->
                                                 </div>
                                                 <select disabled name="select" id="cmbMarca_Modificar" class="form-control">
                                                     <option value="0">Seleccione Marca</option>
@@ -455,7 +455,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fas fa-check"></i>
+                                                    <!-- <i class="fal fa-turntable"></i> -->
                                                 </div>
                                                 <select disabled name="select" id="cmbCategoria_Modificar" class="form-control">
                                                     <option value="0">Seleccione categoria</option>
@@ -465,7 +465,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fas fa-check"></i>
+                                                    <!-- <i class="fal fa-turntable"></i> -->
                                                 </div>
                                                 <select disabled name="select" id="cmbUnidadMedida_Modificar" class="form-control">
                                                     <option value="0">Seleccione Unidad de medida</option>
@@ -476,7 +476,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
+                                                    <!-- <i class="fal fa-turntable"></i> -->
                                                 </div>
                                                 <input type="text" id="txtCantidadMedida_Modificar" name="cantidad" placeholder="Cantidad Medida" class="form-control">
                                             </div>
