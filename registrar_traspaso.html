@@ -282,12 +282,13 @@
                             <table class="table table-data2 display" id="tabla_traspasos">
                                 <thead>
                                     <tr>
-                                        <th>Numero de Traspaso</th>
-                                        <th>Observaciones</th>
-                                        <th>Depósito de Origen</th>
-
-
-                                        <th data-toggle="modal" data-target="#popup_alta_deposito"></th>
+                                        <th>Id</th>
+                                        <th>Fecha</th>
+                                        <th>Depósito Origen</th>
+                                        <th>Depósito Destino</th>
+                                        <th>Estado</th>
+                                        <th></th>
+                                       
                                     </tr>
                                 </thead>
 
@@ -303,33 +304,86 @@
             <!-- END MAIN CONTENT-->
 
             <!-- Modal -->
-            <!-- <div class="modal fade" id="popup_reg_traspaso" tabindex="-1" role="dialog"
-                aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal fade" id="popup_detalle_traspaso" tabindex="-1" role="dialog"
+                aria-labelledby="mediumModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticModalLabel">DETALLE TRASPASO</h5>
+                            <h5 class="modal-title" id="mediumModalLabel">DETALLE TRASPASO</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
+
                         <div class="modal-body">
+
                             <div class="section__content section__content--p30">
                                 <div class="container-fluid">
                                     <div>
-                                        <table class="table table-data2 display" id="tabla_traspaso">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Articulo</th>
-                                                    <th>Cantidad</th>
+                                        <form action="" method="get" class="">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group" id="form_detalle">
+                                                        <div class="input-group">
+                                                           
+                                                            <input disabled type="text" id="txtFecha"
+                                                                name="fecha" placeholder="Fecha" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                           
+                                                            <input disabled type="text" id="txtEstado"
+                                                                name="estado" placeholder="Estado" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            
+                                                            <input disabled type="text" id="txtOrigen"
+                                                                name="origen" placeholder="Origen" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                           
+                                                            <input disabled type="text" id="txtDestino"
+                                                                name="destino" placeholder="Destino" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            
+                                                            <input disabled type="text" id="txtUsuario"
+                                                                name="usuario" placeholder="Usuario" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <table class="table table-data2 display" id="tabla_traspaso">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Articulo</th>
+                                                                <th>Cantidad</th>
+            
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+            
+                                                        <tbody id="cuerpoTabla">
+                                                        </tbody>
+            
+                                                    </table>
+                                                </div>
+                                                   
+                                            </div>
 
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody id="cuerpoTabla">
-                                            </tbody>
-
-                                        </table>
+                                        </form>
+                                       
                                     </div>
 
                                 </div>
@@ -337,19 +391,20 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="btn_aceptar_traspaso" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
-                            <button type="button" class="btn btn-danger">Salir</button>
+                            <button type="button" id="btn_aceptar_traspaso"
+                                class="btn btn-success mr-2">Aceptar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
                         </div>
                     </div>
                 </div>
-            </div>  -->
+            </div>
 
-           
 
-             <!-- MODAL MODIF TRASPASO -->
 
-            <div class="modal fade" id="popup_modif_traspaso" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
-                aria-hidden="true">
+            <!-- MODAL MODIF TRASPASO -->
+
+            <div class="modal fade" id="popup_modif_traspaso" tabindex="-1" role="dialog"
+                aria-labelledby="mediumModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -367,7 +422,8 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="txtArticulo_Modificar" name="articulo" placeholder="Articulo" class="form-control">
+                                                <input type="text" id="txtArticulo_Modificar" name="articulo"
+                                                    placeholder="Articulo" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -375,16 +431,18 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="txtCantidad_Modificar" name="cantidad" placeholder="Cantidad" class="form-control">
+                                                <input type="text" id="txtCantidad_Modificar" name="cantidad"
+                                                    placeholder="Cantidad" class="form-control">
                                             </div>
                                         </div>
-                                    </div>                              
-                                </div>                            
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                            <button id="btnConfirmarModificacion" type="button" class="btn btn-success mr-2">Modificar</button>
+                            <button id="btnConfirmarModificacion" type="button"
+                                class="btn btn-success mr-2">Modificar</button>
                         </div>
                     </div>
                 </div>
@@ -398,9 +456,9 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="staticModalLabel">ELIMINAR TRASPASO</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         <div class="modal-body">
                             <p id="mensaje_confirm_delete">
