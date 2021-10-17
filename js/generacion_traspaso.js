@@ -17,7 +17,7 @@ async function loadcmb() {
     var cmbDestino = $("#cmbDepositoDestino")
     var cmbOrigen = $("#cmbDepositoOrigen")
     var str = ''
-    let [datosDestino, datoOrigen] = await Promise.all([GET('/depositos/'), GET('/deposito/deposito_usuario/')]);
+    const [datosDestino, datoOrigen] = await Promise.all([GET('/depositos/'), GET('/deposito/deposito_usuario/')]);
     if (datosDestino.success) {
         cmbDestino.html('')
         datosDestino.data.forEach(deposito => {
@@ -36,19 +36,24 @@ async function loadcmb() {
 async function loadtableArticulosStock() {
     render_tabla();
     tabla_stock_origen.clear().draw();
-    const datos = await GET('/existencias/');
+    const [datosDestino, datoOrigen] = await Promise.all([GET('/existencias/'), GET('/existencias/')]);
     let pasar_button = ''
-    if (datos.success) {
-        articulos = datos.data
+    if (datosDestino.success) {
+        articulos = datosDestino.data
         articulos.forEach(articulos => {
             pasar_button = '<td><div id="valor_articulo" class="table-data-feature"> <button class="item fa fa-forward text-success" data-placement="top"> </button></div></td>';
             tabla_stock_origen.row.add([articulos.id_articulo, articulos.nombre_articulo, articulos.cantidad, pasar_button]).draw()
         });
-        // datos.data.forEach(articulo => {
-        //     pasar_button = '<td><div id="valor_articulo" class="table-data-feature"> <button class="item fa fa-forward text-success" data-placement="top"> </button></div></td>';
-        //     tabla_stock_origen.row.add([articulo.id_articulo,articulo.nombre_articulo,articulo.cantidad,pasar_button]).draw()
-        // });
     }
+    if (datoOrigen.success) {
+        articulos_enviados = datoOrigen.data
+        articulos_enviados.forEach(articulo_enviado => {
+            articulo_enviado.cantidad = 0
+            pasar_button = '<td><div id="valor_articulo" class="table-data-feature"> <button class="item fa fa-backward text-danger" data-placement="top"> </button></div></td>';
+            tabla_stock_destino.row.add([articulo_enviado.id_articulo, articulo_enviado.nombre_articulo, articulo_enviado.cantidad, pasar_button]).draw()
+        });
+    }
+
 }
 function render_tabla() {
     tabla_stock_origen = $('#tabla_articulo').DataTable({
@@ -168,7 +173,7 @@ function validarInputCantidadIngresada() {
     if (cantidad_stock_ingresada > cantidad_stock) {
         swal({
             title: "Alerta!",
-            text: "Ingrese una cantidad menor al stock vigente ",
+            text: "Ingrese una cantidad menor al stock vigente " + cantidad_stock,
             icon: "warning",
         });
         return { 'desicion': false, 'cantidad_stock_ingresada': '' };
@@ -183,10 +188,10 @@ function validarInputCantidadIngresada() {
     }
     return { 'desicion': true, 'cantidad_stock_ingresada': cantidad_stock_ingresada };
 }
-async function cargarTablaDestino(id_articulo, cantidad_ingresada) {
+function cargarTablaDestino(id_articulo, cantidad_ingresada) {
     let pasar_button = ''
     articulos.forEach(articulo => {
-        if (articulo.id_articulo == id_articulo){
+        if (articulo.id_articulo == id_articulo) {
             articulo.cantidad = articulo.cantidad - cantidad_ingresada
             cantidad_stock = articulo.cantidad
         }
@@ -196,24 +201,9 @@ async function cargarTablaDestino(id_articulo, cantidad_ingresada) {
         pasar_button = '<td><div id="valor_articulo" class="table-data-feature"> <button class="item fa fa-forward text-success" data-placement="top"> </button></div></td>';
         tabla_stock_origen.row.add([articulo.id_articulo, articulo.nombre_articulo, articulo.cantidad, pasar_button]).draw()
     });
-
-    articulos.forEach(articulo => {
-        if (articulo.id_articulo == id_articulo){
-            if(articulos_enviados.length == 0){
-                articulo.cantidad = cantidad_ingresada
-                articulos_enviados.push(articulo)
-            }else{
-                    articulos_enviados.forEach(articulo_enviado => {
-                        if(articulo_enviado.id_articulo != id_articulo){
-                            articulo.cantidad = cantidad_ingresada
-                            articulos_enviados.push(articulo)
-                            alert('hola1')
-                        }else{
-                            alert('hola2')
-                            articulo_enviado.cantidad = (articulo.cantidad+cantidad_ingresada)
-                        }
-                    });
-                }
+    articulos_enviados.forEach(articulo_enviado => {
+        if (articulo_enviado.id_articulo == id_articulo) {
+            articulo_enviado.cantidad = Number(Number(articulo_enviado.cantidad) + Number(cantidad_ingresada))
         }
     });
     tabla_stock_destino.clear().draw();
@@ -221,4 +211,100 @@ async function cargarTablaDestino(id_articulo, cantidad_ingresada) {
         pasar_button = '<td><div id="valor_articulo" class="table-data-feature"> <button class="item fa fa-backward text-danger" data-placement="top"> </button></div></td>';
         tabla_stock_destino.row.add([articulo_enviado.id_articulo, articulo_enviado.nombre_articulo, articulo_enviado.cantidad, pasar_button]).draw()
     });
+}
+$('#tabla_carrito tbody').on('click', 'td', function () {
+    let rowIdx = tabla_stock_destino.cell(this).index().row;
+    let colIdx = tabla_stock_destino.cell(this).index().column;
+    if (colIdx == 3) {
+        id_articulo = tabla_stock_destino.rows(rowIdx).data()[0][0];
+        cantidad_stock = tabla_stock_destino.rows(rowIdx).data()[0][2];
+        descargarTablaDestino(id_articulo, cantidad_stock)
+    }
+});
+//feo se puede reutilizar con cargarTablaDestino, estaba apurado
+function descargarTablaDestino(id_articulo, cantidad_stock) {
+    let pasar_button = ''
+    articulos.forEach(articulo => {
+        if (articulo.id_articulo == id_articulo) {
+            articulo.cantidad = articulo.cantidad + cantidad_stock
+            cantidad_stock = articulo.cantidad
+        }
+    });
+    tabla_stock_origen.clear().draw();
+    articulos.forEach(articulo => {
+        pasar_button = '<td><div id="valor_articulo" class="table-data-feature"> <button class="item fa fa-forward text-success" data-placement="top"> </button></div></td>';
+        tabla_stock_origen.row.add([articulo.id_articulo, articulo.nombre_articulo, articulo.cantidad, pasar_button]).draw()
+    });
+
+    articulos_enviados.forEach(articulo_enviado => {
+        if (articulo_enviado.id_articulo == id_articulo) {
+            articulo_enviado.cantidad = Number(Number(articulo_enviado.cantidad) - Number(cantidad_stock))
+        }
+    });
+    tabla_stock_destino.clear().draw();
+    articulos_enviados.forEach(articulo_enviado => {
+        pasar_button = '<td><div id="valor_articulo" class="table-data-feature"> <button class="item fa fa-backward text-danger" data-placement="top"> </button></div></td>';
+        tabla_stock_destino.row.add([articulo_enviado.id_articulo, articulo_enviado.nombre_articulo, articulo_enviado.cantidad, pasar_button]).draw()
+    });
+}
+$("#btnPopUpTraspasoConfirmacion").on('click', function () {
+    var boolean_encontro_1 = false
+    articulos_enviados.forEach(articulos_enviados => {
+        if (articulos_enviados.cantidad != 0)
+            boolean_encontro_1 = true
+    });
+    if (boolean_encontro_1) {
+        var str_detalle = ''
+        articulos_enviados.forEach(articulo_enviado => {
+            str_detalle += '</b><br> ARTICULO: <b>' + articulo_enviado.nombre_articulo + " </b> CANTIDAD PEDIDA: <b>" + articulo_enviado.cantidad
+        });
+        $('#lblDetallesTraspaso').html('Detalle de traspaso: ' + str_detalle)
+        $('#modalGenerarTraspaso').modal('show')
+    }else{
+        swal({
+            title: "Error!",
+            text: "No existen traspasos existentes.",
+            icon: "error",
+        });
+    }
+})
+$("#btnConfirmTraspaso").on('click', function () {
+
+})
+async function generarTraspaso(){
+    var cmbDestino = $("#cmbDepositoDestino").val()
+    var cmbOrigen = $("#cmbDepositoOrigen").val()
+
+    
+
+    let bodyRequest = {
+        'id_deposito_origen' : '30',
+        'id_deposito_destino': cmbDestino,
+        'detalle_traspaso' : detalle,
+    }
+    const response = await POST('/traspaso/', bodyRequest);
+
+    if (response.success) {
+        swal({
+            title: "Información",
+            text: "Depósito dado de alta con éxito",
+            icon: "success",
+          });
+          const response_depositos = await GET('/depositos/');
+
+          if (response_depositos.success) {
+              llenar_tabla(response_depositos.data, tabla_depositos);
+              
+          }
+
+          $('#popup_alta_deposito').modal('hide');
+
+    }
+    else {
+        swal({
+            title: "Información",
+            text: "El depósito cargado ya existe",
+            icon: "error",
+          });
+    }
 }
