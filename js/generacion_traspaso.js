@@ -68,7 +68,7 @@ function render_tabla() {
         paging: false,
         columnDefs: [
             {
-                'targets': [1, 3],
+                'targets': [2, 3],
                 'searchable': false,
                 'orderable': false,
 
@@ -102,7 +102,7 @@ function render_tabla() {
         paging: false,
         columnDefs: [
             {
-                'targets': [1, 3],
+                'targets': [2, 3],
                 'searchable': false,
                 'orderable': false,
 
@@ -243,7 +243,7 @@ function descargarTablaDestino(id_articulo, cantidad_stock) {
 
     articulos_enviados.forEach(articulo_enviado => {
         if (articulo_enviado.id_articulo == id_articulo) {
-            articulo_enviado.cantidad = Number(Number(articulo_enviado.cantidad) - Number(cantidad_stock))
+            articulo_enviado.cantidad = Number(Number(articulo_enviado.cantidad) - Number(articulo_enviado.cantidad))
         }
     });
     tabla_stock_destino.clear().draw();
