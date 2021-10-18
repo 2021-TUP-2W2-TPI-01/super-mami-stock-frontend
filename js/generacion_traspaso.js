@@ -21,7 +21,7 @@ async function loadcmb() {
     if (datosDestino.success) {
         cmbDestino.html('')
         datosDestino.data.forEach(deposito => {
-            if (deposito.nombre != datoOrigen.data.nombre)
+            if (deposito.id != datoOrigen.data.id)
                 str += '<option value=' + deposito.id + '>' + deposito.nombre + '</option>';
         });
         cmbDestino.html(str)
@@ -33,9 +33,13 @@ async function loadcmb() {
         cmbOrigen.html(str)
     }
 }
-async function loadtableArticulosStock() {
+function loadtableArticulosStock() {
     render_tabla();
+    load_tablas_();
+}
+async function load_tablas_(){
     tabla_stock_origen.clear().draw();
+    tabla_stock_destino.clear().draw();
     const [datosDestino, datoOrigen] = await Promise.all([GET('/existencias/'), GET('/existencias/')]);
     let pasar_button = ''
     if (datosDestino.success) {
@@ -53,7 +57,6 @@ async function loadtableArticulosStock() {
             tabla_stock_destino.row.add([articulo_enviado.id_articulo, articulo_enviado.nombre_articulo, articulo_enviado.cantidad, pasar_button]).draw()
         });
     }
-
 }
 function render_tabla() {
     tabla_stock_origen = $('#tabla_articulo').DataTable({
@@ -142,6 +145,7 @@ $("#btnGuardarCantidadIngresada").on('click', function () {
     var desicion_datos = validarInputCantidadIngresada()
     if (desicion_datos.desicion == true) {
         cargarTablaDestino(id_articulo, desicion_datos.cantidad_stock_ingresada);
+        $("#modalCantidadCarga").modal('hide')
     }
 });
 (function ($) {
@@ -218,7 +222,8 @@ $('#tabla_carrito tbody').on('click', 'td', function () {
     if (colIdx == 3) {
         id_articulo = tabla_stock_destino.rows(rowIdx).data()[0][0];
         cantidad_stock = tabla_stock_destino.rows(rowIdx).data()[0][2];
-        descargarTablaDestino(id_articulo, cantidad_stock)
+        if(cantidad_stock > 0)
+            descargarTablaDestino(id_articulo, cantidad_stock)
     }
 });
 //feo se puede reutilizar con cargarTablaDestino, estaba apurado
@@ -250,13 +255,14 @@ function descargarTablaDestino(id_articulo, cantidad_stock) {
 $("#btnPopUpTraspasoConfirmacion").on('click', function () {
     var boolean_encontro_1 = false
     articulos_enviados.forEach(articulos_enviados => {
-        if (articulos_enviados.cantidad != 0)
+        if (articulos_enviados.cantidad > 0)
             boolean_encontro_1 = true
     });
     if (boolean_encontro_1) {
         var str_detalle = ''
         articulos_enviados.forEach(articulo_enviado => {
-            str_detalle += '</b><br> ARTICULO: <b>' + articulo_enviado.nombre_articulo + " </b> CANTIDAD PEDIDA: <b>" + articulo_enviado.cantidad
+            if(articulo_enviado.cantidad > 0)
+                str_detalle += '</b><br> ARTICULO: <b>' + articulo_enviado.nombre_articulo + " </b> CANTIDAD PEDIDA: <b>" + articulo_enviado.cantidad
         });
         $('#lblDetallesTraspaso').html('Detalle de traspaso: ' + str_detalle)
         $('#modalGenerarTraspaso').modal('show')
@@ -269,41 +275,41 @@ $("#btnPopUpTraspasoConfirmacion").on('click', function () {
     }
 })
 $("#btnConfirmTraspaso").on('click', function () {
-
+    generarTraspaso();
 })
 async function generarTraspaso(){
     var cmbDestino = $("#cmbDepositoDestino").val()
     var cmbOrigen = $("#cmbDepositoOrigen").val()
-
-    
-
+    var detalle = []
+    articulos_enviados.forEach(articulo_enviado => {
+        if(articulo_enviado.cantidad > 0){
+            detalle.push({"id_articulo":articulo_enviado.id_articulo,"cantidad":articulo_enviado.cantidad}) 
+            //'[{"id_articulo": '+articulo_enviado.id_articulo+',"cantidad": '+articulo_enviado.cantidad+'}';
+        }
+    });
+    //detalle += ']'
     let bodyRequest = {
-        'id_deposito_origen' : '30',
-        'id_deposito_destino': cmbDestino,
-        'detalle_traspaso' : detalle,
+        "id_deposito_origen" : Number(cmbOrigen),
+        "id_deposito_destino": Number(cmbDestino),
+        "detalle_traspaso" : JSON.stringify(detalle),
     }
+    console.log(bodyRequest)
     const response = await POST('/traspaso/', bodyRequest);
 
     if (response.success) {
+        $('#modalGenerarTraspaso').modal('hide')
         swal({
             title: "Información",
-            text: "Depósito dado de alta con éxito",
+            text: "Traspaso generado con éxito",
             icon: "success",
           });
-          const response_depositos = await GET('/depositos/');
-
-          if (response_depositos.success) {
-              llenar_tabla(response_depositos.data, tabla_depositos);
-              
-          }
-
-          $('#popup_alta_deposito').modal('hide');
-
+          load_tablas_();
     }
     else {
+        $('#modalGenerarTraspaso').modal('hide')
         swal({
             title: "Información",
-            text: "El depósito cargado ya existe",
+            text: "Traspaso con errores",
             icon: "error",
           });
     }
