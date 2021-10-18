@@ -253,11 +253,143 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-
-        
+                        <section class="content" id="content2">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <section class="col-lg-12">
+                                        <div class="card" style="box-shadow: 0px 2px 25px rgba(0, 0, 0, .55);">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <!-- Left col -->
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label class="lead" for="">Deposito Origen: </label> 
+                                                                <select class="custom-select" name="" id="cmbDepositoOrigen">
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="lead" for="">Deposito Destino: </label> 
+                                                                <select class="custom-select" name="" id="cmbDepositoDestino">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <section>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="card card-outline card-info mt-4">
+                                                                    <div class="card-header">
+                                                                        <h2 class="card-title"><span><i class="fa fa-home"></i></span> Stock Local</h2>
+                                                                    </div>
+                                                                
+                                                                    <div class="card-body">
+                                                                        <table class="table  table-bordered table-light table-data2 display" id="tabla_articulo">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th></th>
+                                                                                    <th>Articulo</th>
+                                                                                    <th>Cantidad</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="cuerpoTablaStockLocal">
+                                                                                
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div><!-- /.card-body -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="card card-outline card-info mt-4">
+                                                                    <div class="card-header">
+                                                                        <h2 class="card-title"><span><i class="fa fa-map-marker"></i></span> Deposito Destino</h2>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <table class="table table-light table-bordered table-data2 display" id="tabla_carrito">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th></th>
+                                                                                    <th>Articulo</th>
+                                                                                    <th>Cantidad</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="cuerpoTablaStockDestino">
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div><!-- /.card-body -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <button class="button btn-sm btn-success pull-right" id='btnPopUpTraspasoConfirmacion'><i class="fa fa-send"></i> Generar traspaso</button>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                                <br>
+                                            </div><!-- /.card-body -->
+                                        </div>
+                                    </section>
+                        
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
+            <!--MODAL CARGAR ARTICULO CANTIDAD-->
+            <div class="modal fade" id="modalCantidadCarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel"></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Cantidad a cargar:</label>
+                          <input type="text" class="form-control" id="cantidad_cargar">
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-primary" id='btnGuardarCantidadIngresada'>Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--MODAL ESTA SEGURO DE REALIZAR EL TRASPASO?-->
+              <div class="modal fade" id="modalGenerarTraspaso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Traspaso</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Desea realizar el traspaso?</label>
+                          <label for="recipient-name" class="col-form-label" id="lblDetallesTraspaso"></label>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-success" id='btnConfirmTraspaso'>Aceptar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
             <!-- END MAIN CONTENT-->
             <!-- END PAGE CONTAINER-->
         </div>
@@ -289,6 +421,16 @@
     <script src="js/main.js"></script>
     <script src="js/session.js"></script>
     <script src="js/configuration.js"></script>
+    
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+
+    <script type="module" src="js/generacion_traspaso.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
 
