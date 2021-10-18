@@ -7,13 +7,14 @@ $(document).ready(function () {
 
     cargar_tablaG();
 
+
     $('#tabla_traspasos tbody').on('click', 'td', function () {
 
         let rowIdx = tabla_traspasos.cell(this).index().row;
         let colIdx = tabla_traspasos.cell(this).index().column;
 
         let id = tabla_traspasos.rows(rowIdx).data()[0][0];
-        //  let username = tabla_usuarios.rows( rowIdx ).data()[0][1] ;
+       
 
 
         if (colIdx == 5) {
@@ -28,24 +29,6 @@ $(document).ready(function () {
 
 
 })
-
-function llenar_tablaG(datos, tabla) {
-
-    // Se limpia la tabla
-    tabla.clear().draw();
-
-    datos.forEach(traspaso => {
-        //let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
-
-        let detalles_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="More"><i class="zmdi zmdi-more"></i></button></div></td>';
-
-        tabla.row.add([traspaso.id, traspaso.fh_generacion, traspaso.deposito_origen, traspaso.deposito_destino, traspaso.tipo_estado, detalles_button]).draw();
-
-
-    });
-
-}
-
 async function cargar_tablaG() {
 
     tabla_traspasos = $('#tabla_traspasos').DataTable({
@@ -72,12 +55,31 @@ async function cargar_tablaG() {
     }
 }
 
+function llenar_tablaG(datos, tabla) {
+
+    // Se limpia la tabla
+    tabla.clear().draw();
+
+    datos.forEach(traspaso => {
+        //let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
+
+        let detalles_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="More"><i class="zmdi zmdi-more"></i></button></div></td>';
+
+        tabla.row.add([traspaso.id, traspaso.fh_generacion, traspaso.deposito_origen, traspaso.deposito_destino, traspaso.tipo_estado, detalles_button]).draw();
+
+
+    });
+
+}
+
+//HASTA ACA TABLA GENERAL, HATAS ACA FUNCIONA
+
+//ACA ME TRAE EL POP UP DE DETALLE
 function modal_detalle_traspaso(id) {
 
-    $('#btn_aceptar_traspaso').off('click');
 
     $("#btn_aceptar_traspaso").click(function () {
-        modal_detalle_traspaso(id);
+        detalle_traspaso(id);
     });
 
 
@@ -85,24 +87,105 @@ function modal_detalle_traspaso(id) {
 
 }
 
-//HASTA ACA TABLA GENERAL
 
-//TABLA DE DETALLE TRASPASO
 
+var tabla_traspaso;
 $(document).ready(function () {
 
-    llenar_campos();
+    cargar_tabla();
+    
+    detalle_traspaso(id);
+
+
+    $('#tabla_traspaso tbody').on('click', 'td', function () {
+
+        let rowIdx = tabla_traspaso.cell(this).index().row;
+        let colIdx = tabla_traspaso.cell(this).index().column;
+    
+        let id = tabla_traspaso.rows(rowIdx).data()[0][0];
+       // let  = tabla_traspaso.rows( rowIdx ).data()[0][1] ;
+    
+    
+        if (colIdx == 3) {
+            modal_modificacion_traspaso(id);
+        }
+        else if (colIdx == 4) {
+            confirmar_eliminacion_traspaso(id);
+        }
+    
+    });
 })
 
-function llenar_campos(datos, form) {
+async function detalle_traspaso(id) {
+    let path = `/traspaso/{id}/`;
 
 
 
-    datos.forEach(traspaso => {
-        form.add([traspaso.id, traspaso.fh_generacion, traspaso.deposito_origen, traspaso.deposito_destino, traspaso.tipo_estado, traspaso.usuario_genero]).draw();
-    })
+    let bodyRequest = {
+        'fecha': fh_generacion,
+        'estado': tipo_estado,
+        'origen': deposito_origen,
+        'destino': deposito_destino,
+        'usuario': usuario_genero,
+        'tabla_traspaso': llenar_tabla(id)
+    }
+    const response = await GET(path, bodyRequest)
+
+    if (response.success) {
+        swal({
+            title: "Información",
+            text: "Modificación exitosa",
+            icon: "success",
+        });
+    }
+}
+   
+
+async function cargar_tabla() {
+
+    tabla_traspaso = $('#tabla_traspaso').DataTable({
+        "language": datetable_languaje,
+        pageLength: 4,
+        columnDefs: [
+            {
+                'targets': [3, 4],
+                'searchable': false,
+                'orderable': false,
+
+            },
+            {
+                'targets': 0,
+                'visible': false
+            }
+        ],
+
+    });
+
+    let path = `/traspaso/${id}/`;
+
+
+    if (datos.success) {
+        cargarDetallesTraspaso(datos.data, tabla);
+    }
 }
 
+async function llenar_tabla(datos, tabla) {
+    
+    tabla.clear().draw();
+  
+         datos.data.detalle_traspaso.forEach(function () {
+            let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
+            let delete_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Delete"><i class="zmdi zmdi-delete"></i></button></div></td>';
+           
+    tabla.row.add([data.detalle_traspaso.id, data.detalle_traspaso.articulo, data.detalle_traspaso.cantidad, edit_button, delete_button]).draw();
+    
+            
+        })
+    
+}
+
+
+/*
 var tabla_traspaso;
 
 // CARGAMOS TABLA TRASPASO
@@ -186,8 +269,6 @@ function llenar_tabla(datos, tabla) {
 
 }
 
-
-/*
 // CONFIRMAR TRASPASO
 function confirmar_detalle_traspaso(id) {
  
@@ -200,6 +281,7 @@ function confirmar_detalle_traspaso(id) {
  //  $("#popup_detalle_traspaso").modal("show");
 }
 */
+
 // ELIMINAR TRASPASO
 
 function confirmar_eliminacion_traspaso(id) {
@@ -248,56 +330,46 @@ async function eliminar_traspaso(id) {
     $("#popup_eliminar_traspaso").modal("hide");
 }
 
-/*
 
-// Modificacion deposito
 
-async function modal_modificacion_deposito(id) {
+// Modificar traspaso
 
-    let path = `/deposito/${id}/`;
+async function modal_modificacion_traspaso(id) {
 
-    // acá iria el reemplazo del get deposito
+    let path = `/traspaso/${id}/`;
+
+   
     const response = await GET(path);
 
     if (response.success) {
 
-        $('#btnConfirmarModificacion').off('click');
+        $('#btnConfirmarModificacionTraspaso').off('click');
 
 
         console.log(response);
 
-        $('#txtNombre_Modificar').val(response.data.nombre);
-        $('#txtDescripcion_Modificar').val(response.data.descripcion);
-        $('#txtDomicilio_Modificar').val(response.data.domicilio);
-        $('#txtBarrio_Modificar').val(response.data.barrio);
-        $('#cmbLocalidad_Modificar').val(response.data.id_localidad);//idlocalidad
-        $('#cmbEncargado_Modificar').val(response.data.id_encargado);//idencargado
-
-
-
-        $('#btnConfirmarModificacion').click(function() {
-            modificar_deposito(id);
+        $('#txtArticulo_Modificar').val(response.data.detalle_traspaso.articulo);
+        $('#txtCantidad_Modificar').val(response.data.detalle_trasapaso.cantidad);
+        
+        $('#btnConfirmarModificacionTraspaso').click(function() {
+            modificar_traspaso(id);
         });
 
-        $('#popup_modif_deposito').modal('show');
+        $('#popup_modif_traspaso').modal('show');
 
     }
 
 }
 
 
-async function modificar_deposito(id) {
+async function modificar_traspaso(id) {
 
-    let path = `/deposito/${id}/`;
+    let path = `/traspaso/${id}/`;
 
-    let nombre = $('#txtNombre_Modificar').val();
-    let descripcion = $('#txtDescripcion_Modificar').val();
-    let domicilio = $('#txtDomicilio_Modificar').val();
-    let barrio = $('#txtBarrio_Modificar').val();
-    let localidad = $('#cmbLocalidad_Modificar').val();
-    let encargado = $('#cmbEncargado_Modificar').val();
-
-    if (nombre == '' || encargado == 0) {
+    let articulo = $('#txtArticulo_Modificar').val();
+    let cantidad = $('#txtCantidad_Modificar').val();
+   
+    if (articulo == '' || cantidad == '') {
 
         swal({
             title: "Información",
@@ -309,15 +381,9 @@ async function modificar_deposito(id) {
     }
 
     let bodyRequest = {
-        'nombre' : nombre,
-        'descripcion' : descripcion,
-        'domicilio' : domicilio,
-        'barrio' : barrio,
-        'id_localidad': localidad,//id
-        'id_encargado' : encargado//id
-
+        'articulo' : articulo,
+        'cantidad' : cantidad
     }
-
 
     const response = await PUT(path, bodyRequest);
 
@@ -328,32 +394,21 @@ async function modificar_deposito(id) {
             icon: "success",
           });
 
-        const response_depositos = await GET('/depositos/');
+        const response_traspaso = await GET(`/traspaso/${id}/`);
 
-        if (response_depositos.success) {
-            llenar_tabla(response_depositos.data, tabla_depositos);
+        if (response_traspaso.success) {
+            llenar_tabla(response_traspaso.data, tabla_traspaso);
 
         }
 
-        $('#popup_modif_deposito').modal('hide');
+        $('#popup_modif_traspaso').modal('hide');
     }
     else {
         swal({
             title: "Información",
-            text: 'El nombre de depósito cargado ya existe',
+            text: 'No se pudo cargar la modificacion',
             icon: "error",
           });
     }
 }
 
-
-
-function limpiarFormularioAlta() {
-    $('#nombre').val('');
-    $('#descripcion').val('');
-    $('#domicilio').val('');
-    $('#barrio').val('');
-    $('#SelectLocalidad').val(0);
-    $('#SelectEncargado').val(0);
-}
-*/
