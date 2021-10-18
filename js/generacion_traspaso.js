@@ -68,7 +68,7 @@ function render_tabla() {
         paging: false,
         columnDefs: [
             {
-                'targets': [1, 3],
+                'targets': [2, 3],
                 'searchable': false,
                 'orderable': false,
 
@@ -102,7 +102,7 @@ function render_tabla() {
         paging: false,
         columnDefs: [
             {
-                'targets': [1, 3],
+                'targets': [2, 3],
                 'searchable': false,
                 'orderable': false,
 
