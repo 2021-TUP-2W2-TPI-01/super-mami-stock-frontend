@@ -75,6 +75,9 @@ async function cargar_tabla() {
     if (datos.success) {
         llenar_tabla(datos.data, tabla_articulos)       
     }
+    else {
+        console.error(`Error: ${datos.data}. Status: ${datos.statusCode}`);
+    }
 
     
 }
@@ -141,6 +144,9 @@ async function cargarSelectMarcas() {
             cmbLocalidadModific.appendChild(optModif);
         })
     }
+    else {
+        console.error(`Error: ${response.data}. Status: ${response.statusCode}`);
+    }
 
 }
 
@@ -172,6 +178,9 @@ async function cargarSelectCategorias() {
 
             cmbEncargadoModific.appendChild(optModif);
         })
+    }
+    else {
+        console.error(`Error: ${response.data}. Status: ${response.statusCode}`);
     }
 
     
@@ -205,6 +214,9 @@ async function cargarSelectUnidadMedida() {
 
             cmbEncargadoModific.appendChild(optModif);
         })
+    }
+    else {
+        console.error(`Error: ${response.data}. Status: ${response.statusCode}`);
     }
 
     
@@ -245,6 +257,9 @@ async function eliminar_articulo(id) {
 
         if (response_articulos.success) {
             llenar_tabla(response_articulos.data, tabla_articulos);
+        }
+        else {
+            console.error(`Error: ${response_articulos.data}. Status: ${response_articulos.statusCode}`);
         }
           
     }
@@ -318,14 +333,18 @@ async function alta_articulo (nombre, descripcion, precio_unitario, marca , cate
               llenar_tabla(response_articulos.data, tabla_articulos);
               
           }
+          else {
+                console.error(`Error: ${response_articulos.data}. Status: ${response_articulos.statusCode}`);
+          }
 
           $('#popup_alta_articulo').modal('hide');
 
     }
     else {
+        
         swal({
             title: "Información",
-            text: "El articulo cargado ya existe",
+            text: `${response.data}`,
             icon: "error",
           });
     }
@@ -344,7 +363,6 @@ async function modal_modificacion_articulo(id) {
 
         $('#btnConfirmarModificacion').off('click');
        
-        console.log(response);
 
         $('#txtNombreArticulo_Modificar').val(response.data.nombre);
         $('#txtDescripcion_Modificar').val(response.data.descripcion);
@@ -361,6 +379,9 @@ async function modal_modificacion_articulo(id) {
 
         $('#popup_modif_articulo').modal('show');
 
+    }
+    else {
+        console.error(`Error: ${response.data}. Status: ${response.statusCode}`);
     }
     
 }
@@ -431,13 +452,16 @@ async function modificar_articulo(id) {
             llenar_tabla(response_articulos.data, tabla_articulos);
             
         }
+        else {
+            console.error(`Error: ${response_articulos.data}. Status: ${response_articulos.statusCode}`);
+        }
 
         $('#popup_modif_articulo').modal('hide');
     }
     else {
         swal({
             title: "Información",
-            text: 'El nombre de articulo cargado ya existe',
+            text: `${response.data}`,
             icon: "error",
           });
     }

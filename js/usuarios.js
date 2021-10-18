@@ -71,6 +71,9 @@ async function cargar_tabla() {
     if (datos.success) {
         llenar_tabla(datos.data, tabla_usuarios);
     }
+    else {
+        console.error(`Error: ${datos.data}. Status: ${datos.statusCode}`);
+    }
 
     
     
@@ -136,6 +139,9 @@ async function cargarSelectTipoRoles() {
             cmbTipoRolModific.appendChild(optModif);
         })
     }
+    else {
+        console.error(`Error: ${response.data}. Status: ${response.statusCode}`);
+    }
 
     
 }
@@ -175,12 +181,15 @@ async function eliminar_usuario(id) {
         if (response_usuarios.success) {
             llenar_tabla(response_usuarios.data, tabla_usuarios);
         }
+        else {
+            console.error(`Error: ${response_usuarios.data}. Status: ${response_usuarios.statusCode}`);
+        }
           
     }
     else {
         swal({
             title: "Información",
-            text: "No fué posible dar de baja el usuario",
+            text: `${response.data}`,
             icon: "error",
           });
     }
@@ -225,6 +234,9 @@ async function alta_usuario (nombre, apellido, usuario, password, email,tipo_rol
               llenar_tabla(response_usuarios.data, tabla_usuarios);
               
           }
+          else {
+            console.error(`Error: ${response_usuarios.data}. Status: ${response_usuarios.statusCode}`);
+        }
 
           $('#popup_alta_usuario').modal('hide');
 
@@ -232,7 +244,7 @@ async function alta_usuario (nombre, apellido, usuario, password, email,tipo_rol
     else {
         swal({
             title: "Información",
-            text: "Los datos ingresados corresponden a un usuario ya existente",
+            text: `${response.data}`,
             icon: "error",
           });
     }
@@ -287,6 +299,9 @@ async function modal_modificacion_usuario(id) {
         $('#popup_modif_usuario').modal('show');
 
     }
+    else {
+        console.error(`Error: ${response.data}. Status: ${response.statusCode}`);
+    }
     
 }
 
@@ -337,13 +352,16 @@ async function modificar_usuario(id) {
             llenar_tabla(response_usuarios.data, tabla_usuarios);
             
         }
+        else {
+            console.error(`Error: ${response_usuarios.data}. Status: ${response_usuarios.statusCode}`);
+        }
 
         $('#popup_modif_usuario').modal('hide');
     }
     else {
         swal({
             title: "Información",
-            text: 'No fué posible actualizar usuario',
+            text: `${response.data}`,
             icon: "error",
           });
     }

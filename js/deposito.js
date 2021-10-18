@@ -71,6 +71,9 @@ async function cargar_tabla() {
     if (datos.success) {
         llenar_tabla(datos.data, tabla_depositos);
     }
+    else {
+        console.error(`Error: ${datos.data}. Status: ${datos.statusCode}`);
+    }
 
     
     
@@ -106,7 +109,7 @@ function llenar_tabla(datos, tabla){
     });
 
 }
-S
+
 // CARGAMOS SELECT CON LOCALIDADES
 
 async function cargarSelectLocalidad() {
@@ -135,6 +138,9 @@ async function cargarSelectLocalidad() {
 
             cmbLocalidadModific.appendChild(optModif);
         })
+    }
+    else {
+        console.error(`Error: ${response.data}. Status: ${response.statusCode}`);
     }
 
     
@@ -169,6 +175,9 @@ async function cargarSelectEncargado() {
 
             cmbEncargadoModific.appendChild(optModif);
         })
+    }
+    else {
+        console.error(`Error: ${response.data}. Status: ${response.statusCode}`);
     }
 
     
@@ -208,12 +217,15 @@ async function eliminar_deposito(id) {
         if (response_depositos.success) {
             llenar_tabla(response_depositos.data, tabla_depositos);
         }
+        else {
+            console.error(`Error: ${response_depositos.data}. Status: ${response_depositos.statusCode}`);
+        }
           
     }
     else {
         swal({
             title: "Información",
-            text: "No fué posible dar de baja el depósito",
+            text: `${response.data}`,
             icon: "error",
           });
     }
@@ -259,6 +271,9 @@ async function alta_deposito (nombre, descripcion, domicilio, barrio, localidad,
               llenar_tabla(response_depositos.data, tabla_depositos);
               
           }
+          else {
+            console.error(`Error: ${response_depositos.data}. Status: ${response_depositos.statusCode}`);
+        }
 
           $('#popup_alta_deposito').modal('hide');
 
@@ -266,7 +281,7 @@ async function alta_deposito (nombre, descripcion, domicilio, barrio, localidad,
     else {
         swal({
             title: "Información",
-            text: "El depósito cargado ya existe",
+            text: `${response.data}`,
             icon: "error",
           });
     }
@@ -287,8 +302,6 @@ async function modal_modificacion_deposito(id) {
         $('#btnConfirmarModificacion').off('click');
        
 
-        console.log(response);
-
         $('#txtNombre_Modificar').val(response.data.nombre);
         $('#txtDescripcion_Modificar').val(response.data.descripcion);
         $('#txtDomicilio_Modificar').val(response.data.domicilio);
@@ -304,6 +317,9 @@ async function modal_modificacion_deposito(id) {
 
         $('#popup_modif_deposito').modal('show');
 
+    }
+    else {
+        console.error(`Error: ${response.data}. Status: ${response.statusCode}`);
     }
     
 }
@@ -357,13 +373,16 @@ async function modificar_deposito(id) {
             llenar_tabla(response_depositos.data, tabla_depositos);
             
         }
+        else {
+            console.error(`Error: ${response_depositos.data}. Status: ${response_depositos.statusCode}`);
+        }
 
         $('#popup_modif_deposito').modal('hide');
     }
     else {
         swal({
             title: "Información",
-            text: 'El nombre de depósito cargado ya existe',
+            text: `${response.data}`,
             icon: "error",
           });
     }
