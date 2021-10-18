@@ -2,6 +2,16 @@ import {GET, DELETE, POST, PUT} from './api.js';
 
 var tabla_usuarios;
 
+$( document ).ajaxStart(function() {
+    $('#loading').show();
+});
+
+$( document ).ajaxComplete(function( event,request, settings ) {
+    $('#loading').hide();
+});
+
+$('#loading').hide();
+
 // CARGAMOS TABLA USUARIOS
 $(document).ready(function() {
 
