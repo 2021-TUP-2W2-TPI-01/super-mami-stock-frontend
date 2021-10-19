@@ -37,19 +37,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="css/loading.css">
 
     <link rel="shortcut icon" href="images/icon/logo-favicon.png" type="image/x-icon">
 </head>
 
 <body class="animsition">
-    <div id="loading" class="loading">
-        <div class="loader">
-            <div class="loader-inner square-spin">
-              <div></div>
-            </div>
-          </div>
-    </div>
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -129,7 +121,7 @@
                             <a href="articulos.html">
                                 <i class="fas fa-boxes"></i>Artículos</a>
                         </li>
-                        <li class="active" id="item-depositos">
+                        <li id="item-depositos">
                             <a href="depositos.html">
                                 <i class="fas fa-warehouse"></i>Depósitos</a>
                         </li>
@@ -141,13 +133,16 @@
                                     <a href="existencias_stock.html"> <i class="fas fa-pallet"></i>Stock</a>
                                 </li>
                                 <li id="item-existencias-recpedidos">
-                                    <a href="recepcion_pedido.html"> <i class="fas fa-shipping-fast"></i>Recepción Pedidos</a>
+                                    <a href="recepcion_pedido.html"> <i
+                                            class="fas fa-shipping-fast"></i>Recepción Pedidos</a>
                                 </li>
-                                <li id="item-existencias-rectraspasos">
-                                    <a href="registrar_traspaso.html"> <i class="fas fa-shipping-fast"></i>Recepción Traspasos</a>
+                                <li class="active" id="item-existencias-rectraspasos">
+                                    <a href="registrar_traspaso.html"> <i class="fas fa-shipping-fast"></i>Recepción
+                                        Traspasos</a>
                                 </li>
                                 <li id="item-existencias-gentraspaso">
-                                    <a href="generacion_traspaso.html"> <i class="fas fa-shipping-fast"></i>Generación Traspaso</a>
+                                    <a href="generacion_traspaso.html"> <i class="fas fa-shipping-fast"></i>Generación
+                                        Traspaso</a>
                                 </li>
                             </ul>
                         </li>
@@ -156,16 +151,20 @@
                             <a class="js-arrow" href="#"> <i class="fas fa-chart-line"></i>Informes</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li id="item-informes-stockdep">
-                                    <a href="existencias_stock.html"> <i class="fas fa-pallet"></i>Stock por depósito</a>
+                                    <a href="existencias_stock.html"> <i class="fas fa-pallet"></i>Stock por
+                                        depósito</a>
                                 </li>
                                 <li id="item-informes-stockvencim">
-                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Stock próximo a vencer</a>
+                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Stock
+                                        próximo a vencer</a>
                                 </li>
                                 <li id="item-informes-movpordep">
-                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Movimientos por depósito</a>
+                                    <a href="existencias_movimientos.html"> <i
+                                            class="fas fa-shipping-fast"></i>Movimientos por depósito</a>
                                 </li>
                                 <li id="item-informes-movdep">
-                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Movimientos del depósito</a>
+                                    <a href="existencias_movimientos.html"> <i
+                                            class="fas fa-shipping-fast"></i>Movimientos del depósito</a>
                                 </li>
                             </ul>
                         </li>
@@ -189,7 +188,7 @@
                     <div class="container-fluid">
                         <div class="header-wrap float-right">
                             <div class="header-button">
-                            <!--
+                                <!--
                                 <div class="noti-wrap">
                                     <div class="noti__item js-item-menu">
                                         <i class="zmdi zmdi-notifications"></i>
@@ -219,7 +218,7 @@
                             -->
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
-                                        
+
                                         <div class="content ml-0">
                                             <a class="lblUsuario" class="js-acc-btn" href="#">Usuario</a>
                                         </div>
@@ -235,7 +234,8 @@
                                                         <a class="lblUsuario" href="#">john doe</a>
                                                     </h5>
                                                     <span id="lblEmail" class="email">johndoe@example.com</span>
-                                                    <span id="lblRol" style="color: rgb(148, 0, 0);" class="email">johndoe@example.com</span>
+                                                    <span id="lblRol" style="color: rgb(148, 0, 0);"
+                                                        class="email">johndoe@example.com</span>
                                                 </div>
                                             </div>
                                             <!--
@@ -261,250 +261,243 @@
             </header>
             <!-- HEADER DESKTOP-->
 
-            <!-- MAIN CONTENT-->
-            <div class="main-content">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div id="">
+             <!-- MAIN CONTENT TABLA-->
+        <div id="seccion_tabla" class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+
+                    <section class="content" id="content2">
+                        <div class="container-fluid">
                             <div class="row">
-                                <div class="col-4">
-                                    <button class="mb-2 au-btn au-btn-icon au-btn--green au-btn--small float-left" id=""
-                                        data-toggle="modal" data-target="#popup_alta_deposito">
-                                        <i class="zmdi zmdi-plus"></i>Nuevo Depósito</button>
-                                </div>
-                                <div class="col-5"></div>
-                                <div class="col-3">
+                                <section class="col-lg-12">
+                                    <div class="card" style="box-shadow: 0px 2px 25px rgba(0, 0, 0, .55);">
+                                        <div class="card-header">
+                                            <h2 class="card-title"><span><i class="fa fa-home"></i></span> Recepción de traspasos</h2>
+                                        </div>
+                                        <div class="card-body">
+                                            <div>
+                                                <table class="table table-data2 display" id="tabla_traspasos">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>id</th>
+                                                            <th>Fecha</th>
+                                                            <th>Deposito Origen</th>
+                                                            <th>Deposito Destino</th>
+                                                            <th>Estado</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
 
-                                </div>
+                                                    <tbody id="cuerpoTabla">
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                        <br>
+                                    </div><!-- /.card-body -->
                             </div>
-                        </div>
-                        <div>
-                            <table class="table table-data2 display" id="tabla_depositos">
-                                <thead>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>Nombre</th>
-                                        <th>Descripción</th>
-                                        <th>Domicilio</th>
-                                        <th>Barrio</th>
-                                        <th>Localidad</th>
-                                        <th>Encargado</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="cuerpoTabla">
-                                </tbody>
-
-                            </table>
-                        </div>
-
-                    </div>
+                    </section>
                 </div>
             </div>
-            <!-- END MAIN CONTENT-->
+        </div>
 
-            <!-- Modal -->
+        <!-- MAIN CONTENT DETALLE -->
+        <div id="seccion_detalle" class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
 
-            <div class="modal fade" id="popup_alta_deposito" tabindex="-1" role="dialog"
-                aria-labelledby="mediumModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="mediumModalLabel">ALTA DEPÓSITO</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="post" class="">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
+                    <section class="content" id="content2">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <section class="col-lg-12">
+                                    <div class="card" style="box-shadow: 0px 2px 25px rgba(0, 0, 0, .55);">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-10"><h2 class="card-title"><span><i class="fa fa-home"></i></span> Detalle de traspaso</h2>
+                                                    </div>
+                                                <div class="col-2">
+                                                    <div class="card-tools">
+                                                        <button id="btnRegresar" type="button" class="btn btn-secondary float-right"
+                                                        >Regresar a traspasos</button>
+                                                    </div>
                                                 </div>
-                                                <input type="text" id="nombre" name="nombre" placeholder="Nombre"
-                                                    class="form-control">
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
+                                        <div class="card-body">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="">Fecha de generación: </label>
+                                                            <h4 id="txtFecha"></h4>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Estado: </label>
+                                                            <h4 id="txtEstado"></h4>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Fecha y hora procesado:</label>
+                                                            <h4 id="txtFechaProcesado"></h4>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="">Deposito Destino: </label>
+                                                            <h4 id="txtDepDestino"></h4>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Deposito Origen: </label>
+                                                            <h4 id="txtDepOrigen"></h4>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Procesado por: </label>
+                                                            <h4 id="txtUsuarioProceso"></h4>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <input type="text" id="descripcion" name="descripcion"
-                                                    placeholder="Descripcion" class="form-control">
                                             </div>
-                                        </div>
+                                            
+                                            <div>
+                                                <table class="table table-data2 display" id="tabla_detalle_traspaso">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>id</th>
+                                                            <th>Artículo</th>
+                                                            <th>Cantidad</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
 
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
+                                                    <tbody id="cuerpoTabla">
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="button" class="btn btn-danger float-right " id="btnRechazarTraspaso">Rechazar</button>
+                                                <button type="button" class="btn btn-success float-right mr-3" id='btnConfirmarTraspaso'>Confirmar trapaso</button>
+                                                <button type="button" class="btn btn-warning float-right mr-3" id='btnModificadoTraspaso'>Confirmar modificado</button>
+                                            </div>
+                                            <div id="seccionObservaciones" class="col-12">
+                                                <div class="form-group">
+                                                    <label for="">Observaciones: </label>
+                                                    <h4 id="lblObservacion"></h4>
                                                 </div>
-                                                <input type="text" id="domicilio" name="domicilio" placeholder="Domicilio"
-                                                    class="form-control">
                                             </div>
+
                                         </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                                <input type="text" id="barrio" name="barrio" placeholder="Barrio"
-                                                    class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                                <select name="select" id="selectLocalidad" class="form-control">
-                                                    <option value="0">Localidad
-
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                                <select name="select" id="selectEncargado" class="form-control">
-                                                    <option value="0">Encargado</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
-                                data-dismiss="modal">Cancelar</button>
-                            <button type="submit"
-                                class="btn btn-success mr-2" id="btn_alta_deposito">Agregar</button>
-                        </div>
-
-                    </div>
-
+                                        <br>
+                                    </div><!-- /.card-body -->
+                            </div>
+                    </section>
                 </div>
             </div>
+        </div>
 
-            <!-- MODAL MODIF DEPOSITO -->
-
-            <div class="modal fade" id="popup_modif_deposito" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="mediumModalLabel">MODIFICACIÓN DEPOSITO</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="post" class="">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                                <input type="text" id="txtNombre_Modificar" name="nombre" placeholder="Nombre" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                                <input type="text" id="txtDescripcion_Modificar" name="descripcion" placeholder="Descripcion" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                                <input disabled type="text" id="txtDomicilio_Modificar" name="domicilio" placeholder="Domicilio" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-envelope"></i>
-                                                </div>
-                                                <input disabled type="text" id="txtBarrio_Modificar" name="barrio" placeholder="Barrio" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                                <select name="select" id="cmbLocalidad_Modificar" class="form-control">
-                                                    <option value="0">Seleccione la localidad</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                                <select name="select" id="cmbEncargado_Modificar" class="form-control">
-                                                    <option value="0">Seleccione el encargado</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                            <button id="btnConfirmarModificacion" type="button" class="btn btn-success mr-2">Modificar</button>
-                        </div>
-                    </div>
+        <!--MODAL CARGAR ARTICULO CANTIDAD-->
+        <div class="modal fade" id="modalCantidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="articuloModificar"></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Cantidad recibida:</label>
+                      <input type="number" class="form-control" id="cantidad_cargar">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" id='btnGuardarCantidadIngresada'>Guardar</button>
+                </div>
+              </div>
             </div>
+          </div>
 
-            <!-- MODAL CONFIRMAR BAJA -->
-
-            <div class="modal fade" id="popup_baja_deposito" tabindex="-1" role="dialog"
+          <div class="modal fade" id="popup_rechazo_traspaso" tabindex="-1" role="dialog"
                 aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticModalLabel">ELIMINAR DEPOSITO</h5>
+                            <h5 class="modal-title" id="staticModalLabel">Rechazar traspaso</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                         </div>
                         <div class="modal-body">
-                            <p id="mensaje_confirm_delete">
-                                Seguro que desea dar de baja este Deposito?
+                            <p id="mensaje_confirm_rechazo">
+                                ¿Desea rechazar el traspaso?
                             </p>
+                            <br>
+                            <div class="form-group">
+                                <textarea style="resize: none;" class="form-control" id="txtObservacion" placeholder="Motivo de rechazo"  rows="4"></textarea>
+                              </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" id="btn_baja_deposito" class="btn btn-danger">Aceptar</button>
+                            <button type="button" id="btn_confirmar_rechazo_traspaso" class="btn btn-danger">Rechazar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="popup_aceptar_traspaso" tabindex="-1" role="dialog"
+                aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticModalLabel">Confirmar traspaso</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="mensaje_confirm_aceptar">
+                                ¿Desea confirmar el traspaso?
+                            </p>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btn_confirmar_aceptar_traspaso" class="btn btn-success">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="popup_modificar_traspaso" tabindex="-1" role="dialog"
+                aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticModalLabel">Confirmar traspaso modificado</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="mensaje_confirm_modificar">
+                                ¿Desea confirmar el traspaso modificado?
+                            </p>
+                            <br>
+                            <div class="form-group">
+                                <textarea style="resize: none;" class="form-control" id="txtObservacionModificado" placeholder="Motivo de modificación"  rows="4"></textarea>
+                              </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btn_confirmar_modificar_traspaso" class="btn btn-warning">Confirmar</button>
                         </div>
                     </div>
                 </div>
@@ -535,21 +528,22 @@
 
             <!-- Main JS-->
             <script src="js/main.js"></script>
-        
-    
-    <script src="js/session.js"></script>
-    <script src="js/configuration.js"></script>
 
-    <!-- Sweet Alert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    
-    <script type="module" src="js/deposito.js"></script>
 
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+            <script src="js/session.js"></script>
+            <script src="js/configuration.js"></script>
 
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+            <!-- Sweet Alert -->
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+            <script src="js/moment.js"></script>
+            <script type="module" src="js/registro_traspaso.js"></script>
+
+            <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+            <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
 
 
 

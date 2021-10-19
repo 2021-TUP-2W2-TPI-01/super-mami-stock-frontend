@@ -56,8 +56,22 @@ function incializar_tabla_pedidos(){
                 'targets': 0,  
                 'visible': false      
             }
-    ],
-                     
+        ],
+        rowCallback: function( row, data, iDisplayIndex ) {
+            if ( data[3] == "Pendiente" )
+            {
+                $(row).find('td:eq(2)').css('color','#ffc107');
+            }
+            if (data[3] == "Procesado" || data[3] == "Procesado con modificaciones")
+            {
+                $(row).find('td:eq(2)').css('color','#28a745');
+            }
+            if (data[3] == "Rechazado")
+            {
+                $(row).find('td:eq(2)').css('color','#dc3545');
+            }
+        },
+    
     });
 }
 
@@ -95,7 +109,7 @@ function llenar_tabla(datos, tabla){
         
         tabla.row.add([pedido.id, pedido.fecha, pedido.numero_remito_asociado, pedido.tipo_estado, pedido.proveedor, ver_detalle_boton]).draw();
    
-
+        
     });
 
 }
@@ -119,7 +133,7 @@ async function show_detalle(id_pedido) {
         $('#txtFecha').text(response.data.fecha);
         $('#txtProveedor').text(response.data.proveedor);
 
-        if (response.data.tipo_estado != 'Pendiente') {
+        if (response.data.tipo_estado == 'Procesado' || response.data.tipo_estado == 'Procesado con modificaciones' ) {
             $('#txtFHProcesado').text(moment(response.data.fh_procesado).format('DD/MM/YYYY - HH:mm') + "HS");
             $('#txtUsuarioProceso').text(response.data.usuario_proceso);
 
@@ -127,13 +141,28 @@ async function show_detalle(id_pedido) {
             $('#seccionObservaciones').show();
 
             editable = false;
+
+            $('#txtEstado').css("color", "#28a745")
+        }
+        else if (response.data.tipo_estado == 'Rechazado') {
+            $('#txtFHProcesado').text(moment(response.data.fh_procesado).format('DD/MM/YYYY - HH:mm') + "HS");
+            $('#txtUsuarioProceso').text(response.data.usuario_proceso);
+
+            $('#lblObservacion').text(response.data.observaciones);
+            $('#seccionObservaciones').show();
+
+            editable = false;
+
+            $('#txtEstado').css("color", "#dc3545")
         }
         else {
             $('#txtFHProcesado').text('-');
             $('#txtUsuarioProceso').text('SIN PROCESAR');
-
+            
             $('#seccionObservaciones').hide();
             editable = true;
+
+            $('#txtEstado').css("color", "#ffc107")
         }
         
 
@@ -324,6 +353,10 @@ function incializar_tabla_detalle() {
             {
                 'targets': [0,1],  
                 'visible': false      
+            },{
+                'targets': 4,  
+                'searchable': false,
+                'orderable': false      
             }
     ],
     preDrawCallback: function (settings) {
