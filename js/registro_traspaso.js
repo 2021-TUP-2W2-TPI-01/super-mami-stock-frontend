@@ -1,33 +1,50 @@
 import { GET, DELETE, POST, PUT } from './api.js';
 
 var tabla_traspasos;
+var tabla_traspaso;
 
 // CARGAMOS TABLA TRASPASOS
 $(document).ready(function () {
 
     cargar_tablaG();
 
+    $('#section_detalles_traspaso').hide();
+    $('#btn_lista_traspasos').click(function () {
+        $('#section_detalles_traspaso').hide();
+        $('#section_traspasos').show();
+        
+    })
 
-    $('#tabla_traspasos tbody').on('click', 'td', function () {
-
+    $('#tabla_traspasos tbody').on( 'click', 'td', function () {
+        
+        $('#section_detalles_traspaso').show();
+        $('#section_traspasos').hide();
         let rowIdx = tabla_traspasos.cell(this).index().row;
-        let colIdx = tabla_traspasos.cell(this).index().column;
-
-        let id = tabla_traspasos.rows(rowIdx).data()[0][0];
-       
-
-
+        let colIdx = tabla_traspasos.cell(this).index().column;  
+    
+        let id_traspaso = tabla_traspasos.rows(rowIdx).data()[0][0] ;
+    
+    
         if (colIdx == 5) {
-            modal_detalle_traspaso(id);
+            section_detalle_traspaso(id_traspaso);
         }
+    
+    });  
+    $('#tabla_traspaso tbody').on('click', 'td', function () {
 
+        let rowIdx = tabla_traspaso.cell(this).index().row;
+        let colIdx = tabla_traspaso.cell(this).index().column;
+    
+        let id = tabla_traspaso.rows(rowIdx).data()[0][0];
+    
+    
+        if (colIdx == 3) {
+            modal_modificacion_traspaso(id);
+
+        }
     });
 
-    $('#popup_detalle_traspaso').on('hidden.bs.modal', function (e) {
-        limpiarFormularioAlta();
-    });
-
-
+    
 })
 async function cargar_tablaG() {
 
@@ -36,7 +53,7 @@ async function cargar_tablaG() {
         pageLength: 5,
         columnDefs: [
             {
-                'targets': [5],
+                'targets': 5,
                 'searchable': false,
                 'orderable': false,
 
@@ -61,9 +78,8 @@ function llenar_tablaG(datos, tabla) {
     tabla.clear().draw();
 
     datos.forEach(traspaso => {
-        //let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
 
-        let detalles_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="More"><i class="zmdi zmdi-more"></i></button></div></td>';
+        let detalles_button = '<td id="btn_section_detalle"><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="More"><i class="zmdi zmdi-more"></i></button></div></td>';
 
         tabla.row.add([traspaso.id, traspaso.fh_generacion, traspaso.deposito_origen, traspaso.deposito_destino, traspaso.tipo_estado, detalles_button]).draw();
 
@@ -74,84 +90,46 @@ function llenar_tablaG(datos, tabla) {
 
 //HASTA ACA TABLA GENERAL, HATAS ACA FUNCIONA
 
-//ACA ME TRAE EL POP UP DE DETALLE
-function modal_detalle_traspaso(id) {
+async function section_detalle_traspaso(id) {
 
+    let path = `/traspaso/${id}/`;
 
-    $("#btn_aceptar_traspaso").click(function () {
-        detalle_traspaso(id);
-    });
+    const response = await GET(path);
 
+    if(response.success) {
 
-    $("#popup_detalle_traspaso").modal("show");
+        $("#popup_detalle_traspaso").modal("show");
 
-}
+        $('#btn_aceptar_traspaso').off('click');
 
+        $('#txtFecha_traspaso').val(response.data.fh_generacion);
+        $('#txtEstado_traspaso').val(response.data.tipo_estado);
+        $('#txtOrigen_traspaso').val(response.data.deposito_origen);
+        $('#txtDestino_traspaso').val(response.data.deposito_destino);
+        $('#txtUsuario_traspaso').val(response.data.usuario_genero);
 
-
-var tabla_traspaso;
-$(document).ready(function () {
-
-    cargar_tabla();
-    
-    detalle_traspaso(id);
-
-
-    $('#tabla_traspaso tbody').on('click', 'td', function () {
-
-        let rowIdx = tabla_traspaso.cell(this).index().row;
-        let colIdx = tabla_traspaso.cell(this).index().column;
-    
-        let id = tabla_traspaso.rows(rowIdx).data()[0][0];
-       // let  = tabla_traspaso.rows( rowIdx ).data()[0][1] ;
-    
-    
-        if (colIdx == 3) {
-            modal_modificacion_traspaso(id);
-        }
-        else if (colIdx == 4) {
-            confirmar_eliminacion_traspaso(id);
-        }
-    
-    });
-})
-
-async function detalle_traspaso(id) {
-    let path = `/traspaso/{id}/`;
-
-
-
-    let bodyRequest = {
-        'fecha': fh_generacion,
-        'estado': tipo_estado,
-        'origen': deposito_origen,
-        'destino': deposito_destino,
-        'usuario': usuario_genero,
-        'tabla_traspaso': llenar_tabla(id)
-    }
-    const response = await GET(path, bodyRequest)
-
-    if (response.success) {
-        swal({
-            title: "Información",
-            text: "Modificación exitosa",
-            icon: "success",
-        });
+        cargar_tabla_traspaso(id)
     }
 }
-   
 
-async function cargar_tabla() {
+
+async function cargar_tabla_traspaso(id) {
 
     tabla_traspaso = $('#tabla_traspaso').DataTable({
         "language": datetable_languaje,
         pageLength: 4,
         columnDefs: [
             {
-                'targets': [3, 4],
+                'targets': 3,
+                'width': '10px',
                 'searchable': false,
                 'orderable': false,
-
+            },
+            {
+                'targets': 4,
+                'width': '10px',
+                'searchable': false,
+                'orderable': false,
             },
             {
                 'targets': 0,
@@ -163,124 +141,26 @@ async function cargar_tabla() {
 
     let path = `/traspaso/${id}/`;
 
-
+    const datos = await GET(path);
     if (datos.success) {
-        cargarDetallesTraspaso(datos.data, tabla);
+        llenar_tabla_traspaso(datos.data, tabla_traspaso)
     }
 }
 
-async function llenar_tabla(datos, tabla) {
+function llenar_tabla_traspaso(datos, tabla) {
     
     tabla.clear().draw();
   
-         datos.data.detalle_traspaso.forEach(function () {
+    datos.detalle_traspaso.forEach(detalle => {
+
             let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
-            let delete_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Delete"><i class="zmdi zmdi-delete"></i></button></div></td>';
+
            
-    tabla.row.add([data.detalle_traspaso.id, data.detalle_traspaso.articulo, data.detalle_traspaso.cantidad, edit_button, delete_button]).draw();
+            tabla_traspaso.row.add([detalle.id_articulo, detalle.articulo, detalle.cantidad, edit_button]).draw();
     
-            
-        })
-    
-}
-
-
-/*
-var tabla_traspaso;
-
-// CARGAMOS TABLA TRASPASO
-$(document).ready(function () {
-
-    cargar_tabla();
-    confirmar_traspaso();
-    llenar_campos();
-    //  $('#popup_detalle_traspaso').modal('hidden.bs.modal');
-
-    $('#tabla_traspaso tbody').on('click', 'td', function () {
-
-        let rowIdx = tabla_traspaso.cell(this).index().row;
-        let colIdx = tabla_traspaso.cell(this).index().column;
-
-        let id = tabla_traspaso.rows(rowIdx).data()[0][0];
-        // let nombre = tabla_traspaso.rows( rowIdx ).data()[0][1] ;
-
-
-        if (colIdx == 3) {
-            modal_modificacion_traspaso(id);
-        }
-        else if (colIdx == 4) {
-            confirmar_eliminacion_traspaso(id);
-        }
-
-
-
-    });
-
-})
-
-async function cargar_tabla() {
-
-    tabla_traspaso = $('#tabla_traspaso').DataTable({
-        "language": datetable_languaje,
-        pageLength: 4,
-        columnDefs: [
-            {
-                'targets': [3, 4],
-                'searchable': false,
-                'orderable': false,
-
-            },
-            {
-                'targets': 0,
-                'visible': false
-            }
-        ],
-
-    });
-
-    let path = `/traspaso/${id}/`;
-
-
-    const datos = await GET(path);
-
-    if (datos.success) {
-        llenar_tabla(datos.data, tabla_traspaso);
-    }
-
-
-
-}
-
-function llenar_tabla(datos, tabla) {
-
-    datos.forEach(detalle_traspaso => {
-        //let botones = '';
-
-        let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
-        let delete_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Delete"><i class="zmdi zmdi-delete"></i></button></div></td>';
-
-        //botones += "<td><div class=\"table-data-feature\">"
-        // Por cada deposito, a los botones de borrar y editar, se le asigna un id dinamico segun el id del deposito
-        //botones += "<button class=\"item\" id=\"btn_modif_deposito_" + deposito.id + "\" data-toggle=\"modal\" data-placement=\"top\" title=\"Modificar\"><i class=\"zmdi zmdi-edit\"></i></button>\<button id=\"btn_elim_deposito_" + deposito.id + "\" class=\"item\" data-toggle=\"modal\"  idata-placement=\"top\" title=\"Eliminar\"><i class=\"zmdi zmdi-delete\"></i></button></div></td>";
-        tabla.row.add([detalle_traspaso.id, detalle_traspaso.articulo, detalle_traspaso.cantidad, edit_button, delete_button]).draw();
-
-
     })
-
 }
-
-// CONFIRMAR TRASPASO
-function confirmar_detalle_traspaso(id) {
- 
-    $('#btn_aceptar_traspaso').off('click');
- 
-    $("#btn_aceptar_traspaso").click(function (){
-        confirmar_detalle_traspaso(id);
-    });
- 
- //  $("#popup_detalle_traspaso").modal("show");
-}
-*/
+    
 
 // ELIMINAR TRASPASO
 
@@ -345,7 +225,6 @@ async function modal_modificacion_traspaso(id) {
 
         $('#btnConfirmarModificacionTraspaso').off('click');
 
-
         console.log(response);
 
         $('#txtArticulo_Modificar').val(response.data.detalle_traspaso.articulo);
@@ -355,9 +234,9 @@ async function modal_modificacion_traspaso(id) {
             modificar_traspaso(id);
         });
 
-        $('#popup_modif_traspaso').modal('show');
-
     }
+
+    $('#popup_modif_traspaso').modal('show');
 
 }
 
@@ -411,4 +290,3 @@ async function modificar_traspaso(id) {
           });
     }
 }
-

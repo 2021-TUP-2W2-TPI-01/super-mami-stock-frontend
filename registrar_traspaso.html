@@ -278,133 +278,111 @@
                                 </div>
                             </div>
                         </div> -->
-                        <div>
-                            <table class="table table-data2 display" id="tabla_traspasos">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Fecha</th>
-                                        <th>Depósito Origen</th>
-                                        <th>Depósito Destino</th>
-                                        <th>Estado</th>
-                                        <th></th>
-                                       
-                                    </tr>
-                                </thead>
-
-                                <tbody id="cuerpoTabla">
-                                </tbody>
-
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!-- END MAIN CONTENT-->
-
-            <!-- Modal -->
-            <div class="modal fade" id="popup_detalle_traspaso" tabindex="-1" role="dialog"
-                aria-labelledby="mediumModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="mediumModalLabel">DETALLE TRASPASO</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-
-                            <div class="section__content section__content--p30">
-                                <div class="container-fluid">
-                                    <div>
-                                        <form action="" method="get" class="">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group" id="form_detalle">
-                                                        <div class="input-group">
-                                                           
-                                                            <input disabled type="text" id="txtFecha"
-                                                                name="fecha" placeholder="Fecha" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                           
-                                                            <input disabled type="text" id="txtEstado"
-                                                                name="estado" placeholder="Estado" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            
-                                                            <input disabled type="text" id="txtOrigen"
-                                                                name="origen" placeholder="Origen" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                           
-                                                            <input disabled type="text" id="txtDestino"
-                                                                name="destino" placeholder="Destino" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            
-                                                            <input disabled type="text" id="txtUsuario"
-                                                                name="usuario" placeholder="Usuario" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <table class="table table-data2 display" id="tabla_traspaso" name="tabla_traspaso">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Id</th>
-                                                                <th>Articulo</th>
-                                                                <th>Cantidad</th>
-            
-                                                                <th></th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-            
-                                                        <tbody id="cuerpoTabla">
-                                                        </tbody>
-            
-                                                    </table>
-                                                </div>
-                                                   
-                                            </div>
-
-                                        </form>
-                                       
-                                    </div>
-
-                                </div>
+                        <section id='section_traspasos'>
+                            <div>
+                                <table class="table table-data2 display" id="tabla_traspasos">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Fecha</th>
+                                            <th>Depósito Origen</th>
+                                            <th>Depósito Destino</th>
+                                            <th>Estado</th>
+                                            <th></th>
+                                           
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody id="cuerpoTabla">
+                                    </tbody>
+    
+                                </table>
                             </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" id="btn_aceptar_traspaso"
-                                class="btn btn-success mr-2">Aceptar</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                        </div>
+                        </section>
+                        <section id='section_detalles_traspaso'>
+                            <button class="mb-2 au-btn au-btn-icon au-btn--red au-btn--small float-left"
+                                        id="btn_lista_traspasos" data-toggle="modal" data-target="#popup_alta_usuario">
+                                        <i class="zmdi zmdi-minus"></i>traspasos</button>
+                            <form action="" method="get" class="">
+                                <div class="row">
+                                    <div class="col-1"></div>
+                                    <div class="col-5">
+                                        <div class="form-group" id="form_detalle">
+                                            <div class="input-group">
+                                               
+                                                <input disabled type="text" id="txtFecha_traspaso"
+                                                    name="fecha" placeholder="Fecha" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                               
+                                                <input disabled type="text" id="txtEstado_traspaso"
+                                                    name="estado" placeholder="Estado" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                
+                                                <input disabled type="text" id="txtOrigen_traspaso"
+                                                    name="origen" placeholder="Origen" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                               
+                                                <input disabled type="text" id="txtDestino_traspaso"
+                                                    name="destino" placeholder="Destino" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                
+                                                <input disabled type="text" id="txtUsuario_traspaso"
+                                                    name="usuario" placeholder="Usuario" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-1"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-6">
+                                        <table class="table table-data2 display" id="tabla_traspaso" name="tabla_traspaso">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Articulo</th>
+                                                    <th>Cantidad</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+            
+                                            <tbody id="cuerpoTabla">
+                                            </tbody>
+            
+                                        </table>
+                                    </div>
+                                    <div class="col-3"></div>
+                                    
+                                </div>
+                            </form>
+                        </section>
                     </div>
                 </div>
             </div>
+
+            
+            <!-- END MAIN CONTENT-->
 
 
 
             <!-- MODAL MODIF TRASPASO -->
 
-            <div class="modal fade" id="popup_modif_traspaso" tabindex="-1" role="dialog"
-                aria-labelledby="mediumModalLabel" aria-hidden="true">
+            <div class="modal fade" id="popup_modif_traspaso" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -472,6 +450,7 @@
                     </div>
                 </div>
             </div>
+            
             <!-- END PAGE CONTAINER-->
 
 
