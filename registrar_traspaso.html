@@ -330,7 +330,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="">Fecha: </label>
+                                                            <label for="">Fecha de generación: </label>
                                                             <h4 id="txtFecha"></h4>
                                                         </div>
                                                         <div class="form-group">
@@ -338,8 +338,8 @@
                                                             <h4 id="txtEstado"></h4>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="">Generado por: </label>
-                                                            <h4 id="txtUsuario"></h4>
+                                                            <label for="">Fecha y hora procesado:</label>
+                                                            <h4 id="txtFechaProcesado"></h4>
                                                         </div>
                                                        
                                                     </div>
@@ -352,7 +352,10 @@
                                                             <label for="">Deposito Origen: </label>
                                                             <h4 id="txtDepOrigen"></h4>
                                                         </div>
-                                                       
+                                                        <div class="form-group">
+                                                            <label for="">Procesado por: </label>
+                                                            <h4 id="txtUsuarioProceso"></h4>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -533,6 +536,7 @@
             <!-- Sweet Alert -->
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+            <script src="js/moment.js"></script>
             <script type="module" src="js/registro_traspaso.js"></script>
 
             <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>

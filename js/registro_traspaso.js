@@ -56,7 +56,21 @@ function incializar_tabla_traspasos(){
                 'targets': 0,  
                 'visible': false      
             }
-    ],
+        ],
+        rowCallback: function( row, data, iDisplayIndex ) {
+            if ( data[4] == "Pendiente" )
+            {
+                $(row).find('td:eq(3)').css('color','#ffc107');
+            }
+            if (data[4] == "Procesado" || data[4] == "Procesado con modificaciones")
+            {
+                $(row).find('td:eq(3)').css('color','#28a745');
+            }
+            if (data[4] == "Rechazado")
+            {
+                $(row).find('td:eq(3)').css('color','#dc3545');
+            }
+        },
                      
     });
 }
@@ -110,36 +124,46 @@ async function show_detalle(id_traspaso) {
 
     const response = await GET(path);
 
-   // let nroRemito;
 
     if (response.success) {
         
-       // $('#txtPedido').text(response.data.numero_remito_asociado);
-       $('#txtDepDestino').text(response.data.deposito_destino);
-       $('#txtDepOrigen').text(response.data.deposito_origen);
+        $('#txtDepDestino').text(response.data.deposito_destino);
+        $('#txtDepOrigen').text(response.data.deposito_origen);
         $('#txtEstado').text(response.data.tipo_estado);
-        $('#txtFecha').text(response.data.fh_generacion);
-        $('#txtUsuario').text(response.data.usuario_genero);
+        $('#txtFecha').text(moment(response.data.fh_generacion).format('DD/MM/YYYY - HH:mm') + "HS");
+        $('#txtUsuarioProceso').text(response.data.usuario_proceso);
+        $('#txtFechaProcesado').text(response.data.fh_procesado);
 
-        if (response.data.tipo_estado != 'Pendiente') {
-            $('#txtFHProcesado').text(moment(response.data.fh_procesado).format('DD/MM/YYYY - HH:mm') + "HS");/////////generacion
-            $('#txtUsuarioGenero').text(response.data.usuario_proceso);//////genero
+        if (response.data.tipo_estado == 'Procesado' || response.data.tipo_estado == 'Procesado con modificaciones') {
+            $('#txtFechaProcesado').text(moment(response.data.fh_procesado).format('DD/MM/YYYY - HH:mm') + "HS");
+            $('#txtUsuarioProceso').text(response.data.usuario_proceso);
 
             $('#lblObservacion').text(response.data.observaciones);
             $('#seccionObservaciones').show();
 
            editable = false;
+
+           $('#txtEstado').css("color", "#28a745")
+        }
+        else if(response.data.tipo_estado == 'Rechazado'){
+            $('#txtFechaProcesado').text(moment(response.data.fh_procesado).format('DD/MM/YYYY - HH:mm') + "HS");
+            $('#txtUsuarioProceso').text(response.data.usuario_proceso);
+
+            $('#lblObservacion').text(response.data.observaciones);
+            $('#seccionObservaciones').show();
+
+            editable = false;
+
+            $('#txtEstado').css("color", "#dc3545")
         }
         else {
-            $('#txtFHProcesado').text('-');
-            $('#txtUsuarioGenero').text('SIN PROCESAR');
+            $('#txtFechaProcesado').text('-');
+            $('#txtUsuarioProceso').text('SIN PROCESAR');
 
             $('#seccionObservaciones').hide();
             editable = true;
         }
         
-
-       // nroRemito = response.data.numero_remito_asociado;
 
         if (tabla_detalle_traspasos == null) {
             incializar_tabla_detalle();
@@ -164,7 +188,7 @@ async function show_detalle(id_traspaso) {
     }
 
     $('#btnRechazarTraspaso').click(function(){
-        confirmarRechazarTraspaso(id_traspaso) //nroRemito
+        confirmarRechazarTraspaso(id_traspaso) 
     });
     
     $('#btnConfirmarTraspaso').click(function(){
@@ -176,7 +200,7 @@ async function show_detalle(id_traspaso) {
     });
 }
 
-function confirmarModificarTraspaso(id_traspaso) { //nroRemito
+function confirmarModificarTraspaso(id_traspaso) {
     $('#btn_confirmar_modificar_traspaso').off('click');
 
     $('#popup_modificar_traspaso').modal('show');
@@ -191,13 +215,13 @@ function confirmarModificarTraspaso(id_traspaso) { //nroRemito
 
 async function modificarTraspaso(id_traspaso) {
 
-    let path = `/traspaso/procesar/modificado/${id_traspaso}/`;//////////////////////////
+    let path = `/traspaso/procesar/modificado/${id_traspaso}/`;
 
     let observacion = $('#txtObservacionModificado').val();
 
     let bodyRequest = {
         "observaciones" : observacion,
-        "detalle_traspaso" : JSON.stringify(detalle_traspaso_actual)///////////////////////////////////s
+        "detalle_traspaso" : JSON.stringify(detalle_traspaso_actual)
     }
 
     const response = await POST(path, bodyRequest);
@@ -327,6 +351,11 @@ function incializar_tabla_detalle() {
             {
                 'targets': [0],  
                 'visible': false      
+            },
+            {
+                'targets': [3],  
+                'searchable': false,
+                'orderable': false     
             }
     ],
     preDrawCallback: function (settings) {
@@ -353,7 +382,7 @@ function incializar_tabla_detalle() {
         
 
         if (colIdx == 3 && editable) {
-            modificar_cantidad(id_articulo,  articulo, cantidad);
+            modificar_cantidad(id_articulo, articulo, cantidad);
         }
     
     } );  
