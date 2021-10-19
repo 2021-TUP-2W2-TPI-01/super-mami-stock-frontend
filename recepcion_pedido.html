@@ -125,11 +125,11 @@
                             <a href="index.html">
                                 <i class="fas fa-chart-bar"></i>Inicio</a>
                         </li>
-                        <li class="active" id="item-articulos">
+                        <li id="item-articulos">
                             <a href="articulos.html">
                                 <i class="fas fa-boxes"></i>Artículos</a>
                         </li>
-                        <li  id="item-depositos">
+                        <li class="active" id="item-depositos">
                             <a href="depositos.html">
                                 <i class="fas fa-warehouse"></i>Depósitos</a>
                         </li>
@@ -141,7 +141,7 @@
                                     <a href="existencias_stock.html"> <i class="fas fa-pallet"></i>Stock</a>
                                 </li>
                                 <li id="item-existencias-recpedidos">
-                                    <a href="recepcion_pedido.html"> <i class="fas fa-shipping-fast"></i>Recepción Pedidos</a>
+                                    <a href="recepcion_pedido.html".html"> <i class="fas fa-shipping-fast"></i>Recepción Pedidos</a>
                                 </li>
                                 <li id="item-existencias-rectraspasos">
                                     <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Recepción Traspasos</a>
@@ -261,270 +261,244 @@
             </header>
             <!-- HEADER DESKTOP-->
 
-            <!-- MAIN CONTENT-->
-            <div class="main-content">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div id="">
+
+        <!-- MAIN CONTENT TABLA-->
+        <div id="seccion_tabla" class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+
+                    <section class="content" id="content2">
+                        <div class="container-fluid">
                             <div class="row">
-                                <div class="col-4">
-                                    <button class="mb-2 au-btn au-btn-icon au-btn--green au-btn--small float-left" id=""
-                                        data-toggle="modal" data-target="#popup_alta_articulo">
-                                        <i class="zmdi zmdi-plus"></i>Nuevo Articulo</button>
-                                </div>
-                                <div class="col-5"></div>
-                                <div class="col-3">
+                                <section class="col-lg-12">
+                                    <div class="card" style="box-shadow: 0px 2px 25px rgba(0, 0, 0, .55);">
+                                        <div class="card-header">
+                                            <h2 class="card-title"><span><i class="fa fa-home"></i></span> Recepción de pedidos</h2>
+                                        </div>
+                                        <div class="card-body">
+                                            <div>
+                                                <table class="table table-data2 display" id="tabla_pedidos">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>id</th>
+                                                            <th>Fecha</th>
+                                                            <th>Nro. Remito</th>
+                                                            <th>Estado</th>
+                                                            <th>Proveedor</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
 
-                                </div>
+                                                    <tbody id="cuerpoTabla">
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                        <br>
+                                    </div><!-- /.card-body -->
                             </div>
-                        </div>
-                        <div>
-                            <table class="table table-data2 display" id="tabla_articulos">
-                                <thead>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>Articulo</th>
-                                        <th>Descripción</th>
-                                        <th>Precio </th>
-                                        <th>Marca</th>
-                                        <th>Categoria</th>
-                                        <th>Unidad </th>
-                                        <th>Cantidad </th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="cuerpoTabla">
-                                </tbody>
-
-                            </table>
-                        </div>
-
-                    </div>
+                    </section>
                 </div>
             </div>
-            <!-- END MAIN CONTENT-->
+        </div>
 
-            <!-- Modal -->
+        <!-- MAIN CONTENT DETALLE -->
+        <div id="seccion_detalle" class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
 
-             <!-- MODAL ALTA ARTICULO -->
-            <div class="modal fade" id="popup_alta_articulo" tabindex="-1" role="dialog"
-                aria-labelledby="mediumModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="mediumModalLabel">ALTA ARTICULO</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="post" class="">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fa fa-shopping-cart"></i> -->
-                                                </div>
-                                                <input type="text" id="txtNombreArticulo" name="nombreArticulo" placeholder="Nombre Articulo"
-                                                    class="form-control">
+                    <section class="content" id="content2">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <section class="col-lg-12">
+                                    <div class="card" style="box-shadow: 0px 2px 25px rgba(0, 0, 0, .55);">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-10"><h2 class="card-title"><span><i class="fa fa-home"></i></span> Detalle de pedido</h2></div>
+                                                <div class="col-2"><div class="card-tools">
+                                                    <button id="btnRegresar" type="button" class="btn btn-secondary float-right"
+                                                    >Regresar a pedidos</button>
+                                                </div></div>
+                                                
+                                                
                                             </div>
+                                            
                                         </div>
-                                        <div class="form-group">
-                                            <textarea class="form-control" id="txtDescripcion" placeholder="Descripcion" rows="4"></textarea>
-                                          </div>
-
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fa fa-usd"></i> -->
+                                        <div class="card-body">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="">N° Remito Asociado: </label>
+                                                            <h4 id="txtPedido">15351</h4>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Estado: </label>
+                                                            <h4 id="txtEstado">Pendiente</h4>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Fecha y hora procesado: </label>
+                                                            <h4 id="txtFHProcesado"></h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="">Fecha del pedido: </label>
+                                                            <h4 id="txtFecha">11/10/2021</h4>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Proveedor: </label>
+                                                            <h4 id="txtProveedor">Juan carlso</h4>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Procesado por: </label>
+                                                            <h4 id="txtUsuarioProceso"></h4>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <input type="text" id="txtPrecio" name="precio" placeholder="Precio Unitario"
-                                                    class="form-control">
                                             </div>
-                                        </div>
+                                            
+                                            <div>
+                                                <table class="table table-data2 display" id="tabla_detalle_pedido">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>id</th>
+                                                            <th>idArticulo</th>
+                                                            <th>Artículo</th>
+                                                            <th>Cantidad</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
 
-                                       
-                                    </div>
-                                    <div class="col-6">
+                                                    <tbody id="cuerpoTabla">
+                                                    </tbody>
 
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fas fa-check"></i> -->
+                                                </table>
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="button" class="btn btn-danger float-right " id="btnRechazarPedido">Rechazar</button>
+                                                <button type="button" class="btn btn-success float-right mr-3" id='btnConfirmarPedido'>Confirmar pedido</button>
+                                                <button type="button" class="btn btn-warning float-right mr-3" id='btnModificadoPedido'>Confirmar modificado</button>
+                                            </div>
+                                            <div id="seccionObservaciones" class="col-12">
+                                                <div class="form-group">
+                                                    <label for="">Observaciones: </label>
+                                                    <h4 id="lblObservacion">Juan carlso</h4>
                                                 </div>
-                                                <select name="select" id="cmbMarca" class="form-control">
-                                                    <option value="0">Seleccione Marca</option>
-                                                </select>
                                             </div>
+
                                         </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fas fa-check"></i> -->
-                                                </div>
-                                                <select name="select" id="cmbCategoria" class="form-control">
-                                                    <option value="0">Seleccione Categoria</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fas fa-check"></i> -->
-                                                </div>
-                                                <select name="select" id="cmbUnidadMedida" class="form-control">
-                                                    <option value="0">Seleccione Unidad de medida</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fas fa-balance-scale-right"></i>
-                                                </div>
-                                                <input type="text" id="txtCantidadMedida" name="cantidad" placeholder="Cantidad Medida" class="form-control">
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
-                                data-dismiss="modal">Cancelar</button>
-                            <button type="submit"
-                                class="btn btn-success mr-2" id="btn_alta_articulo">Agregar</button>
-                        </div>
-
-                    </div>
-
+                                        <br>
+                                    </div><!-- /.card-body -->
+                            </div>
+                    </section>
                 </div>
             </div>
+        </div>
 
-            <!-- MODAL MODIF ARTICULO -->
-
-            <div class="modal fade" id="popup_modif_articulo" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="mediumModalLabel">MODIFICACIÓN ARTICULO</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="post" class="">
-                                <div class="row">
-                                    <div class="col-6">
-                                      
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fal fa-turntable"></i> -->
-                                                </div>
-                                                <input disabled type="text" id="txtNombreArticulo_Modificar" name="nombre" placeholder="Nombre Articulo" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <textarea class="form-control" id="txtDescripcion_Modificar" placeholder="Descripcion" rows="4"></textarea>
-                                          </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fal fa-turntable"></i> -->
-                                                </div>
-                                                <input type="text" id="txtPrecio_Modificar" name="precio" placeholder="Precio Unitario" class="form-control">
-                                            </div>
-                                        </div>
-
-                                    
-                                    </div>
-                                    <div class="col-6">
-                                        
-                                         
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fal fa-turntable"></i> -->
-                                                </div>
-                                                <select disabled name="select" id="cmbMarca_Modificar" class="form-control">
-                                                    <option value="0">Seleccione Marca</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fal fa-turntable"></i> -->
-                                                </div>
-                                                <select disabled name="select" id="cmbCategoria_Modificar" class="form-control">
-                                                    <option value="0">Seleccione categoria</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fal fa-turntable"></i> -->
-                                                </div>
-                                                <select disabled name="select" id="cmbUnidadMedida_Modificar" class="form-control">
-                                                    <option value="0">Seleccione Unidad de medida</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <!-- <i class="fal fa-turntable"></i> -->
-                                                </div>
-                                                <input type="text" id="txtCantidadMedida_Modificar" name="cantidad" placeholder="Cantidad Medida" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        
-                                    </div>
-                                </div>
-                                
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                            <button id="btnConfirmarModificacion" type="button" class="btn btn-success mr-2">Modificar</button>
-                        </div>
-                    </div>
+        <!--MODAL CARGAR ARTICULO CANTIDAD-->
+        <div class="modal fade" id="modalCantidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="articuloModificar"></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Cantidad recibida:</label>
+                      <input type="number" class="form-control" id="cantidad_cargar">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" id='btnGuardarCantidadIngresada'>Guardar</button>
+                </div>
+              </div>
             </div>
+          </div>
 
-            <!-- MODAL CONFIRMAR BAJA -->
-
-            <div class="modal fade" id="popup_baja_articulo" tabindex="-1" role="dialog"
+          <div class="modal fade" id="popup_rechazo_pedido" tabindex="-1" role="dialog"
                 aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticModalLabel">ELIMINAR ARTICULO</h5>
+                            <h5 class="modal-title" id="staticModalLabel">Rechazar pedido</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                         </div>
                         <div class="modal-body">
-                            <p id="mensaje_confirm_delete">
-                                Seguro que desea dar de baja este Articulo?
+                            <p id="mensaje_confirm_rechazo">
+                                ¿Desea rechazar el pedido?
                             </p>
+                            <br>
+                            <div class="form-group">
+                                <textarea style="resize: none;" class="form-control" id="txtObservacion" placeholder="Motivo de rechazo"  rows="4"></textarea>
+                              </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" id="btn_baja_articulo" class="btn btn-danger">Aceptar</button>
+                            <button type="button" id="btn_confirmar_rechazo_pedido" class="btn btn-danger">Rechazar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="popup_aceptar_pedido" tabindex="-1" role="dialog"
+                aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticModalLabel">Confirmar pedido</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="mensaje_confirm_aceptar">
+                                ¿Desea confirmar el pedido?
+                            </p>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btn_confirmar_aceptar_pedido" class="btn btn-success">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="popup_modificar_pedido" tabindex="-1" role="dialog"
+                aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticModalLabel">Confirmar pedido modificado</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="mensaje_confirm_modificar">
+                                ¿Desea confirmar el pedido modificado?
+                            </p>
+                            <br>
+                            <div class="form-group">
+                                <textarea style="resize: none;" class="form-control" id="txtObservacionModificado" placeholder="Motivo de modificación"  rows="4"></textarea>
+                              </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btn_confirmar_modificar_pedido" class="btn btn-warning">Confirmar</button>
                         </div>
                     </div>
                 </div>
@@ -556,14 +530,15 @@
             <!-- Main JS-->
             <script src="js/main.js"></script>
         
-            <script src="https://kit.fontawesome.com/f0e04c0529.js" crossorigin="anonymous"></script>
+    
     <script src="js/session.js"></script>
     <script src="js/configuration.js"></script>
 
     <!-- Sweet Alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
-    <script type="module" src="js/articulo.js"></script>
+    <script src="js/moment.js"></script>
+    <script type="module" src="js/recepcion_pedidos.js"></script>
 
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
@@ -576,3 +551,4 @@
 </body>
 
 </html>
+<!-- end document-->

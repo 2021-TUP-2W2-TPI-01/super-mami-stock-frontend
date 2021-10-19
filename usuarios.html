@@ -33,15 +33,23 @@
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"> -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
   
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="css/loading.css">
 
 <link rel="shortcut icon" href="images/icon/logo-favicon.png" type="image/x-icon">
 </head>
 
 <body class="animsition">
+    <div id="loading" class="loading">
+        <div class="loader">
+            <div class="loader-inner square-spin">
+              <div></div>
+            </div>
+          </div>
+    </div>
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -134,7 +142,7 @@
                                     <a href="existencias_stock.html"> <i class="fas fa-pallet"></i>Stock</a>
                                 </li>
                                 <li id="item-existencias-recpedidos">
-                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Recepción Pedidos</a>
+                                    <a href="recepcion_pedido.html"> <i class="fas fa-shipping-fast"></i>Recepción Pedidos</a>
                                 </li>
                                 <li id="item-existencias-rectraspasos">
                                     <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Recepción Traspasos</a>

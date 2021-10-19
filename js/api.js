@@ -57,9 +57,9 @@ async function GET(path) {
     }
     catch(error) {
 
-        response.statusCode = 0;
+        response.statusCode = error.status;
         response.success = false;
-        response.data = null;
+        response.data = error.responseJSON;
 
     }
 
@@ -110,9 +110,9 @@ async function POST(path, bodyRequest) {
         });
     }
     catch (error) {
-        response.statusCode = 0;
+        response.statusCode = error.status;
         response.success = false;
-        response.data = null
+        response.data = error.responseJSON;
     }
 
     return response;
@@ -162,9 +162,9 @@ async function PUT(path, bodyRequest) {
         });
     }
     catch (error) {
-        response.statusCode = 0;
+        response.statusCode = error.status;
         response.success = false;
-        response.data = null
+        response.data = error.responseJSON;
     }
 
     return response;
@@ -208,9 +208,9 @@ async function DELETE(path) {
     }
     catch(error) {
 
-        response.statusCode = 0;
+        response.statusCode = error.status;
         response.success = false;
-        response.data = null;
+        response.data = error.responseJSON;
 
     }
 

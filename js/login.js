@@ -1,5 +1,15 @@
 import {POST} from './api.js';
 
+$( document ).ajaxStart(function() {
+    $('#loading').show();
+});
+
+$( document ).ajaxComplete(function( event,request, settings ) {
+    $('#loading').hide();
+});
+
+$('#loading').hide();
+
 $(document).ready(function(){
 
     $('#btnIngresar').click(function (){
