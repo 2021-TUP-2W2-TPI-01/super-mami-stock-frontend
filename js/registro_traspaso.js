@@ -347,9 +347,9 @@ function incializar_tabla_detalle() {
         let rowIdx = tabla_detalle_traspasos.cell( this ).index().row;
         let colIdx = tabla_detalle_traspasos.cell(this).index().column;  
 
-        let id_articulo = tabla_detalle_traspasos.rows( rowIdx ).data()[0][1] ;
-        let articulo= tabla_detalle_traspasos.rows( rowIdx ).data()[0][2] ;
-        let cantidad = tabla_detalle_traspasos.rows( rowIdx ).data()[0][3] ;
+        let id_articulo = tabla_detalle_traspasos.rows( rowIdx ).data()[0][0] ;
+        let articulo= tabla_detalle_traspasos.rows( rowIdx ).data()[0][1] ;
+        let cantidad = tabla_detalle_traspasos.rows( rowIdx ).data()[0][2] ;
         
 
         if (colIdx == 3 && editable) {
