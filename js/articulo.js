@@ -78,6 +78,12 @@ async function cargar_tabla() {
                 'visible': false      
             }
     ],
+    rowCallback: function( row, data, iDisplayIndex ) {
+
+        // Alineación a la derecha valores numericos
+        $(row).find('td:eq(2)').addClass('text-right');
+        $(row).find('td:eq(6)').addClass('text-right');
+    },
                      
     });
     const datos = await GET('/articulos/');
@@ -108,7 +114,7 @@ function llenar_tabla(datos, tabla){
         //botones += "<button class=\"item\" id=\"btn_modif_deposito_" + deposito.id + "\" data-toggle=\"modal\" data-placement=\"top\" title=\"Modificar\"><i class=\"zmdi zmdi-edit\"></i></button>\<button id=\"btn_elim_deposito_" + deposito.id + "\" class=\"item\" data-toggle=\"modal\"  idata-placement=\"top\" title=\"Eliminar\"><i class=\"zmdi zmdi-delete\"></i></button></div></td>";
         
         tabla.row.add([articulo.id,articulo.nombre, articulo.descripcion 
-            , articulo.precio_unitario, articulo.marca, articulo.categoria, articulo.unidad_medida,
+            , `$${articulo.precio_unitario}`, articulo.marca, articulo.categoria, articulo.unidad_medida,
             articulo.cantidad_medida, edit_button,delete_button]).draw();
    
         

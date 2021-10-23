@@ -142,6 +142,13 @@ function innitTablaReporte() {
         ],
         rowCallback: function( row, data, iDisplayIndex ) {
             setColorScaleRuler(data[3],$(row).find('td:eq(3)'), false);
+
+            // Alineación a la derecha valores numericos
+            $(row).find('td:eq(2)').addClass('text-right');
+            $(row).find('td:eq(3)').addClass('text-right');
+            $(row).find('td:eq(4)').addClass('text-right');
+            $(row).find('td:eq(5)').addClass('text-right');
+            $(row).find('td:eq(6)').addClass('text-right');
         },
         
     });
