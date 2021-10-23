@@ -70,7 +70,7 @@ async function verReporte() {
 function cargarTablaReporte(data) {
 
     data.forEach(item => {
-        tabla_reporte.row.add([item.deposito, item.tipo_movimiento, item.cantidad, `%${item.pendientes}`, `%${item.confirmados}`, `%${item.modificados}`, `%${item.rechazados}`]).draw();
+        tabla_reporte.row.add([item.deposito, item.tipo_movimiento, item.cantidad, `${item.pendientes}%`, `${item.confirmados}%`, `${item.modificados}%`, `${item.rechazados}%`]).draw();
     });
 
 }
