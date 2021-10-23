@@ -113,6 +113,33 @@ function innitTablaReporte() {
                 'orderable': true      
             },
         ],
+        order: [
+            [ 0, "asc" ],
+            [ 1, "asc" ]
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excel',
+                text:'<i class="fas fa-file-excel"></i> Exportar',
+                className: 'btn btn-success',
+                title:`Reporte Movimientos Depositos ${moment().format('DD-MM-YYYY HH.mm')} HS`,
+                customize: function (xlsx)
+                {
+
+                    var filtros = {
+
+                        'Fecha de Emisión' : `${moment().format('DD/MM/YYYY HH:mm')} HS`,
+                        'Emitido por' : `${user_info_nombre()} ${user_info_apellido()} (${user_info_username()})`,
+                        'Rango de fechas' : `${$('#fecha_filtro').val()}`
+                    }
+
+
+                    generateReportHeader('Movimientos por depósito', filtros, xlsx);
+
+                }
+            }
+        ],
         rowCallback: function( row, data, iDisplayIndex ) {
             setColorScaleRuler(data[3],$(row).find('td:eq(3)'), false);
         },

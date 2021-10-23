@@ -108,7 +108,7 @@ function generateReportHeader(nombreReporte, filtros, xlsx)
 
     _filtros += Addrow(1, [{ k: 'A', v: `${nombreReporte}` }]);
 
-    var _row = 3;
+    var _row = 2;
 
     // Recorro los filtros que hay y los añado
     for (var [key, value] of Object.entries(filtros)) 
