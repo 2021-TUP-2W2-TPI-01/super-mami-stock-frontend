@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <!-- Required meta tags-->
@@ -31,9 +31,22 @@
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
+
     <link href="css/theme.css" rel="stylesheet" media="all">
 
     <link rel="shortcut icon" href="images/icon/logo-favicon.png" type="image/x-icon">
+
+    <style>
+        .chart-container {
+        position: relative;
+        margin: auto;
+        height: 50vh;
+        width: 50vw;
+        }
+
+    </style>
+
+
 </head>
 
 <body class="animsition">
@@ -41,6 +54,7 @@
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
             <div class="header-mobile__bar">
+                asjhkasd
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.html">
@@ -91,7 +105,7 @@
                             <a href="usuarios.html">
                                 <i class="fas fa-users"></i>Usuarios</a>
                         </li>
-              
+
                     </ul>
                 </div>
             </nav>
@@ -108,7 +122,7 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="active">
+                        <li>
                             <a href="index.html">
                                 <i class="fas fa-chart-bar"></i>Inicio</a>
                         </li>
@@ -121,20 +135,23 @@
                                 <i class="fas fa-warehouse"></i>Depósitos</a>
                         </li>
 
-                        <li id="item-existencias" class="has-sub">
+                        <li id="item-existencias" class="has-sub active">
                             <a class="js-arrow" href="#"> <i class="fas fa-clipboard-list"></i>Existencias</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li id="item-existencias-stock">
                                     <a href="existencias_stock.html"> <i class="fas fa-boxes"></i>Stock</a>
                                 </li>
                                 <li id="item-existencias-recpedidos">
-                                    <a href="recepcion_pedido.html"> <i class="fas fa-sign-in-alt"></i>Recepción Pedidos</a>
+                                    <a href="recepcion_pedido.html"> <i class="fas fa-sign-in-alt"></i>Recepción
+                                        Pedidos</a>
                                 </li>
                                 <li id="item-existencias-rectraspasos">
-                                    <a href="registrar_traspaso.html"> <i class="fas fa-sign-in-alt"></i>Recepción Traspasos</a>
+                                    <a href="registrar_traspaso.html"> <i class="fas fa-sign-in-alt"></i>Recepción
+                                        Traspasos</a>
                                 </li>
-                                <li id="item-existencias-gentraspaso">
-                                    <a href="generacion_traspaso.html"> <i class="fas fa-sign-out-alt"></i>Generación Traspaso</a>
+                                <li class="active" id="item-existencias-gentraspaso">
+                                    <a href="generacion_traspaso.html"> <i class="fas fa-sign-out-alt"></i>Generación
+                                        Traspaso</a>
                                 </li>
                             </ul>
                         </li>
@@ -143,16 +160,20 @@
                             <a class="js-arrow" href="#"> <i class="fas fa-chart-line"></i>Informes</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li id="item-informes-stockdep">
-                                    <a href="reporte_stock_deposito.html"> <i class="fas fa-pallet"></i>Stock por depósito</a>
+                                    <a href="reporte_stock_deposito.html"> <i class="fas fa-pallet"></i>Stock por
+                                        depósito</a>
                                 </li>
                                 <li id="item-informes-stockvencim">
-                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Stock próximo a vencer</a>
+                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Stock
+                                        próximo a vencer</a>
                                 </li>
                                 <li id="item-informes-movpordep">
-                                    <a href="movimientos_por_deposito.html"> <i class="fas fa-shipping-fast"></i>Movimientos por depósito</a>
+                                    <a href="movimientos_por_deposito.html"> <i
+                                            class="fas fa-shipping-fast"></i>Movimientos por depósito</a>
                                 </li>
                                 <li id="item-informes-movdep">
-                                    <a href="existencias_movimientos.html"> <i class="fas fa-shipping-fast"></i>Movimientos del depósito</a>
+                                    <a href="existencias_movimientos.html"> <i
+                                            class="fas fa-shipping-fast"></i>Movimientos del depósito</a>
                                 </li>
                             </ul>
                         </li>
@@ -203,10 +224,10 @@
                                         
                                     </div>
                                 </div>
-                                -->
+                            -->
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
-                                        
+
                                         <div class="content ml-0">
                                             <a class="lblUsuario" class="js-acc-btn" href="#">Usuario</a>
                                         </div>
@@ -222,7 +243,8 @@
                                                         <a class="lblUsuario" href="#">john doe</a>
                                                     </h5>
                                                     <span id="lblEmail" class="email">johndoe@example.com</span>
-                                                    <span id="lblRol" style="color: rgb(148, 0, 0);" class="email">johndoe@example.com</span>
+                                                    <span id="lblRol" style="color: rgb(148, 0, 0);"
+                                                        class="email">johndoe@example.com</span>
                                                 </div>
                                             </div>
                                             <!--
@@ -252,15 +274,59 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-                        <div class="col-md-12 d-flex justify-content-center pt-5 mt-5">
-                            <img src="images/icon/logo-super-mami.png" alt="">
-                        </div>
+                        <section class="content" id="content2">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <section class="col-lg-12">
+                                        <div class="card" style="box-shadow: 0px 2px 25px rgba(0, 0, 0, .55);">
+                                            <div class="card-header">
+                                                <h2 class="card-title"><span><i class="fas fa-book"></i></span> Stock
+                                                    por Depositos</h2>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <!-- Left col -->
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label class="lead" for="">Articulo: </label>
+                                                                <select class="custom-select" name="" 
+                                                                    id="cmbArticulos">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <section>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <!--REPORTE-->
+
+                                                            <div class="chart-container pt-5">
+                                                                <canvas id="chart"></canvas>
+                                                            </div>
+                                                            
+                                                            
+                                                            <!--FIN REPORTE-->
+
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                            <br>
+                                        </div><!-- /.card-body -->
+                                </div>
+                        </section>
+
                     </div>
                 </div>
             </div>
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
         </div>
+    </div>
+    <!-- END MAIN CONTENT-->
+    <!-- END PAGE CONTAINER-->
+    </div>
 
     </div>
 
@@ -289,6 +355,16 @@
     <script src="js/main.js"></script>
     <script src="js/session.js"></script>
     <script src="js/configuration.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+
+    <script type="module" src="js/reporte_stock_deposito.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
 
