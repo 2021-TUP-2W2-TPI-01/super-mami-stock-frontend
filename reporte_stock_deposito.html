@@ -38,12 +38,11 @@
 
     <style>
         .chart-container {
-        position: relative;
-        margin: auto;
-        height: 50vh;
-        width: 50vw;
+            position: relative;
+            margin: auto;
+            height: 50vh;
+            width: 50vw;
         }
-
     </style>
 
 
@@ -289,9 +288,10 @@
                                                     <div class="col-sm-12">
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <label class="lead" for="">Articulo: </label>
-                                                                <select class="custom-select" name="" 
-                                                                    id="cmbArticulos">
+                                                                <div class="container-fluid pl-1">
+                                                                    <label class="lead" for="">Articulo: </label>
+                                                                    <select class="custom-select" name="" id="cmbArticulos">
+                                                                </div>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -299,19 +299,43 @@
                                                 </div>
                                                 <section>
                                                     <div class="row">
-                                                        <div class="col-sm-12">
-
+                                                        <div class="col-sm-9">
                                                             <!--REPORTE-->
-
-                                                            <div class="chart-container pt-5">
-                                                                <canvas id="chart"></canvas>
+                                                            <div class="container pt-4">
+                                                                <div class="card card-outline card-info mt-4">
+                                                                    <div class="card-header">
+                                                                        <h5 class="card-title"><span><i
+                                                                                    class="fa fa-pallet"></i></span>
+                                                                            Articulo por depositos </h5>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div>
+                                                                            <canvas id="myChart"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--FIN REPORTE-->
                                                             </div>
-                                                            
-                                                            
-                                                            <!--FIN REPORTE-->
-
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="container pt-5">
+                                                                <div id="depositosNombre">
+                                                                   
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    
+                                                    <!-- <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="container pl-3">
+                                                                <div id="depositosNombre">
+                                                                   
+                                                                </div>
+                                                            </div>
+                                           
+                                                        </div>
+                                                    </div> -->
                                                 </section>
                                             </div>
                                             <br>
