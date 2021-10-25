@@ -4,7 +4,7 @@ import { GET, POST } from "./api.js";
 var f_movimientos_inicio = moment().format('YYYY-MM-DD');
 var f_movimientos_fin = moment().format('YYYY-MM-DD');
 var tabla_reporte;
-var tiposMovimientos='';
+
 
 $(document).ready(function (){
     
@@ -52,7 +52,7 @@ async function verReporte()
         fecha_desde : f_movimientos_inicio,
         fecha_hasta : f_movimientos_fin,
         tipos_estados : lstEstados,
-        tipos_movimientos : tiposMovimientos
+        tipos_movimientos : lstMovimientos
    
     };
 
@@ -132,19 +132,16 @@ function innitComboMovimientos() {
 
     $('#cmbMovimientos').on('select2:select', function (e) {
 
+        let data = e.params.data;
+    
+        let _seleccion = data.id;
+    
 
-        var tipo = document.getElementById("cmbMovimientos").value;
-        
-        if(tipo == 'traspIN'){
-            tiposMovimientos='traspIN';
-        }
-        else if(tipo == 'traspOUT'){
-            tiposMovimientos='traspOUT';
-        }
-        else if(tipo == 'pedidos'){
-            tiposMovimientos='pedidos';
-        }
-        
+        if ($('#cmbMovimientos').val().toString().includes('todos'))
+        {
+            $('#cmbMovimientos').val(null).trigger('change');
+            $('#cmbMovimientos').val(_seleccion).trigger('change');
+        }   
     });
 
 }
