@@ -49,7 +49,7 @@ async function loadDepositos() {
             str += 'Suc <b><a class="text-primary">' + deposito.id + '</a> </b>: <b>' + deposito.nombre + "</b><br> ";
             $DEPOSITO_LIST.push(deposito.id)
         });
-        
+
     }
     str += '</small>'
     $("#depositosNombre").html(str)
@@ -65,9 +65,9 @@ async function loadArticulosPerDeposito(codigo_articulo) {
     if (existenciasDeposito.success) {
         existenciasDeposito.data.forEach(art_dep => {
             $DEPOSITO_LIST.forEach(element => {
-                if (art_dep.IdDeposito == element){
-                    console.log("entra"+art_dep.IdDeposito)
-                    $VALORES_LIST.push({"deposito":art_dep.IdDeposito,"cantidad":art_dep.Cantidad})
+                if (art_dep.IdDeposito == element) {
+                    console.log("entra" + art_dep.IdDeposito)
+                    $VALORES_LIST.push({ "deposito": art_dep.IdDeposito, "cantidad": art_dep.Cantidad })
                 }
             });
         });
@@ -75,11 +75,11 @@ async function loadArticulosPerDeposito(codigo_articulo) {
         var j = 0
         $DEPOSITO_LIST.forEach(element => {
             for (j; j < $VALORES_LIST.length; j++) {
-                if($VALORES_LIST[j]["deposito"] == element){
+                if ($VALORES_LIST[j]["deposito"] == element) {
                     valores.push($VALORES_LIST[j]["cantidad"])
                     j++;
                     break;
-                }else{
+                } else {
                     valores.push(0)
                     break;
                 }
@@ -87,17 +87,24 @@ async function loadArticulosPerDeposito(codigo_articulo) {
         });
         loadChart()
     }
-    
+
 }
 
 function loadChart() {
+
+    $("#m").animate({
+        opacity: 1,
+    }, 1000, function () {
+
+    });
+
     $("#w").html("")
     let aleatorio = Math.random()
 
-    $("#w").html("<canvas id='myChart"+aleatorio+"'></canvas>")
-    var ctx = document.getElementById("myChart"+aleatorio).getContext('2d');
-    
-   
+    $("#w").html("<canvas id='myChart" + aleatorio + "'></canvas>")
+    var ctx = document.getElementById("myChart" + aleatorio).getContext('2d');
+
+
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -109,5 +116,5 @@ function loadChart() {
             }]
         }
     });
-    
+
 }
