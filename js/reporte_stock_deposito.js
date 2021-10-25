@@ -91,8 +91,13 @@ async function loadArticulosPerDeposito(codigo_articulo) {
 }
 
 function loadChart() {
+    $("#w").html("")
+    let aleatorio = Math.random()
+
+    $("#w").html("<canvas id='myChart"+aleatorio+"'></canvas>")
+    var ctx = document.getElementById("myChart"+aleatorio).getContext('2d');
     
-    var ctx = document.getElementById("myChart").getContext('2d');
+   
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
