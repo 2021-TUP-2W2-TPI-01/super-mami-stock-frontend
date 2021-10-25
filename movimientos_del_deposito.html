@@ -39,6 +39,8 @@
 
     <link rel="stylesheet" href="vendor/daterangepicker/daterangepicker.css">
 
+    <link rel="stylesheet" href="css/estilos.css">
+
         
 
     
@@ -322,13 +324,19 @@
 
                                                  
                                                                 
-                                                                <div class="form-group">
+                                                                <div class="form-group " >
                                                                     <label for="">Tipo de movimiento: </label>
-                                                                    <select class="select2" multiple="multiple"
-                                                                        id="cmbMovimientos"
-                                                                        data-placeholder="  Seleccionar tipos de movimientos"
-                                                                        style="width: 100%;">
+                                                                        <select class="select2" multiple="multiple"
                                                                         
+                                                                        id="cmbMovimientos"
+                                                                        
+                                                                        data-placeholder="  Seleccionar tipos de movimientos"
+                                                                        style="width: 100%;">            
+                                                                                                            
+                                                                        <option value="traspIN">Traspaso Entrante</option>
+                                                                        <option value="traspOUT">Traspaso Saliente</option>
+                                                                        <option value="pedidos">Pedido</option>
+
                                                                 </select> 
                                                                 </div>
                                                             

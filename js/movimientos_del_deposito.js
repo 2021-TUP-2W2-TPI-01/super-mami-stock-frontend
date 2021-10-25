@@ -1,15 +1,17 @@
 import { GET, POST } from "./api.js";
 
+
 var f_movimientos_inicio = moment().format('YYYY-MM-DD');
 var f_movimientos_fin = moment().format('YYYY-MM-DD');
-// var tabla_reporte;
-var tiposMovimientos = ["traspIN","traspOUT","pedidos"];
+var tabla_reporte;
+var tiposMovimientos='';
 
 $(document).ready(function (){
     
-     innitFiltroFechas();
-    // innitTablaReporte();
-      innitComboEstados();
+    innitFiltroFechas();
+    innitTablaReporte();
+    innitComboEstados();
+    innitComboMovimientos();
     getEstados();
 
     $('#btnVerReporte').click(function() {
@@ -33,6 +35,18 @@ async function verReporte()
         return;
     }
 
+    let lstMovimientos = $('#cmbMovimientos').val().toString();
+
+    if (lstMovimientos == null || lstMovimientos == '') {
+        swal({
+            title: "Atención",
+            text: `Debe seleccionar al menos un tipo de movimiento`,
+            icon: "warning",
+          });
+
+        return;
+    }
+
     
     let bodyRequest = {
         fecha_desde : f_movimientos_inicio,
@@ -43,41 +57,41 @@ async function verReporte()
     };
 
 
-//     let path = `/reportes/cantidad_movimientos_depositos/`;
+    let path = `/reportes/movimientos_deposito/`;
 
-//     const response = await POST(path,bodyRequest);
+    const response = await POST(path,bodyRequest);
 
-//     tabla_reporte.clear().draw();
+    tabla_reporte.clear().draw();
 
-//     if (response.success) {
-//         if (response.data.length > 0) {
-//             cargarTablaReporte(response.data);
-//         }
-//         else {
-//             swal({
-//                 title: "Atención",
-//                 text: `No hay resultados para ese criterio de búsqueda`,
-//                 icon: "warning",
-//               });
-//         }
-//     }
-//     else {
-//         swal({
-//             title: "Atención",
-//             text: `${response.data}`,
-//             icon: "error",
-//           });
-//     }
+    if (response.success) {
+        if (response.data.length > 0) {
+            cargarTablaReporte(response.data);
+        }
+        else {
+            swal({
+                title: "Atención",
+                text: `No hay resultados para ese criterio de búsqueda`,
+                icon: "warning",
+              });
+        }
+    }
+    else {
+        swal({
+            title: "Atención",
+            text: `${response.data}`,
+            icon: "error",
+          });
+    }
 }
 
 
-// function cargarTablaReporte(data) {
+function cargarTablaReporte(data) {
 
-//     data.forEach(item => {
-//         tabla_reporte.row.add([item.deposito, item.tipo_movimiento, item.cantidad, `${item.pendientes}%`, `${item.confirmados}%`, `${item.modificados}%`, `${item.rechazados}%`]).draw();
-//     });
+    data.forEach(item => {
+        tabla_reporte.row.add([item.fecha_generacion, item.tipo_movimiento, item.estado, item.fh_procesado, item.procesado_por]).draw();
+    });
 
-// }
+}
 
 function innitComboEstados() {
 
@@ -105,66 +119,96 @@ function innitComboEstados() {
 
 }
 
-// function innitTablaReporte() {
 
-//     tabla_reporte = $('#tabla_resultado_reporte').DataTable({
-//         "language": datetable_languaje,
-//         pageLength: 5,
-//         columnDefs: [
-//             {
-//                 'targets': 0,  
-//                 'searchable': true,
-//                 'orderable': true      
-//             },
-//         ],
-//         order: [
-//             [ 0, "asc" ],
-//             [ 1, "asc" ]
-//         ],
-//         dom: 'Bfrtip',
-//         buttons: [
-//             {
-//                 extend: 'excel',
-//                 text:'<i class="fas fa-file-excel"></i> Exportar',
-//                 className: 'btn btn-success',
-//                 title:`Reporte Movimientos Depositos ${moment().format('DD-MM-YYYY HH.mm')} HS`,
-//                 customize: function (xlsx)
-//                 {
+function innitComboMovimientos() {
 
-//                     var filtros = {
+    $('.select2').select2(
+    {
+        language: "es",
+        allowClear: true,
+        closeOnSelect: false,
+        minimumResultsForSearch: Infinity
+    });   
 
-//                         'Fecha de Emisión' : `${moment().format('DD/MM/YYYY HH:mm')} HS`,
-//                         'Emitido por' : `${user_info_nombre()} ${user_info_apellido()} (${user_info_username()})`,
-//                         'Rango de fechas' : `${$('#fecha_filtro').val()}`
-//                     }
+    $('#cmbMovimientos').on('select2:select', function (e) {
 
 
-//                     generateReportHeader('Movimientos por depósito', filtros, xlsx);
-
-//                 }
-//             }
-//         ],
-//         rowCallback: function( row, data, iDisplayIndex ) {
-//             setColorScaleRuler(data[3],$(row).find('td:eq(3)'), false);
-
-//             // Alineación a la derecha valores numericos
-//             $(row).find('td:eq(2)').addClass('text-right');
-//             $(row).find('td:eq(3)').addClass('text-right');
-//             $(row).find('td:eq(4)').addClass('text-right');
-//             $(row).find('td:eq(5)').addClass('text-right');
-//             $(row).find('td:eq(6)').addClass('text-right');
-//         },
+        var tipo = document.getElementById("cmbMovimientos").value;
         
-//     });
+        if(tipo == 'traspIN'){
+            tiposMovimientos='traspIN';
+        }
+        else if(tipo == 'traspOUT'){
+            tiposMovimientos='traspOUT';
+        }
+        else if(tipo == 'pedidos'){
+            tiposMovimientos='pedidos';
+        }
+        
+    });
 
-// }
+}
+
+function innitTablaReporte() {
+
+    tabla_reporte = $('#tabla_resultado_reporte').DataTable({
+        "language": datetable_languaje,
+        pageLength: 5,
+        columnDefs: [
+            {
+                'targets': 0,  
+                'searchable': true,
+                'orderable': true      
+            },
+        ],
+        order: [
+            [ 0, "asc" ],
+            [ 1, "asc" ]
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excel',
+                text:'<i class="fas fa-file-excel"></i> Exportar',
+                className: 'btn btn-success',
+                title:`Reporte Movimientos del Deposito ${moment().format('DD-MM-YYYY HH.mm')} HS`,
+                customize: function (xlsx)
+                {
+
+                    var filtros = {
+
+                        'Fecha de Emisión' : `${moment().format('DD/MM/YYYY HH:mm')} HS`,
+                        'Emitido por' : `${user_info_nombre()} ${user_info_apellido()} (${user_info_username()})`,
+                        'Rango de fechas' : `${$('#fecha_filtro').val()}`
+                    }
+
+
+                    generateReportHeader('Movimientos del depósito', filtros, xlsx);
+
+                }
+            }
+        ],
+        rowCallback: function( row, data, iDisplayIndex ) {
+            setColorScaleRuler(data[3],$(row).find('td:eq(3)'), false);
+
+            // Alineación a la derecha valores numericos
+            $(row).find('td:eq(2)').addClass('text-right');
+            $(row).find('td:eq(3)').addClass('text-right');
+            $(row).find('td:eq(4)').addClass('text-right');
+            $(row).find('td:eq(5)').addClass('text-right');
+            $(row).find('td:eq(6)').addClass('text-right');
+        },
+        
+    });
+
+}
 
 
 async function getEstados() {
 
     let cmbEstados = document.getElementById("cmbEstados");
     
-    const response = await GET('/estados/');
+    const response = await GET('/tipos_estados/');
 
     if (response.success) {
 
