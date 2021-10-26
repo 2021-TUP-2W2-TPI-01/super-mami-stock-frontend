@@ -11,6 +11,11 @@ $(document).ready(function () {
     loadCmbCategorias();
     loadDepositos();
     $('#m').hide();
+    $('#contentHistorico').hide();
+
+    $('#btnRegresar').click(function(){
+        toggleReportsViews(false);
+    });
 })
 
 
@@ -91,20 +96,68 @@ $("#cmbArticulos").on('change', function () {
 
 
 async function loadDepositos() {
+    let first = true;
     list_depos = []
     $DEPOSITO_LIST = []
-    var str = '<small>'
+    var str = '<small><h5>Seleccione un depósito</h5><hr>'
     const depositos = await GET('/depositos/');
     if (depositos.success) {
         depositos.data.forEach(deposito => {
-            list_depos.push('Suc: ' + deposito.id)
-            str += 'Suc <b><a class="text-primary">' + deposito.id + '</a> </b>: <b>' + deposito.nombre + "</b><br> ";
-            $DEPOSITO_LIST.push(deposito.id)
+            if (first) {
+                list_depos.push('Suc: ' + deposito.id)
+                str += '<input class="form-check-input" type="radio" checked name="radioDepositos" value="' + deposito.id + '">'
+                str += 'Suc <b><a class="text-primary">' + deposito.id + '</a> </b>: <b>' + deposito.nombre + "</b><br> ";
+                $DEPOSITO_LIST.push(deposito.id)
+                first = false;
+            }
+            else {
+                list_depos.push('Suc: ' + deposito.id)
+                str += '<input class="form-check-input" type="radio" name="radioDepositos" id="' + deposito.id + '" value="' + deposito.nombre + '">'
+                str += 'Suc <b><a class="text-primary">' + deposito.id + '</a> </b>: <b>' + deposito.nombre + "</b><br> ";
+                $DEPOSITO_LIST.push(deposito.id)
+            }
         });
 
     }
-    str += '</small>'
-    $("#depositosNombre").html(str)
+    str += '</small><hr>'
+    str += '<button type="button" class="btn btn-primary float-right" id="btnVerHistorico">Ver histórico (Beta)</button>';
+    $("#depositosNombre").html(str);
+
+    $('#btnVerHistorico').off('click');
+
+    $('#btnVerHistorico').click(function(){
+        let deposito = {};
+        let articulo = {};
+
+        deposito.id = $("input[name=radioDepositos]:checked").attr('id');
+        deposito.name = $("input[name=radioDepositos]:checked").val();
+        
+        articulo.id = $("#cmbArticulos").val();
+        articulo.name = $('#cmbArticulos option:selected').text();
+
+        getHistoricoStock(articulo, deposito);
+    });
+}
+
+async function getHistoricoStock(articulo, deposito) {
+    let path = '/reportes/historico_stock/';
+        let bodyRequest = {
+            "deposito" : deposito.id,
+            "articulo" : articulo.id
+        }
+        const response = await POST(path, bodyRequest);
+
+        if (response.success) {
+            verHistoricoStock(articulo.name, deposito.name, response.data);
+        }
+        else {
+            swal({
+                title: "Información",
+                text: "No fué posible cargar el histórico",
+                icon: "error",
+              });
+            console.error(`Error : ${response.data}`);
+        }
 }
 
 
@@ -168,4 +221,62 @@ function loadChart() {
         }
     });
 
+}
+
+function toggleReportsViews(historico=false){
+
+    if (historico) {
+        $('#contentHistorico').show();
+        $('#content2').hide();
+    }
+    else {
+        $('#contentHistorico').hide();
+        $('#content2').show();
+    }
+    
+}
+
+function verHistoricoStock(articulo_name, deposito_name, data) {
+    toggleReportsViews(true);
+    $('#lblHistorico').text(` Histórico de stock ${articulo_name}`);
+    $('#lblSeguimiento').text(`Seguimiento mensual para ${deposito_name}`);
+
+    $("#wh").html("")
+    let aleatorio = Math.random()
+
+    $("#wh").html("<canvas id='chartHistorico" + aleatorio + "'></canvas>")
+    var ctx = document.getElementById("chartHistorico" + aleatorio).getContext('2d');
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: $.map(data, row => row.mes),
+            datasets: [{
+                label: 'Cantidad de stock',
+                data: $.map(data, row => row.cantidad),
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
