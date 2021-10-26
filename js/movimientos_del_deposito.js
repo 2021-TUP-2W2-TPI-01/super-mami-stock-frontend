@@ -1,16 +1,18 @@
-
 import { GET, POST } from "./api.js";
+
 
 var f_movimientos_inicio = moment().format('YYYY-MM-DD');
 var f_movimientos_fin = moment().format('YYYY-MM-DD');
 var tabla_reporte;
 
+
 $(document).ready(function (){
     
     innitFiltroFechas();
     innitTablaReporte();
-    innitComboDepositos();
-    getDepositos();
+    innitComboEstados();
+    innitComboMovimientos();
+    getEstados();
 
     $('#btnVerReporte').click(function() {
         verReporte();
@@ -18,14 +20,38 @@ $(document).ready(function (){
 
 });
 
-async function verReporte() {   
+async function verReporte() 
+{   
 
-    let lstDepositos = $('#cmbDepositos').val().toString();
 
-    if (lstDepositos == null || lstDepositos == '') {
+    let lstEstados = $('#cmbEstados').val().toString();
+    let lstMovimientos = $('#cmbMovimientos').val().toString();
+
+
+    if(lstEstados == 'todos'){
+        lstEstados="1,2,3,4";
+    }
+    if(lstMovimientos == 'todos'){
+        lstMovimientos="traspIN,traspOUT,pedidos";
+    }
+  
+
+    if (lstEstados == null || lstEstados == '') {
         swal({
             title: "Atención",
-            text: `Debe seleccionar al menos un depósito`,
+            text: `Debe seleccionar al menos un estado`,
+            icon: "warning",
+          });
+
+        return;
+    }
+
+   
+   
+    if (lstMovimientos == null || lstMovimientos == '') {
+        swal({
+            title: "Atención",
+            text: `Debe seleccionar al menos un tipo de movimiento`,
             icon: "warning",
           });
 
@@ -36,10 +62,13 @@ async function verReporte() {
     let bodyRequest = {
         fecha_desde : f_movimientos_inicio,
         fecha_hasta : f_movimientos_fin,
-        depositos : lstDepositos
+        tipos_estados : lstEstados,
+        tipos_movimientos : lstMovimientos
+   
     };
 
-    let path = `/reportes/cantidad_movimientos_depositos/`;
+
+    let path = `/reportes/movimientos_deposito/`;
 
     const response = await POST(path,bodyRequest);
 
@@ -70,12 +99,12 @@ async function verReporte() {
 function cargarTablaReporte(data) {
 
     data.forEach(item => {
-        tabla_reporte.row.add([item.deposito, item.tipo_movimiento, item.cantidad, `${item.pendientes}%`, `${item.confirmados}%`, `${item.modificados}%`, `${item.rechazados}%`]).draw();
+        tabla_reporte.row.add([item.fecha_generacion, item.tipo_movimiento, item.estado, item.fh_procesado, item.procesado_por]).draw();
     });
 
 }
 
-function innitComboDepositos() {
+function innitComboEstados() {
 
     $('.select2').select2(
     {
@@ -85,18 +114,43 @@ function innitComboDepositos() {
         minimumResultsForSearch: Infinity
     });   
 
-    $('#cmbDepositos').on('select2:select', function (e) {
+    $('#cmbEstados').on('select2:select', function (e) {
         let data = e.params.data;
     
         let _seleccion = data.id;
-
-        if ($('#cmbDepositos').val().toString().includes('todos'))
+     
+        if ($('#cmbEstados').val().toString().includes('todos'))
         {
-            $('#cmbDepositos').val(null).trigger('change');
-            $('#cmbDepositos').val(_seleccion).trigger('change');
+            $('#cmbEstados').val(null).trigger('change');
+            $('#cmbEstados').val(_seleccion).trigger('change');
         }
-        
-        
+
+    });
+
+}
+
+function innitComboMovimientos() {
+
+    $('.select2').select2(
+    {
+        language: "es",
+        allowClear: true,
+        closeOnSelect: false,
+        minimumResultsForSearch: Infinity
+    });   
+
+    $('#cmbMovimientos').on('select2:select', function (e) {
+
+        let data = e.params.data;
+    
+        let _seleccion = data.id;
+    
+
+        if ($('#cmbMovimientos').val().toString().includes('todos'))
+        {
+            $('#cmbMovimientos').val(null).trigger('change');
+            $('#cmbMovimientos').val(_seleccion).trigger('change');
+        }   
     });
 
 }
@@ -123,7 +177,7 @@ function innitTablaReporte() {
                 extend: 'excel',
                 text:'<i class="fas fa-file-excel"></i> Exportar',
                 className: 'btn btn-success',
-                title:`Reporte Movimientos Depositos ${moment().format('DD-MM-YYYY HH.mm')} HS`,
+                title:`Reporte Movimientos del Deposito ${moment().format('DD-MM-YYYY HH.mm')} HS`,
                 customize: function (xlsx)
                 {
 
@@ -135,7 +189,7 @@ function innitTablaReporte() {
                     }
 
 
-                    generateReportHeader('Movimientos por depósito', filtros, xlsx);
+                    generateReportHeader('Movimientos del depósito', filtros, xlsx);
 
                 }
             }
@@ -156,11 +210,11 @@ function innitTablaReporte() {
 }
 
 
-async function getDepositos() {
+async function getEstados() {
 
-    let cmbDepositos = document.getElementById("cmbDepositos");
+    let cmbEstados = document.getElementById("cmbEstados");
     
-    const response = await GET('/depositos/');
+    const response = await GET('/tipos_estados/');
 
     if (response.success) {
 
@@ -168,18 +222,18 @@ async function getDepositos() {
    
         optTodos.appendChild(document.createTextNode("Todos"));
         optTodos.value = 'todos';
+        
+        cmbEstados.appendChild(optTodos);
 
-        cmbDepositos.appendChild(optTodos);
+        response.data.forEach(estado => {
 
-        response.data.forEach(deposito => {
-
-           // Select depositos
+           // Select estados
            let opt = document.createElement("option");
    
-           opt.appendChild(document.createTextNode(deposito.nombre));
-           opt.value = deposito.id;
+           opt.appendChild(document.createTextNode(estado.descripcion));
+           opt.value = estado.id;
    
-           cmbDepositos.appendChild(opt);
+           cmbEstados.appendChild(opt);
         });
         
     }
@@ -235,3 +289,4 @@ function innitFiltroFechas() {
     
     
 }
+
