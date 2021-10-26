@@ -4,35 +4,87 @@ var articulo_Seleccionado = ''
 var $VALORES_LIST = []
 var $DEPOSITO_LIST = [] //Se usa para obtener Id solamente
 var valores = []
+var articulos = []
 
 $(document).ready(function () {
-    loadCmbArticulos();
+    getArticulos();
+    loadCmbCategorias();
     loadDepositos();
+    $('#m').hide();
 })
 
 
-async function loadCmbArticulos() {
+function loadCmbArticulos(articulos) {
+    console.log(articulos);
     var cmbArticulos = $("#cmbArticulos")
-    var str = ''
-    const articulos = await GET('/articulos/');
-    if (articulos.success) {
-        cmbArticulos.html('')
-        articulos.data.forEach(articulo => {
+    var str = '<option value=0>' + "Seleccione un artículo" + '</option>'
+    cmbArticulos.html('')
+    articulos.forEach(articulo => {
+        if (articulo.nombre == articulo_Seleccionado) {
+            str += '<option selected value=' + articulo.id + '>' + articulo.nombre + '</option>';
+        }
+        else {
             str += '<option value=' + articulo.id + '>' + articulo.nombre + '</option>';
-        });
-        cmbArticulos.html(str)
-    }
+        }
+       
+    });
+    cmbArticulos.html(str)
+    
     var e = document.getElementById("cmbArticulos");
+    var articulo_nombre = e.options[e.selectedIndex].text;
+    articulo_Seleccionado = articulo_nombre
+}
+
+async function getArticulos() {
+    const response = await GET('/articulos/');
+    if (response.success) {
+        articulos = response.data;
+
+        loadCmbArticulos(articulos);
+    }
+
+}
+
+$('#cmbCategorias').on('change', function(){
+    if ($('#cmbCategorias').val() != 0) {
+        let categoria = $('#cmbCategorias option:selected').text();
+        let art_filtrados = articulos.filter(articulo => articulo.categoria == categoria);
+        loadCmbArticulos(art_filtrados)
+    }
+    else {
+        getArticulos();
+    }
+    
+});
+
+
+async function loadCmbCategorias() {
+    var cmbCategorias = $("#cmbCategorias")
+    var str = '<option value=0>' + "Sin filtrar" + '</option>'
+    const response = await GET('/categorias/');
+    if (response.success) {
+        cmbCategorias.html('')
+        response.data.forEach(categoria => {
+            str += '<option value=' + categoria.id + '>' + categoria.descripcion + '</option>';
+        });
+        cmbCategorias.html(str)
+    }
+    var e = document.getElementById("cmbCategorias");
     var articulo_nombre = e.options[e.selectedIndex].text;
     articulo_Seleccionado = articulo_nombre
 }
 
 
 $("#cmbArticulos").on('change', function () {
+    var codigo_art = $("#cmbArticulos").val()
+    if (codigo_art == 0) {
+        $('#m').hide();
+        return;
+    }
     var e = document.getElementById("cmbArticulos");
     var articulo_nombre = e.options[e.selectedIndex].text;
     articulo_Seleccionado = articulo_nombre
-    var codigo_art = $("#cmbArticulos").val()
+    
     loadArticulosPerDeposito(codigo_art)
     loadChart();
 })
@@ -66,7 +118,6 @@ async function loadArticulosPerDeposito(codigo_articulo) {
         existenciasDeposito.data.forEach(art_dep => {
             $DEPOSITO_LIST.forEach(element => {
                 if (art_dep.IdDeposito == element) {
-                    console.log("entra" + art_dep.IdDeposito)
                     $VALORES_LIST.push({ "deposito": art_dep.IdDeposito, "cantidad": art_dep.Cantidad })
                 }
             });
@@ -91,7 +142,7 @@ async function loadArticulosPerDeposito(codigo_articulo) {
 }
 
 function loadChart() {
-
+    $('#m').show();
     $("#m").animate({
         opacity: 1,
     }, 1000, function () {
