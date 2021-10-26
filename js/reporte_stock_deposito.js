@@ -105,7 +105,7 @@ async function loadDepositos() {
         depositos.data.forEach(deposito => {
             if (first) {
                 list_depos.push('Suc: ' + deposito.id)
-                str += '<input class="form-check-input" type="radio" checked name="radioDepositos" value="' + deposito.id + '">'
+                str += '<input class="form-check-input" type="radio" id="' + deposito.id + '" checked name="radioDepositos" value="' + deposito.id + '">'
                 str += 'Suc <b><a class="text-primary">' + deposito.id + '</a> </b>: <b>' + deposito.nombre + "</b><br> ";
                 $DEPOSITO_LIST.push(deposito.id)
                 first = false;
