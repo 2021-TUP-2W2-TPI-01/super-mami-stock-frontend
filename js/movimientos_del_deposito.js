@@ -23,7 +23,18 @@ $(document).ready(function (){
 async function verReporte() 
 {   
 
+
     let lstEstados = $('#cmbEstados').val().toString();
+    let lstMovimientos = $('#cmbMovimientos').val().toString();
+
+
+    if(lstEstados == 'todos'){
+        lstEstados="1,2,3,4";
+    }
+    if(lstMovimientos == 'todos'){
+        lstMovimientos="traspIN,traspOUT,pedidos";
+    }
+  
 
     if (lstEstados == null || lstEstados == '') {
         swal({
@@ -35,8 +46,8 @@ async function verReporte()
         return;
     }
 
-    let lstMovimientos = $('#cmbMovimientos').val().toString();
-
+   
+   
     if (lstMovimientos == null || lstMovimientos == '') {
         swal({
             title: "Atención",
@@ -107,18 +118,16 @@ function innitComboEstados() {
         let data = e.params.data;
     
         let _seleccion = data.id;
-    
+     
         if ($('#cmbEstados').val().toString().includes('todos'))
         {
             $('#cmbEstados').val(null).trigger('change');
             $('#cmbEstados').val(_seleccion).trigger('change');
         }
-        
-        
+
     });
 
 }
-
 
 function innitComboMovimientos() {
 
@@ -213,7 +222,7 @@ async function getEstados() {
    
         optTodos.appendChild(document.createTextNode("Todos"));
         optTodos.value = 'todos';
-
+        
         cmbEstados.appendChild(optTodos);
 
         response.data.forEach(estado => {

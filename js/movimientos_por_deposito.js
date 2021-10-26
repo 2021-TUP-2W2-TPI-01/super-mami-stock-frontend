@@ -89,7 +89,7 @@ function innitComboDepositos() {
         let data = e.params.data;
     
         let _seleccion = data.id;
-    
+
         if ($('#cmbDepositos').val().toString().includes('todos'))
         {
             $('#cmbDepositos').val(null).trigger('change');
