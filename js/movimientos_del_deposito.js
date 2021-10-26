@@ -195,14 +195,18 @@ function innitTablaReporte() {
             }
         ],
         rowCallback: function( row, data, iDisplayIndex ) {
-            setColorScaleRuler(data[3],$(row).find('td:eq(3)'), false);
-
-            // Alineación a la derecha valores numericos
-            $(row).find('td:eq(2)').addClass('text-right');
-            $(row).find('td:eq(3)').addClass('text-right');
-            $(row).find('td:eq(4)').addClass('text-right');
-            $(row).find('td:eq(5)').addClass('text-right');
-            $(row).find('td:eq(6)').addClass('text-right');
+            if ( data[2] == "Pendiente" )
+            {
+                $(row).find('td:eq(2)').css('color','#ffc107');
+            }
+            if (data[2] == "Procesado" || data[2] == "Procesado con modificaciones")
+            {
+                $(row).find('td:eq(2)').css('color','#28a745');
+            }
+            if (data[2] == "Rechazado")
+            {
+                $(row).find('td:eq(2)').css('color','#dc3545');
+            }
         },
         
     });
