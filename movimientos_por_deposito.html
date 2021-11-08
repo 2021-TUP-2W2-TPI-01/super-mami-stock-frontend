@@ -261,7 +261,7 @@
             <!-- HEADER DESKTOP-->
 
             <!-- MAIN CONTENT-->
-            <div class="main-content">
+            <div class="main-content" id="rpt_content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
 
@@ -274,7 +274,7 @@
                                                 <h2 class="card-title"><span><i class="fas fa-exchange-alt"></i></span> Movimientos por depósito</h2>
                                             </div>
                                             <div class="card-body">
-                                                <div class="col-12 border rounded bg-light pt-2 ">
+                                                <div id="section_filters" class="col-12 border rounded bg-light pt-2 ">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <h3 class="card-title"><span><i class="fas fa-filter"></i></span> Filtros</h3>
@@ -301,7 +301,7 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group">
                                                                 <label for="">Depósitos: </label>
-                                                                <select class="select2" multiple="multiple"
+                                                                <select class="form-control"
                                                                     id="cmbDepositos"
                                                                     data-placeholder="  Seleccionar depósitos"
                                                                     style="width: 100%;">
@@ -318,7 +318,17 @@
                                                 </div>
                                                 <br>
                                                 
-                                                <div>
+                                                <div id="section_lista_resumen">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <h4 class="lblFechaFiltrado">En período del 15/11/2021 al 16/11/2021</h4>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <button id="btnRegresarProductividad" type="button" class="btn btn-secondary float-right"
+                                                            >Regresar a productividad</button>
+                                                        </div>
+                                                    </div>
+                                                    <br>
                                                     <table class="table table-data2 display"   id="tabla_resultado_reporte">
                                                         <thead>
                                                             <tr>
@@ -336,6 +346,187 @@
                                                         </tbody>
                         
                                                     </table>
+                                                </div>
+                                                    
+                                            </div>
+                                            <br>
+                                            </div><!-- /.card-body -->
+                                        </div>
+                                    </section>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- PRODUCTIVIDAD CONTENT-->
+            <div class="main-content" id="productividad">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+
+                        <section class="content" id="content2">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <section class="col-lg-12">
+                                        <div class="card" style="box-shadow: 0px 2px 25px rgba(0, 0, 0, .55);">
+                                            <div class="card-header">
+                                                <div class="row">
+                                                    <div class="col-10"> <h2 id="lblSucursalProductividad" class="card-title"><span><i class="fas fa-exchange-alt"></i></span> Productividad Sucursal San Vicente</h2></div>
+                                                    <div class="col-2"><div class="card-tools">
+                                                        <button id="btnRegresar" type="button" class="btn btn-secondary float-right"
+                                                        >Regresar a filtros</button>
+                                                    </div></div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="card-body px-5">
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <h4 class="lblFechaFiltrado">En período del 15/11/2021 al 16/11/2021</h4>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button id="btnResumenDepositos" type="button" class="btn btn-secondary float-right"
+                                                        >Resumen general</button>
+                                                    </div>
+                                                </div>
+                                                <div class="row m-t-25">
+                                                    <div class="col-sm-6 col-lg-3">
+                                                        <div class="overview-item overview-item--c1">
+                                                            <div id="divPedidos" style="cursor: pointer;" class="overview__inner">
+                                                                <div class="overview-box clearfix">
+                                                                    <div class="icon">
+                                                                        <i class="zmdi zmdi-shopping-cart"></i>
+                                                                    </div>
+                                                                    <div class="text">
+                                                                        <h2 id="lblCountPedidos">240</h2>
+                                                                        <span>Pedidos</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="pedidosChart" class="overview-chart">
+                                                                    <canvas id="chartPedidos"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-lg-3">
+                                                        <div class="overview-item overview-item--c2">
+                                                            <div id="divTraspSalientes" style="cursor: pointer;" class="overview__inner">
+                                                                <div class="overview-box clearfix">
+                                                                    <div class="icon">
+                                                                        <i class="zmdi zmdi-mail-reply-all"></i>
+                                                                    </div>
+                                                                    <div class="text">
+                                                                        <h2 id="lblCountTS">388</h2>
+                                                                        <span>Traspasos salientes</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="tsChart" class="overview-chart">
+                                                                    <canvas id="widgetChart2"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-lg-3">
+                                                        <div class="overview-item overview-item--c3">
+                                                            <div id="divTraspEntrantes" style="cursor: pointer;" class="overview__inner">
+                                                                <div class="overview-box clearfix">
+                                                                    <div class="icon">
+                                                                        <i class="zmdi zmdi-sign-in"></i>
+                                                                    </div>
+                                                                    <div class="text">
+                                                                        <h2 id="lblCountTE">50</h2>
+                                                                        <span>Traspasos entrantes</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="teChart" class="overview-chart">
+                                                                    <canvas id="chartTE"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-lg-3">
+                                                        <div class="overview-item overview-item--c4">
+                                                            <div id="divTodosMovimientos" style="cursor: pointer;" class="overview__inner">
+                                                                <div class="overview-box clearfix">
+                                                                    <div class="icon">
+                                                                        <i class="zmdi zmdi-swap-vertical"></i>
+                                                                    </div>
+                                                                    <div class="text">
+                                                                        <h2 id="lblCountTotal">678</h2>
+                                                                        <span>Total movimientos</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="totalChart" class="overview-chart">
+                                                                    <canvas id="chartTotal"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="au-card recent-report" style="height: 450px;">
+                                                            <div class="au-card-inner">
+                                                            <h3 id="lblTipoMovimiento" class="title-3">Traspaso salientes</h3>
+                                                            <br>
+                                                            <div class="au-skill-container">
+                                                                <div class="au-progress">
+                                                                    <span class="au-progress__title">Pendientes</span>
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar progress-bar-striped" id="porcPendientes"style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                      </div>
+                                                                    
+                                                                </div>
+                                                                <div class="au-progress">
+                                                                    <span class="au-progress__title">Confirmados</span>
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar progress-bar-striped" id="porcConfirmados"style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="au-progress">
+                                                                    <span class="au-progress__title">Con modificaciones</span>
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar progress-bar-striped" id="porcModificados"style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="au-progress pb-0">
+                                                                    <span class="au-progress__title">Rechazados</span>
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar progress-bar-striped" id="porcRechazados"style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="au-card chart-percent-card" style="height: 450px;>
+                                                            <div class="au-card-inner">
+                                                                <h3 id="lblProductividadChart" class="title-2 tm-b-5">Productividad gestión traspasos salientes</h3>
+                                                                <div class="row no-gutters">
+                                                                    <div class="col-xl-6">
+                                                                        <div class="chart-note-wrap">
+                                                                            <div class="chart-note mr-0 d-block">
+                                                                                <span class="dot dot--blue"></span>
+                                                                                <span>Gestionado</span>
+                                                                            </div>
+                                                                            <div class="chart-note mr-0 d-block">
+                                                                                <span class="dot dot--red"></span>
+                                                                                <span>No gestionado</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-6">
+                                                                        <div id="chartDiv" class="percent-chart" style="height: 280px;">
+                                                                            <canvas id="chartProd"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                     
                                             </div>
