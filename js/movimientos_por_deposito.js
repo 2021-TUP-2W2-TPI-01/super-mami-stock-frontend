@@ -4,16 +4,44 @@ import { GET, POST } from "./api.js";
 var f_movimientos_inicio = moment().format('YYYY-MM-DD');
 var f_movimientos_fin = moment().format('YYYY-MM-DD');
 var tabla_reporte;
+var productividad_suc_actual;
+var cantidades_movimientos;
 
 $(document).ready(function (){
     
+    $('#section_lista_resumen').hide();
+    $('#productividad').hide();
     innitFiltroFechas();
     innitTablaReporte();
     innitComboDepositos();
     getDepositos();
 
+
     $('#btnVerReporte').click(function() {
         verReporte();
+    });
+
+    $('#btnRegresar').click(function (){
+      toggleReportView('section_filters');
+    });
+
+    $('#divPedidos').click(function(){
+      changeTipoMovimiento('Pedidos');
+    });
+    $('#divTraspSalientes').click(function(){
+      changeTipoMovimiento('Traspasos salientes');
+    });
+    $('#divTraspEntrantes').click(function(){
+      changeTipoMovimiento('Traspasos entrantes');
+    });
+    $('#divTodosMovimientos').click(function(){
+      changeTipoMovimiento('Total movimientos');
+    });
+    $('#btnResumenDepositos').click(function(){
+      toggleReportView('section_lista_resumen');
+    });
+    $('#btnRegresarProductividad').click(function(){
+      toggleReportView('productividad');
     });
 
 });
@@ -46,8 +74,16 @@ async function verReporte() {
     tabla_reporte.clear().draw();
 
     if (response.success) {
-        if (response.data.length > 0) {
-            cargarTablaReporte(response.data);
+        if (response.data.reporte_depositos.length > 0) {
+            cargarTablaReporte(response.data.reporte_depositos);
+            productividad_suc_actual = response.data.reporte_por_deposito;
+            cantidades_movimientos = response.data.cantidades_movimientos;
+            console.log(cantidades_movimientos);
+            verProductividad();
+            toggleReportView('productividad');
+            let fecha_filtro = $('#fecha_filtro').val();
+            $('#lblSucursalProductividad').text('Productividad ' + $('#cmbDepositos option:selected').text());
+            $('.lblFechaFiltrado').text(`Período del ${fecha_filtro.replace('-','al')}`);
         }
         else {
             swal({
@@ -73,6 +109,28 @@ function cargarTablaReporte(data) {
         tabla_reporte.row.add([item.deposito, item.tipo_movimiento, item.cantidad, `${item.pendientes}%`, `${item.confirmados}%`, `${item.modificados}%`, `${item.rechazados}%`]).draw();
     });
 
+}
+
+
+function toggleReportView(view) {
+  if (view == 'productividad') {
+    $('#productividad').show();
+    $('#section_filters').hide();
+    $('#section_lista_resumen').hide();
+    $('#rpt_content').hide();
+  }
+  else if (view == 'section_filters') {
+    $('#productividad').hide();
+    $('#section_filters').show();
+    $('#section_lista_resumen').hide();
+    $('#rpt_content').show();
+  }
+  else if (view == 'section_lista_resumen') {
+    $('#productividad').hide();
+    $('#section_filters').hide();
+    $('#section_lista_resumen').show();
+    $('#rpt_content').show();
+  }
 }
 
 function innitComboDepositos() {
@@ -105,6 +163,7 @@ function innitTablaReporte() {
 
     tabla_reporte = $('#tabla_resultado_reporte').DataTable({
         "language": datetable_languaje,
+        ordering: false,
         pageLength: 5,
         columnDefs: [
             {
@@ -143,6 +202,9 @@ function innitTablaReporte() {
         rowCallback: function( row, data, iDisplayIndex ) {
             setColorScaleRuler(data[3],$(row).find('td:eq(3)'), false);
 
+            $(row).find('td:eq(0)').attr('style','white-space:nowrap;');
+            $(row).find('td:eq(7)').attr('style','white-space:nowrap;');
+
             // Alineación a la derecha valores numericos
             $(row).find('td:eq(2)').addClass('text-right');
             $(row).find('td:eq(3)').addClass('text-right');
@@ -152,6 +214,79 @@ function innitTablaReporte() {
         },
         
     });
+
+    $('#tabla_resultado_reporte tbody').on( 'click', 'td', function () {
+       
+        let rowIdx = tabla_reporte.cell( this ).index().row;
+        let colIdx = tabla_reporte.cell(this).index().column;  
+
+        let id_usuario = tabla_reporte.rows( rowIdx ).data()[0][0] ;
+        let username = tabla_reporte.rows( rowIdx ).data()[0][1] ;
+    
+
+        if (colIdx == 7) {
+            verProductividad();
+        }
+    
+    } );  
+
+}
+
+
+function verProductividad() {
+
+    productividad_suc_actual.forEach(movimiento => {
+      if (movimiento.tipo_movimiento == "Traspasos entrantes") {
+        $('#lblCountTE').text(`${movimiento.total}`);
+      }
+      else if (movimiento.tipo_movimiento == "Traspasos salientes") {
+        $('#lblCountTS').text(`${movimiento.total}`);
+      }
+      else if (movimiento.tipo_movimiento == "Pedidos") {
+        $('#lblCountPedidos').text(`${movimiento.total}`);
+      }
+      else {
+        $('#lblCountTotal').text(`${movimiento.total}`);
+      }
+
+    });
+
+    chartTraspasosSalientes();
+    chartTraspasosEntrantes();
+    chartPedidos();
+    chartTotalMovimientos();
+
+    changeTipoMovimiento('Total movimientos');
+}
+
+function changeTipoMovimiento(tipoMovimiento) {
+  let porcPendientes = "";
+  let porcConfirmados = "";
+  let porcModificados = "";
+  let porcRechazados = "";
+  
+  productividad_suc_actual.forEach(movimiento => {
+    if (movimiento.tipo_movimiento == tipoMovimiento) {
+      $('#lblTipoMovimiento').text(tipoMovimiento);
+      porcPendientes = movimiento.pendientes.toString();
+      porcConfirmados = movimiento.confirmados.toString();
+      porcModificados = movimiento.modificados.toString();
+      porcRechazados = movimiento.rechazados.toString();
+
+    }
+  });
+
+  $('.progress #porcPendientes').attr('style',`width:${porcPendientes}%`);
+  $('.progress #porcConfirmados').attr('style',`width:${porcConfirmados}%`);
+  $('.progress #porcModificados').attr('style',`width:${porcModificados}%`);
+  $('.progress #porcRechazados').attr('style',`width:${porcRechazados}%`);
+
+  $('.progress #porcPendientes').text(`${porcPendientes}%`);
+  $('.progress #porcConfirmados').text(`${porcConfirmados}%`);
+  $('.progress #porcModificados').text(`${porcModificados}%`);
+  $('.progress #porcRechazados').text(`${porcRechazados}%`);
+
+  chartProductividad(tipoMovimiento);
 
 }
 
@@ -234,4 +369,449 @@ function innitFiltroFechas() {
     
     
     
+}
+
+
+function chartProductividad(tipo_movimiento) {
+
+    $('#lblProductividadChart').text('Productividad gestión ' + tipo_movimiento);
+
+    let movimientoSuc = productividad_suc_actual.filter(movimiento => movimiento.tipo_movimiento == tipo_movimiento)[0] ;
+    let gestionado = parseFloat(movimientoSuc.confirmados) +  parseFloat(movimientoSuc.modificados) +  parseFloat(movimientoSuc.rechazados);
+    let noGestionados = parseFloat(movimientoSuc.pendientes);  
+    
+    $("#chartDiv").html("")
+    let aleatorio = Math.random();
+
+    $("#chartDiv").html("<canvas id='chartProd" + aleatorio + "'></canvas>")
+    var ctx = document.getElementById("chartProd" + aleatorio);
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [
+            {
+              label: "My First dataset",
+              data: [gestionado, noGestionados],
+              backgroundColor: [
+                '#00b5e9',
+                '#fa4251'
+              ],
+              hoverBackgroundColor: [
+                '#00b5e9',
+                '#fa4251'
+              ],
+              borderWidth: [
+                0, 0
+              ],
+              hoverBorderColor: [
+                'transparent',
+                'transparent'
+              ]
+            }
+          ],
+          labels: [
+            ' % gestionado',
+            ' % no gestionado'
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          cutoutPercentage: 55,
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          },
+          legend: {
+            display: false
+          },
+          tooltips: {
+            titleFontFamily: "Poppins",
+            xPadding: 15,
+            yPadding: 10,
+            caretPadding: 0,
+            bodyFontSize: 16
+          }
+        }
+    });
+}
+
+
+function grafico() {
+
+    $("#teChart").html("")
+    let aleatorio = Math.random()
+
+    $("#teChart").html("<canvas id='chartTE" + aleatorio + "'></canvas>")
+    var ctx = document.getElementById("chartTE" + aleatorio).getContext('2d');
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['01-10','05-10','09-10','15-10','23-10'],
+            datasets: [{
+                label: 'Cantidad',
+                data: [10,5,3,9,8],
+                backgroundColor: 'transparent',
+                borderColor: 'rgba(255,255,255,.55)'
+            }],
+            
+        },
+        options: {
+
+            maintainAspectRatio: false,
+            legend: {
+              display: false
+            },
+            responsive: true,
+            tooltips: {
+              mode: 'index',
+              titleFontSize: 12,
+              titleFontColor: '#000',
+              bodyFontColor: '#000',
+              backgroundColor: '#fff',
+              titleFontFamily: 'Montserrat',
+              bodyFontFamily: 'Montserrat',
+              cornerRadius: 3,
+              intersect: false,
+            },
+            scales: {
+              xAxes: [{
+                gridLines: {
+                  color: 'transparent',
+                  zeroLineColor: 'transparent'
+                },
+                ticks: {
+                  fontSize: 2,
+                  fontColor: 'transparent'
+                }
+              }],
+              yAxes: [{
+                display: false,
+                ticks: {
+                  display: false,
+                }
+              }]
+            },
+            title: {
+              display: false,
+            },
+            elements: {
+              line: {
+                borderWidth: 1
+              },
+              point: {
+                radius: 4,
+                hitRadius: 10,
+                hoverRadius: 4
+              }
+            }
+          }
+    });
+}
+
+
+function chartTraspasosSalientes() {
+
+    let cant_traspasos_salientes = cantidades_movimientos.filter(item => item.movimiento == 'Traspasos salientes');
+
+    $("#tsChart").html("")
+    let aleatorio = Math.random()
+
+    $("#tsChart").html("<canvas id='chartTS" + aleatorio + "'></canvas>")
+    var ctx = document.getElementById("chartTS" + aleatorio).getContext('2d');
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: $.map(cant_traspasos_salientes, row => row.fecha),
+            datasets: [{
+                label: 'Cantidad',
+                data: $.map(cant_traspasos_salientes, row => row.cantidad),
+                backgroundColor: 'transparent',
+                borderColor: 'rgba(255,255,255,.55)'
+            }],
+            
+        },
+        options: {
+
+            maintainAspectRatio: false,
+            legend: {
+              display: false
+            },
+            responsive: true,
+            tooltips: {
+              mode: 'index',
+              titleFontSize: 12,
+              titleFontColor: '#000',
+              bodyFontColor: '#000',
+              backgroundColor: '#fff',
+              titleFontFamily: 'Montserrat',
+              bodyFontFamily: 'Montserrat',
+              cornerRadius: 3,
+              intersect: false,
+            },
+            scales: {
+              xAxes: [{
+                gridLines: {
+                  color: 'transparent',
+                  zeroLineColor: 'transparent'
+                },
+                ticks: {
+                  fontSize: 2,
+                  fontColor: 'transparent'
+                }
+              }],
+              yAxes: [{
+                display: false,
+                ticks: {
+                  display: false,
+                }
+              }]
+            },
+            title: {
+              display: false,
+            },
+            elements: {
+              line: {
+                tension: 0.00001,
+                borderWidth: 1
+              },
+              point: {
+                radius: 4,
+                hitRadius: 10,
+                hoverRadius: 4
+              }
+            }
+          }
+    });
+}
+
+
+function chartTraspasosEntrantes() {
+
+  let cant_traspasos_entrantes = cantidades_movimientos.filter(item => item.movimiento == 'Traspasos entrantes');
+
+  $("#teChart").html("")
+  let aleatorio = Math.random()
+
+  $("#teChart").html("<canvas id='chartTE" + aleatorio + "'></canvas>")
+  var ctx = document.getElementById("chartTE" + aleatorio).getContext('2d');
+
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: $.map(cant_traspasos_entrantes, row => row.fecha),
+          datasets: [{
+              label: 'Cantidad',
+              data: $.map(cant_traspasos_entrantes, row => row.cantidad),
+              backgroundColor: 'transparent',
+              borderColor: 'rgba(255,255,255,.55)'
+          }],
+          
+      },
+      options: {
+
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        responsive: true,
+        tooltips: {
+          mode: 'index',
+          titleFontSize: 12,
+          titleFontColor: '#000',
+          bodyFontColor: '#000',
+          backgroundColor: '#fff',
+          titleFontFamily: 'Montserrat',
+          bodyFontFamily: 'Montserrat',
+          cornerRadius: 3,
+          intersect: false,
+        },
+        scales: {
+          xAxes: [{
+            gridLines: {
+              color: 'transparent',
+              zeroLineColor: 'transparent'
+            },
+            ticks: {
+              fontSize: 2,
+              fontColor: 'transparent'
+            }
+          }],
+          yAxes: [{
+            display: false,
+            ticks: {
+              display: false,
+            }
+          }]
+        },
+        title: {
+          display: false,
+        },
+        elements: {
+          line: {
+            borderWidth: 1
+          },
+          point: {
+            radius: 4,
+            hitRadius: 10,
+            hoverRadius: 4
+          }
+        }
+      }
+  });
+}
+
+
+function chartPedidos() {
+
+  let cant_pedidos = cantidades_movimientos.filter(item => item.movimiento == 'Pedidos');
+
+  $("#pedidosChart").html("")
+  let aleatorio = Math.random()
+
+  $("#pedidosChart").html("<canvas id='chartPedidos" + aleatorio + "'></canvas>")
+  var ctx = document.getElementById("chartPedidos" + aleatorio).getContext('2d');
+
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: $.map(cant_pedidos, row => row.fecha),
+          datasets: [{
+              label: 'Cantidad',
+              data: $.map(cant_pedidos, row => row.cantidad),
+              backgroundColor: 'transparent',
+              borderColor: 'rgba(255,255,255,.55)'
+          }],
+          
+      },
+      options: {
+
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        responsive: true,
+        tooltips: {
+          mode: 'index',
+          titleFontSize: 12,
+          titleFontColor: '#000',
+          bodyFontColor: '#000',
+          backgroundColor: '#fff',
+          titleFontFamily: 'Montserrat',
+          bodyFontFamily: 'Montserrat',
+          cornerRadius: 3,
+          intersect: false,
+        },
+        scales: {
+          xAxes: [{
+            gridLines: {
+              color: 'transparent',
+              zeroLineColor: 'transparent'
+            },
+            ticks: {
+              fontSize: 2,
+              fontColor: 'transparent'
+            }
+          }],
+          yAxes: [{
+            display: false,
+            ticks: {
+              display: false,
+            }
+          }]
+        },
+        title: {
+          display: false,
+        },
+        elements: {
+          line: {
+            borderWidth: 1
+          },
+          point: {
+            radius: 4,
+            hitRadius: 10,
+            hoverRadius: 4
+          }
+        }
+      }
+  });
+}
+
+
+function chartTotalMovimientos() {
+
+  let cant_total = cantidades_movimientos.filter(item => item.movimiento == 'Total movimientos');
+
+  $("#totalChart").html("")
+  let aleatorio = Math.random()
+
+  $("#totalChart").html("<canvas id='chartTotal" + aleatorio + "'></canvas>")
+  var ctx = document.getElementById("chartTotal" + aleatorio).getContext('2d');
+
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: $.map(cant_total, row => row.fecha),
+          datasets: [{
+              label: 'Cantidad',
+              data: $.map(cant_total, row => row.cantidad),
+              backgroundColor: 'transparent',
+              borderColor: 'rgba(255,255,255,.55)'
+          }],
+          
+      },
+      options: {
+
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        responsive: true,
+        tooltips: {
+          mode: 'index',
+          titleFontSize: 12,
+          titleFontColor: '#000',
+          bodyFontColor: '#000',
+          backgroundColor: '#fff',
+          titleFontFamily: 'Montserrat',
+          bodyFontFamily: 'Montserrat',
+          cornerRadius: 3,
+          intersect: false,
+        },
+        scales: {
+          xAxes: [{
+            gridLines: {
+              color: 'transparent',
+              zeroLineColor: 'transparent'
+            },
+            ticks: {
+              fontSize: 2,
+              fontColor: 'transparent'
+            }
+          }],
+          yAxes: [{
+            display: false,
+            ticks: {
+              display: false,
+            }
+          }]
+        },
+        title: {
+          display: false,
+        },
+        elements: {
+          line: {
+            tension: 0.00001,
+            borderWidth: 1
+          },
+          point: {
+            radius: 4,
+            hitRadius: 10,
+            hoverRadius: 4
+          }
+        }
+      }
+  });
 }
