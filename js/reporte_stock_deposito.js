@@ -16,6 +16,11 @@ $(document).ready(function () {
     $('#btnRegresar').click(function(){
         toggleReportsViews(false);
     });
+    
+    $('.select2bs4_search').select2(
+    {
+        language: "es"
+    });
 })
 
 
