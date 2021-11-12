@@ -299,12 +299,7 @@ async function getDepositos() {
 
     if (response.success) {
 
-        let optTodos = document.createElement("option");
-   
-        optTodos.appendChild(document.createTextNode("Todos"));
-        optTodos.value = 'todos';
-
-        cmbDepositos.appendChild(optTodos);
+      
 
         response.data.forEach(deposito => {
 
