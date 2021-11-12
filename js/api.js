@@ -1,7 +1,7 @@
 
 import '../js/session.js';
 
-const apiURL = 'http://26.100.251.19/api';
+const apiURL = 'https://api-stockeanding.herokuapp.com/api';
 const authType = 'Token';
 const dataType = 'JSON';
 
