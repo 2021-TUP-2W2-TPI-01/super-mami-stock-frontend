@@ -46,6 +46,7 @@ function incializar_tabla_traspasos(){
     tabla_traspasos  = $('#tabla_traspasos').DataTable({
         "language": datetable_languaje,
         pageLength: 7,
+        ordering: false,
         columnDefs: [
             {
                 'targets': 5,  
