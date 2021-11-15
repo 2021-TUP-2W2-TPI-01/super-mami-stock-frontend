@@ -125,7 +125,7 @@ async function loadDepositos() {
 
     }
     str += '</small><hr>'
-    str += '<button type="button" class="btn btn-primary float-right" id="btnVerHistorico">Ver histórico (Beta)</button>';
+    str += '<button type="button" class="btn btn-primary float-right" id="btnVerHistorico">Ver histórico</button>';
     $("#depositosNombre").html(str);
 
     $('#btnVerHistorico').off('click');
