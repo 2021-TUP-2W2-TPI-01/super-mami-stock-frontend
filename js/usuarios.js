@@ -101,8 +101,8 @@ function llenar_tabla(datos, tabla){
         // Por cada usuario, a los botones de borrar y editar, se le asigna un id dinamico segun el id del usuario
        // botones += "<button class=\"item\" id=\"btn_modif_usuario_" + usuario.id + "\" data-toggle=\"modal\" data-placement=\"top\" title=\"Modificar\"><i class=\"zmdi zmdi-edit\"></i></button>\<button id=\"btn_elim_usuario_" + usuario.id + "\" class=\"item\" data-toggle=\"modal\"  idata-placement=\"top\" title=\"Eliminar\"><i class=\"zmdi zmdi-delete\"></i></button></div></td>";
         
-        let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
-        let delete_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Delete"><i class="zmdi zmdi-delete"></i></button></div></td>';
+        let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Editar"><i class="zmdi zmdi-edit"></i></button></div></td>';
+        let delete_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="zmdi zmdi-delete"></i></button></div></td>';
 
         tabla.row.add([usuario.id ,usuario.usuario, usuario.nombre, usuario.apellido, usuario.email, usuario.rol, edit_button, delete_button]).draw();
    

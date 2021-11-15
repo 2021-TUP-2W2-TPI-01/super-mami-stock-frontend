@@ -97,8 +97,8 @@ function llenar_tabla(datos, tabla){
     datos.forEach(deposito => {
         //let botones = '';
 
-        let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="zmdi zmdi-edit"></i></button></div></td>';
-        let delete_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Delete"><i class="zmdi zmdi-delete"></i></button></div></td>';
+        let edit_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Editar"><i class="zmdi zmdi-edit"></i></button></div></td>';
+        let delete_button = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="zmdi zmdi-delete"></i></button></div></td>';
         
         //botones += "<td><div class=\"table-data-feature\">"
         // Por cada deposito, a los botones de borrar y editar, se le asigna un id dinamico segun el id del deposito

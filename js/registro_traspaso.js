@@ -105,7 +105,7 @@ function llenar_tabla(datos, tabla){
     datos.forEach(traspaso => {
         //let botones = '';
 
-        let ver_detalle_boton = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-eye"></i></button></div></td>';
+        let ver_detalle_boton = '<td><div class="table-data-feature"><button class="item" data-toggle="tooltip" data-placement="top" title="Ver detalle"><i class="fas fa-eye"></i></button></div></td>';
         
         tabla.row.add([traspaso.id, traspaso.fh_generacion, traspaso.deposito_origen, traspaso.deposito_destino, traspaso.tipo_estado, ver_detalle_boton]).draw();
    
