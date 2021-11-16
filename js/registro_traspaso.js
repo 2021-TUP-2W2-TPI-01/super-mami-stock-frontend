@@ -208,6 +208,14 @@ function confirmarModificarTraspaso(id_traspaso) {
     $('#mensaje_confirm_modificar').text(`¿Desea confirmar el traspaso modificado?`);
 
     $('#btn_confirmar_modificar_traspaso').click(function(){
+        if ($('#txtObservacionModificado').val().trim() == ''){
+            swal({
+                title: "Error!",
+                text: "La observación es obligatoria",
+                icon: "error",
+            });
+            return;
+        }
         modificarTraspaso(id_traspaso);
     });
 }
@@ -300,6 +308,14 @@ function confirmarRechazarTraspaso(id_traspaso) {
     $('#mensaje_confirm_rechazo').text(`¿Desea rechazar el traspaso?`);// con el remito N° ${nro_remito}
 
     $('#btn_confirmar_rechazo_traspaso').click(function(){
+        if ($('#txtObservacion').val().trim() == ''){
+            swal({
+                title: "Error!",
+                text: "La observación es obligatoria",
+                icon: "error",
+            });
+            return;
+        }
         rechazarTraspaso(id_traspaso);
     });
 }

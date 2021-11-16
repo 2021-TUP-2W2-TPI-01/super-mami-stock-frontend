@@ -211,6 +211,14 @@ function confirmarModificarPedido(id_pedido, nro_remito) {
     $('#mensaje_confirm_modificar').text(`¿Desea confirmar el pedido modificado con el remito N° ${nro_remito}?`);
 
     $('#btn_confirmar_modificar_pedido').click(function(){
+        if ($('#txtObservacionModificado').val().trim() == ''){
+            swal({
+                title: "Error!",
+                text: "La observación es obligatoria",
+                icon: "error",
+            });
+            return;
+        }
         modificarPedido(id_pedido);
     });
 }
@@ -302,6 +310,14 @@ function confirmarRechazarPedido(id_pedido, nro_remito) {
     $('#mensaje_confirm_rechazo').text(`¿Desea rechazar el pedido con el remito N° ${nro_remito}?`);
 
     $('#btn_confirmar_rechazo_pedido').click(function(){
+        if ($('#txtObservacion').val().trim() == ''){
+            swal({
+                title: "Error!",
+                text: "La observación es obligatoria",
+                icon: "error",
+            });
+            return;
+        }
         rechazarPedido(id_pedido);
     });
 }

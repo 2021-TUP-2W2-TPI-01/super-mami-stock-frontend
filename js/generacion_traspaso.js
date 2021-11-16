@@ -269,7 +269,7 @@ $("#btnPopUpTraspasoConfirmacion").on('click', function () {
     }else{
         swal({
             title: "Error!",
-            text: "No existen traspasos existentes.",
+            text: "No hay artículos cargados.",
             icon: "error",
         });
     }
