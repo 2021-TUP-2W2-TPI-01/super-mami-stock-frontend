@@ -110,7 +110,7 @@ async function loadDepositos() {
         depositos.data.forEach(deposito => {
             if (first) {
                 list_depos.push('Suc: ' + deposito.id)
-                str += '<input class="form-check-input" type="radio" id="' + deposito.id + '" checked name="radioDepositos" value="' + deposito.id + '">'
+                str += '<input class="form-check-input" type="radio" id="' + deposito.id + '" checked name="radioDepositos" value="' + deposito.nombre + '">'
                 str += 'Suc <b><a class="text-primary">' + deposito.id + '</a> </b>: <b>' + deposito.nombre + "</b><br> ";
                 $DEPOSITO_LIST.push(deposito.id)
                 first = false;
@@ -242,6 +242,7 @@ function toggleReportsViews(historico=false){
 }
 
 function verHistoricoStock(articulo_name, deposito_name, data) {
+    console.log(deposito_name);
     toggleReportsViews(true);
     $('#lblHistorico').text(` Histórico de stock ${articulo_name}`);
     $('#lblSeguimiento').text(`Seguimiento mensual para ${deposito_name}`);
