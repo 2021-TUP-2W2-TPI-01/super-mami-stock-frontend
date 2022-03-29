@@ -19,7 +19,7 @@ var getHeaders = () => {
     return headers;
 }
 
-
+// Agrego comment
 async function GET(path) {
 
     let response = {};
